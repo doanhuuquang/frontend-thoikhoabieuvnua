@@ -6,23 +6,34 @@ import { ScheduleData } from "@/data/ScheduleData";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
-  const numberOfLessons = getTodaySchedule()?.subjects?.reduce(
-    (total, subject) => total + subject.numberOfLessons,
-    0
-  );
+  const numberOfLessons =
+    getTodaySchedule()?.subjects?.reduce(
+      (total, subject) => total + subject.numberOfLessons,
+      0
+    ) ?? 0;
 
   return (
     <div
-      className={`flex flex-wrap gap-10 items-center justify-between p-4 bg-background dark:bg-accent rounded-md overflow-hidden ${className}`}
+      className={`flex flex-wrap gap-10 items-center justify-center p-4 bg-background dark:bg-accent rounded-md overflow-hidden ${className}`}
     >
-      <div className="grow text-center">
+      <div className="text-center lg-text-start md:text-start">
         <h2 className="text-2xl">Xin chào, Quang!</h2>
         <p className="text-gray-500">Hôm nay bạn thế nào rồi?</p>
-        <p className="text-sm text-gray-400 mt-2">
-          Hôm nay bạn có{" "}
-          <span className="text-primary font-bold">{numberOfLessons}</span> tiết
-          học, đừng cúp học đấy nhé!
-        </p>
+        {0 > 0 ? (
+          <p className="text-sm text-gray-400 mt-2">
+            Hôm nay bạn có
+            <span className="text-primary font-bold"> {numberOfLessons} </span>
+            tiết học, đừng cúp học đấy nhé!
+          </p>
+        ) : (
+          <p className="text-sm text-gray-400 mt-2">
+            Hôm nay bạn{" "}
+            <span className="text-primary font-bold">
+              không có tiết học nào{" "}
+            </span>
+          </p>
+        )}
+
         <Button className="mt-5">Xem chi tiết lịch học hôm nay</Button>
       </div>
       <div className="grow flex justify-center">

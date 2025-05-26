@@ -1,6 +1,8 @@
 import { Schedule } from "@/lib/models/Schedule";
 import { useMemo } from "react";
 
+import { getVietnamDate } from "@/utils/timeUtils";
+
 export const useScheduleCalculator = (schedule: Schedule | null) => {
   const getCurrentWeekNumber = (currentDate: Date): number => {
     if (!schedule) return 1;
@@ -29,7 +31,7 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
   const getTodaySchedule = () => {
     if (!schedule) return null;
 
-    const today = new Date();
+    const today = getVietnamDate();
     const weekNumber = getCurrentWeekNumber(today);
     const dayName = getDayName(today);
 
@@ -60,7 +62,7 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
   };
 
   const getCurrentWeek = () => {
-    const today = new Date();
+    const today = getVietnamDate();
     const weekNumber = getCurrentWeekNumber(today);
     return getWeekSchedule(weekNumber);
   };
