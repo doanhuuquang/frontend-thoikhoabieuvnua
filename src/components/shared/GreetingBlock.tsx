@@ -1,0 +1,39 @@
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+
+import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
+import { ScheduleData } from "@/data/ScheduleData";
+
+export default function GreetingBlock({ className }: { className?: string }) {
+  const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
+  const numberOfLessons = getTodaySchedule()?.subjects?.reduce(
+    (total, subject) => total + subject.numberOfLessons,
+    0
+  );
+
+  return (
+    <div
+      className={`flex flex-wrap gap-10 items-center justify-between p-4 bg-background dark:bg-accent rounded-md overflow-hidden ${className}`}
+    >
+      <div className="grow text-center">
+        <h2 className="text-2xl">Xin chào, Quang!</h2>
+        <p className="text-gray-500">Hôm nay bạn thế nào rồi?</p>
+        <p className="text-sm text-gray-400 mt-2">
+          Hôm nay bạn có{" "}
+          <span className="text-primary font-bold">{numberOfLessons}</span> tiết
+          học, đừng cúp học đấy nhé!
+        </p>
+        <Button className="mt-5">Xem chi tiết lịch học hôm nay</Button>
+      </div>
+      <div className="grow flex justify-center">
+        <Image
+          alt="Greeting image"
+          src={"/assets/images/children-preparing-their-backpack-bro.svg"}
+          width={300}
+          height={150}
+          className="-mb-50"
+        />
+      </div>
+    </div>
+  );
+}
