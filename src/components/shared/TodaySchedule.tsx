@@ -6,6 +6,7 @@ import {
 
 import { ScheduleData } from "@/data/ScheduleData";
 import WeatherBlock from "@/components/shared/WeatherBlock";
+import { getVietnamDate } from "@/utils/timeUtils";
 
 const colors = [
   "border-red-500",
@@ -20,21 +21,13 @@ const getRandomBorderColor = () =>
   colors[Math.floor(Math.random() * colors.length)];
 
 const TodayScheduleItem = ({ className }: { className: string }) => {
-  const { getTodaySchedule, getNextClass } =
-    useScheduleCalculator(ScheduleData);
+  const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
   const todayClasses = getTodaySchedule();
-  const nextClass = getNextClass();
 
   if (!todayClasses?.subjects?.length) {
     return (
       <div className="p-4 text-center text-gray-500">
-        Hôm nay không có lịch học
-        {nextClass && (
-          <div className="mt-2 text-sm">
-            Lớp tiếp theo: {nextClass.subject.name} -{" "}
-            {nextClass.date.toLocaleDateString("vi-VN")}
-          </div>
-        )}
+        Hôm nay không có lịch học - {getVietnamDate().toLocaleDateString()}
       </div>
     );
   }

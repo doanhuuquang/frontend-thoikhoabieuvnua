@@ -6,5 +6,8 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export const getVietnamDate = (): Date => {
-  return dayjs().tz("Asia/Ho_Chi_Minh").toDate();
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const vietnamTime = new Date(utc + 7 * 60 * 60 * 1000); // GMT+7
+  return vietnamTime;
 };

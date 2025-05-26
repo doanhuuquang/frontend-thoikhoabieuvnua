@@ -19,7 +19,7 @@ export default function GreetingBlock({ className }: { className?: string }) {
       <div className="text-center lg-text-start md:text-start">
         <h2 className="text-2xl">Xin chào, Quang!</h2>
         <p className="text-gray-500">Hôm nay bạn thế nào rồi?</p>
-        {0 > 0 ? (
+        {numberOfLessons > 0 ? (
           <p className="text-sm text-gray-400 mt-2">
             Hôm nay bạn có
             <span className="text-primary font-bold"> {numberOfLessons} </span>
