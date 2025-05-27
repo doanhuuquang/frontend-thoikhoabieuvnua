@@ -7,6 +7,9 @@ import {
   Bell,
   BookCheck,
   Calculator,
+  Bolt,
+  UserRound,
+  LogOut,
 } from "lucide-react";
 
 import {
@@ -139,7 +142,7 @@ const studentCode = UserData.studentCode || "Người dùng";
 
 export function AppSidebarHeader() {
   return (
-    <SidebarHeader>
+    <SidebarHeader className="border-b-1">
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
@@ -173,7 +176,7 @@ export function AppSidebarHeader() {
 export function AppSidebarContent() {
   return (
     <SidebarContent>
-      <SidebarGroup className="border-t-1">
+      <SidebarGroup>
         <Link href="/" className="no-underline">
           <SidebarMenu>
             <SidebarMenuButton>
@@ -224,7 +227,7 @@ export function AppSidebarContent() {
 
 export function AppSidebarFooter() {
   return (
-    <SidebarFooter>
+    <SidebarFooter className="border-t-1">
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
@@ -243,12 +246,15 @@ export function AppSidebarFooter() {
             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
               <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
                 <span>Cài đặt</span>
+                <Bolt className="ml-auto" />
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span>Thông tin cá nhân</span>
+                <UserRound className="ml-auto" />
               </DropdownMenuItem>
-              <DropdownMenuItem className="bg-red-500/20 ">
+              <DropdownMenuItem>
                 <span>Đăng xuất</span>
+                <LogOut className="ml-auto" />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

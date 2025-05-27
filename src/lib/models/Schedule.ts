@@ -1,4 +1,4 @@
-type Subject = {
+export type Subject = {
   code: string;
   name: string;
   group: string;
@@ -8,13 +8,14 @@ type Subject = {
   numberOfLessons: number;
   room: string;
   lecturerName: string;
+  subjectDate: string;
 };
 
-type DailySchedule = {
+export type DailySchedule = {
   subjects: Subject[];
 };
 
-type WeeklySchedule = {
+export type WeeklySchedule = {
   dailySchedules: Record<string, DailySchedule>;
 };
 
