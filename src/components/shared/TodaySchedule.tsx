@@ -20,7 +20,7 @@ const colors = [
 const getRandomBorderColor = () =>
   colors[Math.floor(Math.random() * colors.length)];
 
-const TodayScheduleItem = ({ className }: { className: string }) => {
+const TodayScheduleItemList = ({ className }: { className: string }) => {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
   const todayClasses = getTodaySchedule();
 
@@ -75,7 +75,7 @@ export const TodaySchedule = () => {
     <div className="space-y-2">
       <h3 className="font-semibold text-lg">Lịch học hôm nay</h3>
       <div className="grid grid-flow-row grid-rows-1 grid-cols-4 gap-3">
-        <TodayScheduleItem className="lg:col-span-2 col-span-4" />
+        <TodayScheduleItemList className="lg:col-span-2 col-span-4" />
         <WeatherBlock className="lg:col-span-2 col-span-4" />
       </div>
       <div></div>

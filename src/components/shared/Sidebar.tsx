@@ -1,7 +1,6 @@
 import {
   Home,
   Calendar,
-  User2,
   GraduationCap,
   ChevronDown,
   ChevronsUpDown,
@@ -35,6 +34,9 @@ import {
 
 import Image from "next/image";
 import Link from "next/link";
+
+import UserAvatar from "@/components/shared/UserAvatar";
+import { UserData } from "@/data/UserData";
 
 // Sidebar group items
 const items = [
@@ -132,6 +134,9 @@ const items = [
   },
 ];
 
+const userName = UserData.name || "Người dùng";
+const studentCode = UserData.studentCode || "Người dùng";
+
 export function AppSidebarHeader() {
   return (
     <SidebarHeader>
@@ -225,23 +230,25 @@ export function AppSidebarFooter() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton>
-                <User2 className="h-4 w-4" />
-                <span>Username</span>
+                <UserAvatar className="w-10 h-10" />
+                <div className="flex flex-col">
+                  <span>{userName}</span>
+                  <span className="text-accent-foreground/60 text-xs font-light">
+                    {studentCode}
+                  </span>
+                </div>
                 <ChevronsUpDown className="ml-auto h-4 w-4" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              side="top"
-              className="w-[--radix-popper-anchor-width]"
-            >
-              <DropdownMenuItem className="w-56">
-                <span>Account Settings</span>
+            <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
+              <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
+                <span>Cài đặt</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <span>Profile</span>
+                <span>Thông tin cá nhân</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Sign Out</span>
+              <DropdownMenuItem className="bg-red-500/20 ">
+                <span>Đăng xuất</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

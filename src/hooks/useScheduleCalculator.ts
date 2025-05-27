@@ -73,7 +73,6 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
 
-    // Check today first
     const todaySchedule = getTodaySchedule();
     if (todaySchedule?.subjects) {
       for (const subject of todaySchedule.subjects) {

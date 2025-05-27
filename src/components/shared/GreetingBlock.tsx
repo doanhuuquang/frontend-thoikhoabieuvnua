@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 
 import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 import { ScheduleData } from "@/data/ScheduleData";
+import { UserData } from "@/data/UserData";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
@@ -17,7 +18,7 @@ export default function GreetingBlock({ className }: { className?: string }) {
       className={`flex flex-wrap gap-10 items-center justify-center p-4 bg-background dark:bg-accent rounded-md overflow-hidden ${className}`}
     >
       <div className="text-center lg-text-start md:text-start">
-        <h2 className="text-2xl">Xin chào, Quang!</h2>
+        <h2 className="text-2xl">Xin chào, {UserData.name}!</h2>
         <p className="text-gray-500">Hôm nay bạn thế nào rồi?</p>
         {numberOfLessons > 0 ? (
           <p className="text-sm text-gray-400 mt-2">
