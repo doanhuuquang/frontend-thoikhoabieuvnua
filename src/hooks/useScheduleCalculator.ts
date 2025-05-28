@@ -165,11 +165,15 @@ export const formatClassTime = (
   return `${minutesToTime(startTime)} - ${minutesToTime(endTime)}`;
 };
 
-export const isClassDoned = (
+export const getSubjectStatus = (
   start: number,
   numberOfLessons: number,
   subjectDateStr: string
-): boolean => {
+): number => {
+  // 0: Đã hoàn thành
+  // 1: Đang diễn ra
+  // 2: sắp tới
+
   const now = getVietnamDate();
 
   const [subjectYear, subjectMonth, subjectDay] = subjectDateStr
@@ -180,20 +184,26 @@ export const isClassDoned = (
   const currentMonth = now.getMonth() + 1;
   const currentDay = now.getDate();
 
+  const startTimeMinutes = PERIOD_START_TIMES[start - 1];
   const endTimeMinutes = PERIOD_END_TIMES[start + numberOfLessons - 2];
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-  if (currentYear < subjectYear) return false;
-  if (currentMonth < subjectMonth) return false;
-  if (currentDay < subjectDay) return false;
+  if (currentYear < subjectYear) return 2;
+  if (currentMonth < subjectMonth) return 2;
+  if (currentDay < subjectDay) return 2;
 
   if (
     currentYear == subjectYear &&
     currentMonth == subjectMonth &&
     currentDay == subjectDay
   ) {
-    return currentMinutes >= endTimeMinutes;
+    if (
+      currentMinutes >= startTimeMinutes &&
+      currentMinutes <= endTimeMinutes
+    ) {
+      return 1;
+    }
   }
 
-  return true;
+  return 0;
 };

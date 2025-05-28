@@ -10,27 +10,35 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import { formatClassTime, isClassDoned } from "@/hooks/useScheduleCalculator";
+import {
+  formatClassTime,
+  getSubjectStatus,
+} from "@/hooks/useScheduleCalculator";
 import { Subject } from "@/lib/models/Schedule";
 
 const borderColors = {
+  incoming: "border-amber-400",
   active: "border-primary",
   inactive: "border-gray-300",
 };
 
 export const ScheduleItem = ({ subject }: { subject: Subject }) => {
+  const subjectStatus = getSubjectStatus(
+    subject.start,
+    subject.numberOfLessons,
+    subject.subjectDate
+  );
+
   return (
     <div
       key={subject.code}
       className={`p-3 rounded-lg border-l-5 hover:cursor-pointer
       ${
-        isClassDoned(
-          subject.start,
-          subject.numberOfLessons,
-          subject.subjectDate
-        )
+        subjectStatus == 0
           ? `opacity-50 bg-background dark:bg-accent/50 dark:opacity-30 ${borderColors.inactive}`
-          : `bg-background dark:bg-accent ${borderColors.active}`
+          : subjectStatus == 1
+          ? `bg-background dark:bg-accent ${borderColors.active}`
+          : `bg-background dark:bg-accent ${borderColors.incoming}`
       }`}
     >
       <AlertDialog>
@@ -59,35 +67,40 @@ export const ScheduleItem = ({ subject }: { subject: Subject }) => {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{subject.name}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {isClassDoned(
-                subject.start,
-                subject.numberOfLessons,
-                subject.subjectDate
-              ) ? (
-                "Tiết học này đã kết thúc rồi"
+            <AlertDialogTitle className="flex gap-2 items-center justify-between">
+              <span>{subject.name}</span>
+              {subjectStatus == 0 ? (
+                <span className="bg-gray-200 px-2 py-1 text-xs rounded-full font-light">
+                  Đã kết thúc
+                </span>
+              ) : subjectStatus == 1 ? (
+                <span className="bg-green-400 px-2 py-1 text-xs rounded-full font-normal">
+                  Đang diễn ra
+                </span>
               ) : (
-                <div>
-                  <p className="text-sm text-gray-500">
-                    Mã môn: {subject.code} - Nhóm {subject.group}
-                  </p>
-                  <p className="text-sm text-gray-500">Phòng: {subject.room}</p>
-                  <p className="text-sm text-gray-500">
-                    Giảng viên: {subject.lecturerName}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Tiết {subject.start}-
-                    {subject.start + subject.numberOfLessons - 1}
-                  </p>
-                  <p>
-                    thời gian tiết học diễn ra:{" "}
-                    <span className="font-bold text-primary">
-                      {formatClassTime(subject.start, subject.numberOfLessons)}
-                    </span>
-                  </p>
-                </div>
+                <span className="bg-amber-300 px-2 py-1 text-xs rounded-full font-normal">
+                  Chưa đến
+                </span>
               )}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-start">
+              <li className="text-sm text-gray-500">
+                Mã môn: {subject.code} - Nhóm {subject.group}
+              </li>
+              <li className="text-sm text-gray-500">Phòng: {subject.room}</li>
+              <li className="text-sm text-gray-500">
+                Giảng viên: {subject.lecturerName}
+              </li>
+              <li className="text-sm text-gray-500">
+                Tiết {subject.start}-
+                {subject.start + subject.numberOfLessons - 1}
+              </li>
+              <li>
+                thời gian tiết học diễn ra:{" "}
+                <span className="font-bold text-primary">
+                  {formatClassTime(subject.start, subject.numberOfLessons)}
+                </span>
+              </li>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

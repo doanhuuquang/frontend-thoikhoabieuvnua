@@ -245,16 +245,16 @@ export function AppSidebarFooter() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
               <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
+                <Bolt className="mr-2" />
                 <span>Cài đặt</span>
-                <Bolt className="ml-auto" />
               </DropdownMenuItem>
               <DropdownMenuItem>
+                <UserRound className="mr-2" />
                 <span>Thông tin cá nhân</span>
-                <UserRound className="ml-auto" />
               </DropdownMenuItem>
               <DropdownMenuItem>
+                <LogOut className="mr-2" />
                 <span>Đăng xuất</span>
-                <LogOut className="ml-auto" />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
