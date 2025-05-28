@@ -1,4 +1,5 @@
 import WeekSelector from "@/components/shared/WeekSelector";
+import DayOfWeekSelector from "@/components/shared/WeekDaySelector";
 // import { ScheduleData } from "@/data/ScheduleData";
 // import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 
@@ -12,10 +13,10 @@ export const WeeklySchedule = () => {
     <div className="space-y-5">
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <h4 className="font-semibold text-lg">Lịch học theo tuần</h4>
-        <WeekSelector className="lg:col-span-2 col-span-6 lg:w-[50%] md:w-[50%] w-full" />
       </div>
-      <div className="space-y-5 grid grid-flow-row grid-rows-1 grid-cols-6 gap-3">
-        <h1>xin chào</h1>
+      <div className="space-y-2">
+        <WeekSelector className="w-full" />
+        <DayOfWeekSelector className="w-full" />
       </div>
     </div>
   );
