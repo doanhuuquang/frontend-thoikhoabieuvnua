@@ -1,3 +1,9 @@
+import { WeeklySchedule } from "@/components/shared/WeeklySchedule";
+
 export default function WeeklySchedulePage() {
-  return <h1>Thời khóa biểu theo tuần</h1>;
+  return (
+    <div className="p-3">
+      <WeeklySchedule />
+    </div>
+  );
 }

@@ -1,9 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
-import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 import { ScheduleData } from "@/data/ScheduleData";
 import { UserData } from "@/data/UserData";
+import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
@@ -35,7 +35,9 @@ export default function GreetingBlock({ className }: { className?: string }) {
           </p>
         )}
 
-        <Button className="mt-5">Xem chi tiết lịch học hôm nay</Button>
+        <Button className="mt-5" asChild>
+          <Link href={"/schedule/today"}>Xem chi tiết lịch học hôm nay</Link>
+        </Button>
       </div>
       <div className="grow flex justify-center">
         <Image

@@ -70,15 +70,15 @@ export const ScheduleItem = ({ subject }: { subject: Subject }) => {
             <AlertDialogTitle className="flex gap-2 items-center justify-between">
               <span>{subject.name}</span>
               {subjectStatus == 0 ? (
-                <span className="bg-gray-200 px-2 py-1 text-xs rounded-full font-light">
+                <span className="bg-gray-200 text-black px-2 py-1 text-xs rounded-full font-light">
                   Đã kết thúc
                 </span>
               ) : subjectStatus == 1 ? (
-                <span className="bg-green-400 px-2 py-1 text-xs rounded-full font-normal">
+                <span className="bg-green-400 text-black px-2 py-1 text-xs rounded-full font-normal">
                   Đang diễn ra
                 </span>
               ) : (
-                <span className="bg-amber-300 px-2 py-1 text-xs rounded-full font-normal">
+                <span className="bg-amber-300 text-black px-2 py-1 text-xs rounded-full font-normal">
                   Chưa đến
                 </span>
               )}

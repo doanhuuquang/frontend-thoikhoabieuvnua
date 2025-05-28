@@ -1,10 +1,8 @@
-import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
-
-import { ScheduleData } from "@/data/ScheduleData";
-
 import WeatherBlock from "@/components/shared/WeatherBlock";
 import { getVietnamDate } from "@/utils/timeUtils";
+import { ScheduleData } from "@/data/ScheduleData";
 import { ScheduleItem } from "@/components/shared/ScheduleItem";
+import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 
 const TodayScheduleItemList = ({ className }: { className: string }) => {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
@@ -12,8 +10,8 @@ const TodayScheduleItemList = ({ className }: { className: string }) => {
 
   if (!todayClasses?.subjects?.length) {
     return (
-      <div className="p-4 text-center text-gray-500">
-        Hôm nay không có lịch học -
+      <div className={className}>
+        <p className="py-5 text-gray-500">Hôm nay không có lịch học</p>
       </div>
     );
   }
@@ -31,7 +29,7 @@ export const TodaySchedule = () => {
       <h4 className="font-semibold text-lg flex items-center justify-between wrap">
         <span>Lịch học hôm nay</span>
         <span className="text-accent-foreground/50 font-light text-sm">
-          {getVietnamDate().toLocaleDateString()}
+          {getVietnamDate().format("DD/MM/YYYY")}
         </span>
       </h4>
       <div className="grid grid-flow-row grid-rows-1 grid-cols-4 gap-3">
