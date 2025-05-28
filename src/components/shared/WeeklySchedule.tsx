@@ -1,13 +1,11 @@
 import WeekSelector from "@/components/shared/WeekSelector";
-import { Button } from "@/components/ui/button";
-import { ChevronsUpDown, Ghost } from "lucide-react";
-import { ScheduleData } from "@/data/ScheduleData";
-import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
+// import { ScheduleData } from "@/data/ScheduleData";
+// import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 
-const TodayScheduleItemList = ({ className }: { className: string }) => {
-  const { getWeekSchedule } = useScheduleCalculator(ScheduleData);
-  const weekClasses = getWeekSchedule(21);
-};
+// const TodayScheduleItemList = ({ className }: { className: string }) => {
+//   const { getWeekSchedule } = useScheduleCalculator(ScheduleData);
+//   const weekClasses = getWeekSchedule(21);
+// };
 
 export const WeeklySchedule = () => {
   return (
