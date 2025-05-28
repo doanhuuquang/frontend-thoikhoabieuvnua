@@ -94,20 +94,27 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
       return [];
     }
 
+    const numberOfWeek: number = Number(
+      Object.keys(schedule.weeklySchedules).findLast((key) => key)
+    );
+
+    const weeks = [];
     const startDate = dayjs(schedule.semesterStartDate);
-    return Object.keys(schedule.weeklySchedules)
-      .map((week) => {
-        const weekNumber = Number(week);
-        const weekStart = startDate.add((weekNumber - 1) * 7, "day");
-        const weekEnd = weekStart.add(6, "day");
-        return {
-          weekNumber: weekNumber.toString(),
-          weekString: `Tuần ${weekNumber} - bắt đầu ${weekStart.format(
-            "DD/MM/YYYY"
-          )} đến ${weekEnd.format("DD/MM/YYYY")}`,
-        };
-      })
-      .sort((a, b) => Number(a.weekNumber) - Number(b.weekNumber));
+
+    for (let i = 1; i <= numberOfWeek; i++) {
+      const weekNumber = i;
+      const weekStart = startDate.add((weekNumber - 1) * 7, "day");
+      const weekEnd = weekStart.add(6, "day");
+      weeks.push({
+        weekNumber: weekNumber.toString(),
+        weekString: `Tuần ${weekNumber} - bắt đầu ${weekStart.format(
+          "DD/MM/YYYY"
+        )} đến ${weekEnd.format("DD/MM/YYYY")}`,
+      });
+    }
+
+    weeks.sort((a, b) => Number(a.weekNumber) - Number(b.weekNumber));
+    return weeks;
   };
 
   const getCurrentWeek = () => {

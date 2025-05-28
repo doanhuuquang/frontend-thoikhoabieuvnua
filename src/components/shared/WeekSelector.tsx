@@ -21,24 +21,32 @@ import {
 
 import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 import { ScheduleData } from "@/data/ScheduleData";
+import { getVietnamDate } from "@/utils/timeUtils";
 
 type Weeks = { weekNumber: string; weekString: string }[];
 
 export default function WeekSelector({ className }: { className: string }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  const caculator = useScheduleCalculator(ScheduleData);
-  const weeks: Weeks = caculator.getWeeks();
+  const calculator = useScheduleCalculator(ScheduleData);
+  const weeks: Weeks = calculator.getWeeks();
+
+  const today = getVietnamDate();
+  const currentWeek = weeks.find(
+    (week) =>
+      week.weekNumber === calculator.getCurrentWeekNumber(today).toString()
+  );
+
+  const [value, setValue] = React.useState(currentWeek?.weekNumber);
 
   return (
     <div className={className}>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className="w-full">
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="justify-between lg:w-full w-[300px]"
+            className="justify-between w-full h-12"
           >
             <p className="truncate pr-2">
               {value
@@ -49,7 +57,7 @@ export default function WeekSelector({ className }: { className: string }) {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0">
-          <Command className="w-full">
+          <Command>
             <CommandInput placeholder="Tìm tuần học..." className="h-9" />
             <CommandList>
               <CommandEmpty>Không tìm thấy.</CommandEmpty>
@@ -62,6 +70,11 @@ export default function WeekSelector({ className }: { className: string }) {
                       setValue(currentValue === value ? value : currentValue);
                       setOpen(false);
                     }}
+                    className={
+                      currentWeek === week
+                        ? "bg-primary rounded-md text-white"
+                        : ""
+                    }
                   >
                     {week.weekString}
                     <Check
