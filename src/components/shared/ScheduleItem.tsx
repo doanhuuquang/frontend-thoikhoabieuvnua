@@ -45,7 +45,7 @@ export const ScheduleItem = ({ subject }: { subject: Subject }) => {
         <AlertDialogTrigger asChild>
           <div className="flex justify-between items-start">
             <div>
-              <h4 className="font-medium">{subject.name}</h4>
+              <h4 className="font-medium w-[200px]">{subject.name}</h4>
               <p className="text-sm text-gray-500">
                 Mã môn: {subject.code} - Nhóm {subject.group}
               </p>
@@ -67,8 +67,8 @@ export const ScheduleItem = ({ subject }: { subject: Subject }) => {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="flex gap-2 items-center justify-between">
-              <span>{subject.name}</span>
+            <AlertDialogTitle className="flex gap-2 items-start justify-between">
+              <span className="w-[200px] text-start">{subject.name}</span>
               {subjectStatus == 0 ? (
                 <span className="bg-gray-200 text-black px-2 py-1 text-xs rounded-full font-light">
                   Đã kết thúc
