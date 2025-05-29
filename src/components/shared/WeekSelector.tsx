@@ -8,9 +8,7 @@ import { ScheduleData } from "@/data/ScheduleData";
 import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
