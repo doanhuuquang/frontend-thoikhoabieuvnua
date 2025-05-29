@@ -193,9 +193,7 @@ export default function WeekSelector({
         </PopoverTrigger>
         <PopoverContent className="p-0">
           <Command>
-            <CommandInput placeholder="Tìm tuần học..." className="h-9" />
             <CommandList>
-              <CommandEmpty>Không tìm thấy.</CommandEmpty>
               <CommandGroup>
                 {weeks.map((week) => (
                   <CommandItem
