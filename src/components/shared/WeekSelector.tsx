@@ -1,10 +1,11 @@
 "use client";
-
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { getVietnamDate } from "@/utils/timeUtils";
+import { ScheduleData } from "@/data/ScheduleData";
+import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
 import {
   Command,
   CommandEmpty,
@@ -18,28 +19,162 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
-import { ScheduleData } from "@/data/ScheduleData";
-import { getVietnamDate } from "@/utils/timeUtils";
+import dayjs from "dayjs";
 
 type Weeks = { weekNumber: string; weekString: string }[];
 
-export default function WeekSelector({ className }: { className: string }) {
+type WeekDay = {
+  dayOfTheMonth: number;
+  dayOfTheWeek: string;
+};
+
+interface WeekSelectorProps {
+  className?: string;
+  value: string | number | undefined;
+  onWeekChange: (weekNumber: string | number) => void;
+  dayName: string;
+  onDayChange: (dayName: string) => void;
+}
+
+const weekDays: WeekDay[] = [
+  { dayOfTheMonth: 1, dayOfTheWeek: "Thứ 2" },
+  { dayOfTheMonth: 2, dayOfTheWeek: "Thứ 3" },
+  { dayOfTheMonth: 3, dayOfTheWeek: "Thứ 4" },
+  { dayOfTheMonth: 4, dayOfTheWeek: "Thứ 5" },
+  { dayOfTheMonth: 5, dayOfTheWeek: "Thứ 6" },
+  { dayOfTheMonth: 6, dayOfTheWeek: "Thứ 7" },
+  { dayOfTheMonth: 7, dayOfTheWeek: "CN" },
+];
+
+const vietnameseToEnglishDay: Record<string, string> = {
+  "Thứ 2": "MONDAY",
+  "Thứ 3": "TUESDAY",
+  "Thứ 4": "WEDNESDAY",
+  "Thứ 5": "THURSDAY",
+  "Thứ 6": "FRIDAY",
+  "Thứ 7": "SATURDAY",
+  CN: "SUNDAY",
+};
+
+const WeekDayItem = React.memo(
+  ({
+    dayOfTheMonth,
+    dayOfTheWeek,
+    selected,
+    onClick,
+    hasClass,
+    isToday,
+  }: {
+    dayOfTheMonth: number;
+    dayOfTheWeek: string;
+    selected: boolean;
+    onClick: (dayOfTheWeek: string) => void;
+    hasClass?: boolean;
+    isToday?: boolean;
+  }) => (
+    <button
+      onClick={() => onClick(dayOfTheWeek)}
+      type="button"
+      className={cn(
+        "w-full relative p-1 bg-background dark:bg-sidebar  rounded-md border flex flex-col items-center gap-1 justify-center text-center hover:border-primary hover:cursor-pointer transition",
+        selected && "border-primary ",
+        isToday && "bg-primary dark:bg-primary text-white"
+      )}
+    >
+      <p className="lg:text-[15px] text-[10px] text-accent-foreground/50">
+        {dayOfTheWeek}
+      </p>
+      <p className="font-bold lg:text-[15px] text-[10px]">{dayOfTheMonth}</p>
+      {hasClass && (
+        <div className="bg-primary absolute -bottom-0.5 border-2 border-background -right-0.5 w-3 h-3 rounded-full"></div>
+      )}
+    </button>
+  )
+);
+WeekDayItem.displayName = "WeekDayItem";
+
+function WeekDaySelector({
+  className,
+  selectedDay,
+  onSelect,
+  days,
+  hasClassMap,
+  todayInfo,
+}: {
+  className?: string;
+  selectedDay: string | null;
+  onSelect: (dayOfTheWeek: string) => void;
+  days: WeekDay[];
+  hasClassMap: Record<string, boolean>;
+  todayInfo: { day: number; month: number; year: number };
+}) {
+  return (
+    <div className={cn("flex gap-1", className)}>
+      {days.map((day) => (
+        <WeekDayItem
+          key={day.dayOfTheMonth}
+          dayOfTheMonth={day.dayOfTheMonth}
+          dayOfTheWeek={day.dayOfTheWeek}
+          selected={selectedDay === day.dayOfTheWeek}
+          onClick={onSelect}
+          hasClass={hasClassMap[day.dayOfTheWeek]}
+          isToday={
+            day.dayOfTheMonth === todayInfo.day &&
+            todayInfo.month === dayjs().month() + 1 &&
+            todayInfo.year === dayjs().year()
+          }
+        />
+      ))}
+    </div>
+  );
+}
+
+export default function WeekSelector({
+  className,
+  value,
+  onWeekChange,
+  dayName,
+  onDayChange,
+}: WeekSelectorProps) {
   const [open, setOpen] = React.useState(false);
   const calculator = useScheduleCalculator(ScheduleData);
   const weeks: Weeks = calculator.getWeeks();
 
   const today = getVietnamDate();
+  const todayInfo = {
+    day: today.date(),
+    month: today.month() + 1,
+    year: today.year(),
+  };
   const currentWeek = weeks.find(
     (week) =>
       week.weekNumber === calculator.getCurrentWeekNumber(today).toString()
   );
 
-  const [value, setValue] = React.useState(currentWeek?.weekNumber);
+  const daysOfWeek = React.useMemo(() => {
+    if (value) return calculator.getWeekDaysByWeekNumber(value);
+    return weekDays;
+  }, [value]);
+
+  const hasClassMap = React.useMemo(() => {
+    const map: Record<string, boolean> = {};
+    daysOfWeek.forEach((day) => {
+      const englishDay = vietnameseToEnglishDay[day.dayOfTheWeek];
+      const schedule = calculator.getScheduleByWeekNumberAndDayName(
+        Number(value),
+        englishDay
+      );
+      map[day.dayOfTheWeek] = !!(
+        schedule &&
+        schedule.subjects &&
+        schedule.subjects.length > 0
+      );
+    });
+    return map;
+  }, [daysOfWeek, value, calculator]);
 
   return (
-    <div className={className}>
+    <div className={cn("space-y-3", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild className="w-full">
           <Button
@@ -67,7 +202,7 @@ export default function WeekSelector({ className }: { className: string }) {
                     key={week.weekNumber}
                     value={week.weekNumber}
                     onSelect={(currentValue) => {
-                      setValue(currentValue === value ? value : currentValue);
+                      onWeekChange(currentValue);
                       setOpen(false);
                     }}
                     className={
@@ -90,6 +225,14 @@ export default function WeekSelector({ className }: { className: string }) {
           </Command>
         </PopoverContent>
       </Popover>
+
+      <WeekDaySelector
+        selectedDay={dayName}
+        onSelect={onDayChange}
+        days={daysOfWeek}
+        hasClassMap={hasClassMap}
+        todayInfo={todayInfo}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
+import dayjs from "dayjs";
+import { getVietnamDate } from "@/utils/timeUtils";
 import { Schedule } from "@/lib/models/Schedule";
 import { useMemo } from "react";
-import { getVietnamDate } from "@/utils/timeUtils";
-import dayjs from "dayjs";
 
 const PERIOD_START_TIMES = [
   7 * 60 + 0, // Tiết 1: 07:00
@@ -70,17 +70,26 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
     );
   };
 
-  const getScheduleByDate = (date: dayjs.Dayjs) => {
+  const getScheduleByWeekNumberAndDayName = (
+    weekNumber: number,
+    dayName: string
+  ) => {
     if (!schedule) return null;
-
-    const weekNumber = getCurrentWeekNumber(date);
-    const dayName = getDayName(date);
 
     return (
       schedule.weeklySchedules[weekNumber.toString()]?.dailySchedules[
         dayName
       ] || null
     );
+  };
+
+  const getScheduleByDate = (date: dayjs.Dayjs) => {
+    if (!schedule) return null;
+
+    const weekNumber = getCurrentWeekNumber(date);
+    const dayName = getDayName(date);
+
+    return getScheduleByWeekNumberAndDayName(weekNumber, dayName);
   };
 
   const getWeekSchedule = (weekNumber: number) => {
@@ -123,6 +132,37 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
     return getWeekSchedule(weekNumber);
   };
 
+  const getWeekDaysByWeekNumber = (weekNumber: string | number) => {
+    if (!schedule || !schedule.semesterStartDate) return [];
+
+    const weekNum =
+      typeof weekNumber === "string" ? parseInt(weekNumber, 10) : weekNumber;
+
+    const startDate = dayjs(schedule.semesterStartDate);
+    const weekStart = startDate.add((weekNum - 1) * 7, "day");
+
+    const days: { dayOfTheMonth: number; dayOfTheWeek: string }[] = [];
+    const dayNames = [
+      "Thứ 2",
+      "Thứ 3",
+      "Thứ 4",
+      "Thứ 5",
+      "Thứ 6",
+      "Thứ 7",
+      "CN",
+    ];
+
+    for (let i = 0; i < 7; i++) {
+      const date = weekStart.add(i, "day");
+      days.push({
+        dayOfTheMonth: date.date(),
+        dayOfTheWeek: dayNames[i],
+      });
+    }
+
+    return days;
+  };
+
   const getNextClass = () => {
     if (!schedule) return null;
 
@@ -161,8 +201,10 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
       getDayName,
       getTodaySchedule,
       getScheduleByDate,
+      getScheduleByWeekNumberAndDayName,
       getWeekSchedule,
       getCurrentWeek,
+      getWeekDaysByWeekNumber,
       getNextClass,
     }),
     [schedule]
