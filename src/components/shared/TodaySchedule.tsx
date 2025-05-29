@@ -11,7 +11,10 @@ const TodayScheduleItemList = ({ className }: { className: string }) => {
   if (!todayClasses?.subjects?.length) {
     return (
       <div className={className}>
-        <p className="py-5 text-gray-500">Hôm nay không có lịch học</p>
+        <p className="text-gray-500 text-sm lg:text-start text-center">
+          Yeahhhhh! Không có lịch học. Hãy tận dụng thời gian rảnh để tự học
+          thêm kiến thức nhé
+        </p>
       </div>
     );
   }
