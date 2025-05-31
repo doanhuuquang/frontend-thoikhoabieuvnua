@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Header() {
   return (
-    <header className="h-[64px] sticky top-0 flex items-center border-b bg-background/60 dark:bg-sidebar/60 backdrop-blur-sm">
+    <header className="z-50 h-[64px] sticky top-0 flex items-center border-b bg-background/60 dark:bg-sidebar/60 backdrop-blur-sm">
       <div className="w-full max-w-7xl m-auto px-3 flex items-center">
         <SidebarTrigger />
         <div className="ml-auto flex items-center gap-3">
