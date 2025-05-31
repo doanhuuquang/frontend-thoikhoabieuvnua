@@ -1,32 +1,13 @@
+import ScheduleItemList from "@/components/shared/ScheduleItemList";
 import WeatherBlock from "@/components/shared/WeatherBlock";
 import { getVietnamDate } from "@/utils/timeUtils";
 import { ScheduleData } from "@/data/ScheduleData";
-import { ScheduleItem } from "@/components/shared/ScheduleItem";
-import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
+import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 
-const TodayScheduleItemList = ({ className }: { className: string }) => {
+export const TodaySchedule = () => {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
   const todayClasses = getTodaySchedule();
 
-  if (!todayClasses?.subjects?.length) {
-    return (
-      <div className={className}>
-        <p className="text-gray-500 text-sm lg:text-start text-center">
-          Yeahhhhh! Không có lịch học. Hãy tận dụng thời gian rảnh để tự học
-          thêm kiến thức nhé
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className={`space-y-3 ${className}`}>
-      {todayClasses.subjects.map((subject) => ScheduleItem({ subject }))}
-    </div>
-  );
-};
-
-export const TodaySchedule = () => {
   return (
     <div className="space-y-5">
       <h4 className="font-semibold text-lg flex items-center justify-between wrap">
@@ -36,7 +17,10 @@ export const TodaySchedule = () => {
         </span>
       </h4>
       <div className="grid grid-flow-row grid-rows-1 grid-cols-4 gap-3">
-        <TodayScheduleItemList className="lg:col-span-2 col-span-4" />
+        <ScheduleItemList
+          className="lg:col-span-2 col-span-4"
+          subjects={todayClasses ?? []}
+        />
         <WeatherBlock className="lg:col-span-2 col-span-4" />
       </div>
       <div></div>

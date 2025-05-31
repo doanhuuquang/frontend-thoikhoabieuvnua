@@ -3,12 +3,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ScheduleData } from "@/data/ScheduleData";
 import { UserData } from "@/data/UserData";
-import { useScheduleCalculator } from "@/hooks/useScheduleCalculator";
+import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
   const numberOfLessons =
-    getTodaySchedule()?.subjects?.reduce(
+    getTodaySchedule().reduce(
       (total, subject) => total + subject.numberOfLessons,
       0
     ) ?? 0;

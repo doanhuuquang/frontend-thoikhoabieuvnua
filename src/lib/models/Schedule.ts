@@ -11,16 +11,8 @@ export type Subject = {
   subjectDate: string;
 };
 
-export type DailySchedule = {
-  subjects: Subject[];
-};
-
-export type WeeklySchedule = {
-  dailySchedules: Record<string, DailySchedule>;
-};
-
 export type Schedule = {
   semesterString: string;
   semesterStartDate: string;
-  weeklySchedules: Record<string, WeeklySchedule>;
+  schedules: Record<string, Subject[]>;
 };

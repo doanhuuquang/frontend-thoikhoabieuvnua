@@ -1,3 +1,9 @@
+import MonthlySchedule from "@/components/shared/MonthlySchedule";
+
 export default function MonthlySchedulePage() {
-  return <h1>Thời khóa biểu theo tháng</h1>;
+  return (
+    <div className="p-3 w-full max-w-7xl m-auto">
+      <MonthlySchedule />
+    </div>
+  );
 }

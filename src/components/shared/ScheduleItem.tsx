@@ -10,10 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import {
-  formatClassTime,
-  getSubjectStatus,
-} from "@/hooks/useScheduleCalculator";
+import { formatClassTime, getSubjectStatus } from "@/utils/scheduleUtils";
 import { Subject } from "@/lib/models/Schedule";
 
 const borderColors = {
