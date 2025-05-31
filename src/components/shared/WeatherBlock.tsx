@@ -17,6 +17,7 @@ export default function WeatherBlock({ className }: { className?: string }) {
           <p className="text-gray-500">25°C</p>
         </div>
       </div>
+      <h1>hello</h1>
       <div className="text-right">
         <p className="text-sm text-gray-500">Humidity: 60%</p>
         <p className="text-sm text-gray-500">Wind: 10 km/h</p>
