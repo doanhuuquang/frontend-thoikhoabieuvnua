@@ -58,31 +58,28 @@ export const getSubjectStatus = (
   const [subjectYear, subjectMonth, subjectDay] = subjectDateStr
     .split("-")
     .map(Number);
-  const currentYear = now.year();
-  const currentMonth = now.month() + 1;
-  const currentDay = now.date();
+
+  const subjectDate = now
+    .clone()
+    .year(subjectYear)
+    .month(subjectMonth - 1)
+    .date(subjectDay)
+    .startOf("day");
+
+  const today = now.startOf("day");
+
   const startTimeMinutes = PERIOD_START_TIMES[start - 1];
   const endTimeMinutes = PERIOD_END_TIMES[start + numberOfLessons - 2];
   const currentMinutes = now.hour() * 60 + now.minute();
 
-  if (currentYear < subjectYear) return 2;
-  if (currentYear === subjectYear && currentMonth < subjectMonth) return 2;
-  if (
-    currentYear === subjectYear &&
-    currentMonth === subjectMonth &&
-    currentDay < subjectDay
-  )
-    return 2;
+  if (today.isBefore(subjectDate)) return 2; // Sắp tới
+  if (today.isAfter(subjectDate)) return 0; // Đã hoàn thành
 
-  if (
-    currentYear === subjectYear &&
-    currentMonth === subjectMonth &&
-    currentDay === subjectDay &&
-    currentMinutes >= startTimeMinutes &&
-    currentMinutes <= endTimeMinutes
-  ) {
-    return 1;
-  }
+  // Cùng ngày
+  if (currentMinutes < startTimeMinutes) return 2; // Sắp tới
+  if (currentMinutes > endTimeMinutes) return 0; // Đã hoàn thành
+  if (currentMinutes >= startTimeMinutes && currentMinutes <= endTimeMinutes)
+    return 1; // Đang diễn ra
 
   return 0;
 };
