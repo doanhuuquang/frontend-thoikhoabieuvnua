@@ -19,7 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { convertDateToString } from "@/utils/timeUtils";
+import { convertDateToString, getVietnamDate } from "@/utils/timeUtils";
 
 type Weeks = {
   weekNumber: string;
@@ -56,7 +56,6 @@ const WeekDayItem = React.memo(
     selected: boolean;
     onClick: (date: dayjs.Dayjs) => void;
     hasClass?: boolean;
-    isToday?: boolean;
   }) => (
     <button
       onClick={() => onClick(date)}
@@ -64,7 +63,9 @@ const WeekDayItem = React.memo(
       className={cn(
         "w-full relative p-1 bg-background dark:bg-sidebar rounded-md border flex flex-col items-center gap-1 justify-center text-center hover:border-primary hover:cursor-pointer transition",
         selected && "border-primary",
-        date.isSame(dayjs(), "day") && "bg-primary dark:bg-primary text-white"
+        convertDateToString(date, "-", "YYYY-MM-DD") ==
+          convertDateToString(getVietnamDate(), "-", "YYYY-MM-DD") &&
+          "bg-primary dark:bg-primary text-white"
       )}
     >
       <p className="lg:text-[15px] text-[10px] text-accent-foreground/50">
@@ -239,7 +240,7 @@ export const WeeklySchedule = () => {
 
   React.useEffect(() => {
     if (selectedWeek) {
-      setSelectedDate(dayjs(selectedWeek.weekStartDate, "DD-MM-YYYY"));
+      setSelectedDate(getVietnamDate);
     }
   }, [weekNumber]);
 
