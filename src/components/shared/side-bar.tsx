@@ -33,9 +33,9 @@ import {
 } from "@/components/ui/collapsible";
 
 import Link from "next/link";
-import Logo from "@/components/shared/Logo";
+import Logo from "@/components/shared/logo";
 
-import UserAvatar from "@/components/shared/UserAvatar";
+import UserAvatar from "@/components/shared/user-avatar";
 import { UserData } from "@/data/UserData";
 
 // Sidebar group items

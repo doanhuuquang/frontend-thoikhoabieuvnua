@@ -6,7 +6,7 @@ import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { ScheduleData } from "@/data/ScheduleData";
 import dayjs from "dayjs";
 import { getVietnamDate } from "@/utils/timeUtils";
-import ScheduleItemList from "@/components/shared/ScheduleItemList";
+import ScheduleItemList from "@/components/shared/schedule-item-list";
 import { cn } from "@/lib/utils";
 
 function CalendarSelector({

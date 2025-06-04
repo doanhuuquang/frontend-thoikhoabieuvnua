@@ -1,4 +1,4 @@
-import { WeeklySchedule } from "@/components/shared/WeeklySchedule";
+import { WeeklySchedule } from "@/components/shared/weekly-schedule";
 
 export default function WeeklySchedulePage() {
   return (

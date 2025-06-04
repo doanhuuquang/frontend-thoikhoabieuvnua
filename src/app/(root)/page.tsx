@@ -1,5 +1,5 @@
-import WeatherBlock from "@/components/shared/WeatherBlock";
-import GreetingBlock from "@/components/shared/GreetingBlock";
+import WeatherBlock from "@/components/shared/weather-block";
+import GreetingBlock from "@/components/shared/greeting-block";
 
 export default function Home() {
   return (

@@ -1,4 +1,4 @@
-import ModeToggle from "@/components/shared/ModeToggle";
+import ModeToggle from "@/components/shared/mode-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";

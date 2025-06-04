@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import dayjs from "dayjs";
-import ScheduleItemList from "@/components/shared/ScheduleItemList";
+import ScheduleItemList from "@/components/shared/schedule-item-list";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";

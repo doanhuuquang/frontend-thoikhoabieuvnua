@@ -1,5 +1,5 @@
-import ScheduleItemList from "@/components/shared/ScheduleItemList";
-import WeatherBlock from "@/components/shared/WeatherBlock";
+import ScheduleItemList from "@/components/shared/schedule-item-list";
+import WeatherBlock from "@/components/shared/weather-block";
 import { getVietnamDate } from "@/utils/timeUtils";
 import { ScheduleData } from "@/data/ScheduleData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";

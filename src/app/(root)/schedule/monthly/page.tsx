@@ -1,4 +1,4 @@
-import MonthlySchedule from "@/components/shared/MonthlySchedule";
+import MonthlySchedule from "@/components/shared/monthly-schedule";
 
 export default function MonthlySchedulePage() {
   return (

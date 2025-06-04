@@ -1,5 +1,5 @@
 import { Subject } from "@/lib/models/Schedule";
-import { ScheduleItem } from "@/components/shared/ScheduleItem";
+import { ScheduleItem } from "@/components/shared/schedule-item";
 
 export default function ScheduleItemList({
   className,
