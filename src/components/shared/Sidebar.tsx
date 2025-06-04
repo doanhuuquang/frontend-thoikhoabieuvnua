@@ -7,9 +7,6 @@ import {
   Bell,
   BookCheck,
   Calculator,
-  Bolt,
-  UserRound,
-  LogOut,
 } from "lucide-react";
 
 import {
@@ -35,8 +32,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-import Image from "next/image";
 import Link from "next/link";
+import Logo from "@/components/shared/Logo";
 
 import UserAvatar from "@/components/shared/UserAvatar";
 import { UserData } from "@/data/UserData";
@@ -148,22 +145,16 @@ export function AppSidebarHeader() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton>
-                <Image alt="Logo" src="/logo.svg" width={35} height={35} />
-                <div>
-                  <p className="font-semibold">Vnua Calendar</p>
-                  <p className="text-xs text-muted-foreground">
-                    Thời khóa biểu Vnua
-                  </p>
-                </div>
+                <Logo />
                 <ChevronsUpDown className="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
               <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
-                <span>Acme Inc</span>
+                <span>Thông tin ứng dụng</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <span>Acme Corp.</span>
+                <span>Về chúng tôi</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -245,15 +236,12 @@ export function AppSidebarFooter() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
               <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
-                <Bolt className="mr-2" />
                 <span>Cài đặt</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <UserRound className="mr-2" />
                 <span>Thông tin cá nhân</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <LogOut className="mr-2" />
                 <span>Đăng xuất</span>
               </DropdownMenuItem>
             </DropdownMenuContent>

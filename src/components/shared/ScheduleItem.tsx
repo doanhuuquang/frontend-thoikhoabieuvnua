@@ -13,10 +13,10 @@ import {
 import { formatClassTime, getSubjectStatus } from "@/utils/scheduleUtils";
 import { Subject } from "@/lib/models/Schedule";
 
-const borderColors = {
-  incoming: "border-amber-400",
-  active: "border-primary",
+const statusColors = {
   inactive: "border-gray-300",
+  active: "border-primary",
+  incoming: "border-amber-400",
 };
 
 export const ScheduleItem = ({ subject }: { subject: Subject }) => {
@@ -32,10 +32,10 @@ export const ScheduleItem = ({ subject }: { subject: Subject }) => {
       className={`p-3 rounded-lg border-l-5 hover:cursor-pointer
       ${
         subjectStatus == 0
-          ? `opacity-50 bg-background dark:bg-accent/50 dark:opacity-30 ${borderColors.inactive}`
+          ? `opacity-50 bg-background dark:bg-accent/50 dark:opacity-30 ${statusColors.inactive}`
           : subjectStatus == 1
-          ? `bg-background dark:bg-accent ${borderColors.active}`
-          : `bg-background dark:bg-accent ${borderColors.incoming}`
+          ? `bg-background dark:bg-accent ${statusColors.active}`
+          : `bg-background dark:bg-accent ${statusColors.incoming}`
       }`}
     >
       <AlertDialog>
