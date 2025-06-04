@@ -6,7 +6,7 @@ export default function NotFound() {
     <div className="w-[100vw] h-[100vh] bg-background dark:bg-sidebar flex flex-col items-center justify-center gap-3">
       <Image
         alt="404"
-        src={"assets/images/404-error-with-a-broken-robot.svg"}
+        src={"/assets/images/404-error-with-a-broken-robot.svg"}
         width={400}
         height={100}
       />
