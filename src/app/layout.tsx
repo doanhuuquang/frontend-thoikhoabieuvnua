@@ -18,9 +18,13 @@ export const metadata: Metadata = {
   description: "Thời khóa biểu Vnua",
   icons: {
     icon: "/assets/icons/favicon/favicon.ico",
-    apple: "/assets/icons/favicon//apple-touch-icon.png",
-    shortcut: "/assets/icons/favicon//favicon-32x32.png",
+    apple: "/assets/icons/favicon/apple-touch-icon.png",
+    shortcut: "/assets/icons/favicon/favicon-32x32.png",
   },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#00ff91" },
+    { media: "(prefers-color-scheme: dark)", color: "#22223B" },
+  ],
 };
 
 export default function RootLayout({
