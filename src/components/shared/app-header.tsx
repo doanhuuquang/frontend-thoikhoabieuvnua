@@ -18,7 +18,7 @@ export default function Header() {
               height={40}
               className="dark:hidden block"
             />
-            <Image
+            <Image  
               alt="Buy me a coffe"
               src={"/assets/images/logos/bmc-brand-logo-dark.svg"}
               width={100}
