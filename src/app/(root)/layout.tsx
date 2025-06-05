@@ -1,5 +1,5 @@
 import Header from "@/components/shared/app-header";
-import AppSidebar from "@/components/shared/side-bar";
+import AppSidebar from "@/components/shared/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 
