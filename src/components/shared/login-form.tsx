@@ -66,7 +66,7 @@ export default function LoginForm({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "w-full bg-background dark:bg-sidebar px-3 py-5 rounded-xl",
+        "w-full bg-background dark:bg-sidebar px-3 py-5 rounded-md",
         className
       )}
     >
@@ -90,7 +90,7 @@ export default function LoginForm({ className }: { className?: string }) {
                   <Input
                     placeholder="Nhập mã sinh viên của bạn"
                     {...field}
-                    className="rounded-xl"
+                    className="rounded-md"
                   />
                 </FormControl>
                 <FormMessage />
@@ -107,14 +107,14 @@ export default function LoginForm({ className }: { className?: string }) {
                   <Input
                     placeholder="Nhập mật khẩu tài khoản"
                     {...field}
-                    className="rounded-xl"
+                    className="rounded-md"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="w-full text-white rounded-xl mt-3" type="submit">
+          <Button className="w-full text-white rounded-md mt-3" type="submit">
             Đăng nhập
           </Button>
         </form>
