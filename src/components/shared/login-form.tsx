@@ -15,36 +15,52 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Loading,
+  LoadingContent,
+  LoadingOverlay,
+} from "@/components/shared/loading";
+import React from "react";
 
 const formSchema = z.object({
-  sudentCode: z.string().min(6, { message: "Mã sinh viên có ít nhất 6 ký tự" }),
+  studentCode: z
+    .string()
+    .min(6, { message: "Mã sinh viên có ít nhất 6 ký tự" }),
   password: z.string().min(1, { message: "Mật khẩu không được để trống" }),
 });
 
 export default function LoginForm({ className }: { className?: string }) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      sudentCode: "",
+      studentCode: "",
       password: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    fetch("https://thoikhoabieuvnua.up.railway.app/api/user/login", {
+    setIsLoading(true);
+
+    fetch("/api/auth-proxy", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     })
       .then(async (res) => {
-        if (!res.ok) throw new Error("Đăng nhập thất bại");
         const data = await res.json();
-        // Xử lý thành công, ví dụ: lưu token, chuyển trang...
+        if (!res.ok) {
+          console.log(data.message);
+          throw new Error(data.message || "Đăng nhập thất bại");
+        }
         console.log("Đăng nhập thành công:", data);
       })
       .catch((err) => {
-        // Xử lý lỗi, ví dụ: hiển thị thông báo
         alert(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -55,11 +71,19 @@ export default function LoginForm({ className }: { className?: string }) {
         className
       )}
     >
+      {isLoading && (
+        <Loading>
+          <LoadingOverlay />
+          <LoadingContent>
+            <p className="text-white">Đang kiểm tra thông tin...</p>
+          </LoadingContent>
+        </Loading>
+      )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
-            name="sudentCode"
+            name="studentCode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Mã sinh viên</FormLabel>
