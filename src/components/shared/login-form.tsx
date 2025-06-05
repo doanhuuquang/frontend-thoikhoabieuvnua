@@ -54,7 +54,6 @@ export default function LoginForm({ className }: { className?: string }) {
           console.log(data.message);
           throw new Error(data.message || "Đăng nhập thất bại");
         }
-        console.log("Đăng nhập thành công:", data);
       })
       .catch((err) => {
         alert(err.message);
