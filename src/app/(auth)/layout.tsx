@@ -18,13 +18,7 @@ export default function AuthLayout({
       {/* Banner */}
       <div className="lg:w-[50%] flex h-full rounded-2xl flex-col items-center justify-between bg-linear-to-br from-secondary/90 to-secondary relative overflow-hidden">
         <div className="flex flex-col items-center gap-5 py-10 px-3">
-          <Image
-            alt="Logo"
-            src={"/logo.svg"}
-            width={50}
-            height={50}
-            className="border border-white/20 rounded-lg"
-          />
+          <Image alt="Logo" src={"/logo.svg"} width={50} height={50} />
           <p className="max-w-[400px] lg:text-2xl text-lg text-center font-semibold text-secondary-foreground">
             Lịch học và hơn thế nữa – tất cả trong một ứng dụng duy nhất
           </p>
@@ -34,7 +28,7 @@ export default function AuthLayout({
         </div>
         {/* Mock up */}
         <Image
-          alt="Pc mockup"
+          alt="Mockup"
           src={"/assets/images/banner-mockup.svg"}
           width={800}
           height={1000}
