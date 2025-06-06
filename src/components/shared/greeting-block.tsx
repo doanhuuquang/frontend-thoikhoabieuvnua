@@ -5,7 +5,7 @@ import { ScheduleData } from "@/data/ScheduleData";
 import { UserData } from "@/data/UserData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { cn } from "@/lib/utils";
-import { ArrowBigRightDash } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
@@ -43,7 +43,7 @@ export default function GreetingBlock({ className }: { className?: string }) {
         <Button className="mt-5" asChild>
           <Link href={"/schedule/today"}>
             Xem chi tiết lịch học hôm nay
-            <ArrowBigRightDash />
+            <ArrowUpRight />
           </Link>
         </Button>
       </div>
