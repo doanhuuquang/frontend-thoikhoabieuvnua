@@ -1,4 +1,4 @@
-import ScheduleItemList from "@/components/shared/schedule-item-list";
+import ScheduleItems from "@/components/shared/schedule-items";
 import WeatherBlock from "@/components/shared/weather-block";
 import { getVietnamDate } from "@/utils/timeUtils";
 import { ScheduleData } from "@/data/ScheduleData";
@@ -17,7 +17,7 @@ export const TodaySchedule = () => {
         </span>
       </h4>
       <div className="grid grid-flow-row grid-rows-1 grid-cols-4 gap-3">
-        <ScheduleItemList
+        <ScheduleItems
           className="lg:col-span-2 col-span-4"
           subjects={todayClasses ?? []}
         />

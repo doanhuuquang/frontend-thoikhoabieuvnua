@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import dayjs from "dayjs";
-import ScheduleItemList from "@/components/shared/schedule-item-list";
+import ScheduleItems from "@/components/shared/schedule-items";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -272,10 +272,7 @@ export const WeeklySchedule = () => {
         <h4 className="font-semibold text-lg">Lịch học theo tuần</h4>
       </div>
       <div className="flex flex-col-reverse lg:flex-row gap-4 items-start">
-        <ScheduleItemList
-          className="lg:w-[50%] w-[100%]"
-          subjects={daySubjects}
-        />
+        <ScheduleItems className="lg:w-[50%] w-[100%]" subjects={daySubjects} />
         <WeekSelector
           className="lg:w-[50%] w-[100%]"
           value={weekNumber}

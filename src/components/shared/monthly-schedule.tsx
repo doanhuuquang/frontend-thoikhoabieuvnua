@@ -6,7 +6,7 @@ import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { ScheduleData } from "@/data/ScheduleData";
 import dayjs from "dayjs";
 import { getVietnamDate } from "@/utils/timeUtils";
-import ScheduleItemList from "@/components/shared/schedule-item-list";
+import ScheduleItems from "@/components/shared/schedule-items";
 import { cn } from "@/lib/utils";
 
 function CalendarSelector({
@@ -59,10 +59,7 @@ export default function MonthlySchedule() {
         <h4 className="font-semibold text-lg">Lịch học theo tháng</h4>
       </div>
       <div className="flex flex-col-reverse lg:flex-row gap-4 items-start">
-        <ScheduleItemList
-          className="lg:w-[50%] w-[100%]"
-          subjects={daySubjects}
-        />
+        <ScheduleItems className="lg:w-[50%] w-[100%]" subjects={daySubjects} />
         <CalendarSelector
           className="lg:w-[50%] w-[100%]"
           selected={selected}
