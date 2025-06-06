@@ -6,49 +6,40 @@ export default function AuthLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <main className="bg-background dark:bg-sidebar p-3 flex gap-3 lg:flex-row flex-col w-full lg:justify-between justify-center items-center h-[100vh]">
+    <main className="bg-background dark:bg-sidebar p-3 flex gap-3 lg:flex-row flex-col w-full lg:justify-between items-center h-[100vh]">
       <div className="lg:w-[50%] lg:h-full flex lg:gap-0 gap-5 flex-col w-full lg:justify-between justify-center lg:items-start items-center">
         <div className="w-full lg:h-full flex items-center justify-center">
-          <div className="w-full max-w-[400px] grid space-y-5">
+          <div className="w-full max-w-[400px] grid space-y-5 lg:border-0 border rounded-lg p-3">
             <Logo />
             {children}
           </div>
         </div>
       </div>
       {/* Banner */}
-      <div className="lg:w-[50%] lg:flex hidden h-full py-10 px-3 rounded-2xl flex-col items-center justify-between bg-[url('/assets/images/banner-background-light.svg')] dark:bg-[url('/assets/images/banner-background-dark.svg')] bg-cover bg-no-repeat bg-center relative overflow-hidden">
-        <div className="flex flex-col items-center gap-5">
+      <div className="lg:w-[50%] flex h-full rounded-2xl flex-col items-center justify-between bg-linear-to-br from-secondary/90 to-secondary relative overflow-hidden">
+        <div className="flex flex-col items-center gap-5 py-10 px-3">
           <Image
             alt="Logo"
             src={"/logo.svg"}
             width={50}
             height={50}
-            className="border border-white/20 rounded-lg shadow-2xl"
+            className="border border-white/20 rounded-lg"
           />
-          <p className="max-w-[400px] text-[25px] text-center font-semibold text-[#2B2B2B] dark:text-white">
+          <p className="max-w-[400px] lg:text-2xl text-lg text-center font-semibold text-secondary-foreground">
             Lịch học và hơn thế nữa – tất cả trong một ứng dụng duy nhất
           </p>
-          <p className="max-w-[440px] text-[18px] text-center font-medium text-[#2B2B2B]/60 dark:text-white/60">
+          <p className="max-w-[440px] lg:text-lg text-sm text-center font-light text-secondary-foreground/70">
             Xem thời khóa biểu, ghi chú, nhắc nhở... dễ dàng và trực quan.
           </p>
         </div>
         {/* Mock up */}
-        <div>
-          <Image
-            alt="Pc mockup"
-            src={"/assets/images/banner-pc-mockup.svg"}
-            width={800}
-            height={1000}
-            className="absolute bottom-0 left-0 translate-y-[0%] -translate-x-[20%]"
-          />
-          <Image
-            alt="Pc mockup"
-            src={"/assets/images/banner-iphone-mockup.svg"}
-            width={250}
-            height={500}
-            className="absolute bottom-0 left-[70%] translate-y-[30%] -translate-x-[50%]"
-          />
-        </div>
+        <Image
+          alt="Pc mockup"
+          src={"/assets/images/banner-mockup.svg"}
+          width={800}
+          height={1000}
+          className="w-[full]"
+        />
       </div>
     </main>
   );
