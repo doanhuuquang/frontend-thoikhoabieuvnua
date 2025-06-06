@@ -35,7 +35,7 @@ interface WeekSelectorProps {
   onDateChange: (date: dayjs.Dayjs) => void;
 }
 
-const dayNameInVietnamese = {
+const dayNameInVietnamese: Record<number, string> = {
   0: "CN",
   1: "Thứ 2",
   2: "Thứ 3",
@@ -43,6 +43,21 @@ const dayNameInVietnamese = {
   4: "Thứ 5",
   5: "Thứ 6",
   6: "Thứ 7",
+};
+
+const monthNameInVietnamese: Record<number, string> = {
+  0: "Th 1",
+  1: "Th 2",
+  2: "Th 3",
+  3: "Th 4",
+  4: "Th 5",
+  5: "Th 6",
+  6: "Th 7",
+  7: "Th 8",
+  8: "Th 9",
+  9: "Th 10",
+  10: "Th 11",
+  11: "Th 12",
 };
 
 const WeekDayItem = React.memo(
@@ -72,6 +87,9 @@ const WeekDayItem = React.memo(
         {dayNameInVietnamese[date.day()]}
       </p>
       <p className="font-bold lg:text-[15px] text-[10px]">{date.date()}</p>
+      <p className="lg:text-[15px] text-[10px] text-accent-foreground/50">
+        {monthNameInVietnamese[date.month()]}
+      </p>
       {hasClass && (
         <div className="bg-primary absolute -bottom-0.5 border-2 border-background -right-0.5 w-3 h-3 rounded-full"></div>
       )}
