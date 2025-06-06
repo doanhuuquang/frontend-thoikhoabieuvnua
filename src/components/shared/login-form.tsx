@@ -1,11 +1,14 @@
 "use client";
-import { cn } from "@/lib/utils";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,13 +17,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Loading,
   LoadingContent,
   LoadingOverlay,
 } from "@/components/shared/loading";
-import React from "react";
 
 const formSchema = z.object({
   studentCode: z
@@ -31,6 +32,7 @@ const formSchema = z.object({
 
 export default function LoginForm({ className }: { className?: string }) {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,6 +44,7 @@ export default function LoginForm({ className }: { className?: string }) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    setError(null);
 
     fetch("/api/auth-proxy", {
       method: "POST",
@@ -51,12 +54,11 @@ export default function LoginForm({ className }: { className?: string }) {
       .then(async (res) => {
         const data = await res.json();
         if (!res.ok) {
-          console.log(data.message);
           throw new Error(data.message || "Đăng nhập thất bại");
         }
       })
       .catch((err) => {
-        alert(err.message);
+        setError(err.message || "Đăng nhập thất bại");
       })
       .finally(() => {
         setIsLoading(false);
@@ -77,6 +79,14 @@ export default function LoginForm({ className }: { className?: string }) {
             <p className="text-white">Đang kiểm tra thông tin...</p>
           </LoadingContent>
         </Loading>
+      )}
+      {error && (
+        <Alert variant="destructive" className="mb-3 bg-red-500/10 ">
+          <AlertTitle>
+            <span>Đăng nhập thất bại</span>
+          </AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -105,6 +115,7 @@ export default function LoginForm({ className }: { className?: string }) {
                 <FormLabel>Mật khẩu</FormLabel>
                 <FormControl>
                   <Input
+                    type="password"
                     placeholder="Nhập mật khẩu tài khoản"
                     {...field}
                     className="rounded-md"
