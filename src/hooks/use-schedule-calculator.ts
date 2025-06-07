@@ -84,7 +84,6 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
     return subjects;
   };
 
-  // Memoize các hàm trả về để tránh tính toán lại không cần thiết
   return useMemo(
     () => ({
       startDate,

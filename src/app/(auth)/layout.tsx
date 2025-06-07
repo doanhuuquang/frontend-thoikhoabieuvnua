@@ -6,10 +6,10 @@ export default function AuthLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <main className="bg-background dark:bg-sidebar p-3 flex gap-3 lg:flex-row flex-col w-full lg:h-[100vh] h-fit lg:justify-between items-center ">
+    <main className="bg-accent dark:bg-background p-3 flex gap-3 lg:flex-row flex-col w-full lg:h-[100vh] h-fit lg:justify-between items-center ">
       <div className="lg:w-[50%] lg:h-full flex lg:gap-0 gap-5 flex-col w-full lg:justify-between justify-center lg:items-start items-center">
         <div className="w-full lg:h-full flex items-center justify-center">
-          <div className="w-full max-w-[400px] grid space-y-5 lg:border-0 border rounded-lg p-3">
+          <div className="w-full max-w-[400px] bg-background dark:bg-sidebar grid space-y-5 border rounded-lg p-3">
             <Logo />
             {children}
           </div>

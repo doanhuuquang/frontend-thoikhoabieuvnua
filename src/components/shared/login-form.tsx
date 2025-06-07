@@ -53,9 +53,11 @@ export default function LoginForm({ className }: { className?: string }) {
     })
       .then(async (res) => {
         const data = await res.json();
+        // Đăng nhập thất bại
         if (!res.ok) {
           throw new Error(data.message || "Đăng nhập thất bại");
         }
+        // Đăng nhập thành công
       })
       .catch((err) => {
         setError(err.message || "Đăng nhập thất bại");
