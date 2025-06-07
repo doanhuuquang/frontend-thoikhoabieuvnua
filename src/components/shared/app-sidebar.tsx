@@ -226,8 +226,6 @@ export function AppSidebarFooter() {
     setLoggedIn(isLoggedIn());
   }, []);
 
-  if (!loggedIn) return null;
-
   return (
     <SidebarFooter className="border-t-1">
       <SidebarMenu>
