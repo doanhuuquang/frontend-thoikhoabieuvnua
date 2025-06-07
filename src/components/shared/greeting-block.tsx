@@ -6,6 +6,7 @@ import { UserData } from "@/data/UserData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
+import React from "react";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);

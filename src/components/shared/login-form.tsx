@@ -58,17 +58,12 @@ export default function LoginForm({ className }: { className?: string }) {
           throw new Error(data.message || "Đăng nhập thất bại");
         }
         // Đăng nhập thành công
-        console.log(data);
-
-        fetch("/api/schedule/get-semester-list", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
-        }).then(async (res) => {
-          const scheduleData = await res.json();
-          console.log("Danh sách học kỳ:", scheduleData);
-        });
+        // Lưu token vào localStorage
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
       })
+
       .catch((err) => {
         setError(err.message || "Đăng nhập thất bại");
       })

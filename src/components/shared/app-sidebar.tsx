@@ -1,3 +1,9 @@
+"use client";
+
+import Link from "next/link";
+import Logo from "@/components/shared/logo";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { UserData } from "@/data/UserData";
 import {
   Home,
   Calendar,
@@ -31,12 +37,9 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-
-import Link from "next/link";
-import Logo from "@/components/shared/logo";
-
-import UserAvatar from "@/components/shared/user-avatar";
-import { UserData } from "@/data/UserData";
+import React from "react";
+import { isLoggedIn } from "@/utils/authUtils";
+import { Button } from "@/components/ui/button";
 
 // Sidebar group items
 const items = [
@@ -217,37 +220,58 @@ export function AppSidebarContent() {
 }
 
 export function AppSidebarFooter() {
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  React.useEffect(() => {
+    setLoggedIn(isLoggedIn());
+  }, []);
+
+  if (!loggedIn) return null;
+
   return (
     <SidebarFooter className="border-t-1">
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton>
-                <UserAvatar className="w-10 h-10" />
-                <div className="flex flex-col">
-                  <span>{userName}</span>
-                  <span className="text-accent-foreground/60 text-xs font-light">
-                    {studentCode}
-                  </span>
-                </div>
-                <ChevronsUpDown className="ml-auto h-4 w-4" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
-              <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
-                <span>Cài đặt</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Thông tin cá nhân</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Đăng xuất</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarMenuItem>
-      </SidebarMenu>
+      {!loggedIn ? (
+        <Button>
+          <Link href="/login" className="no-underline text-inherit">
+            Đăng nhập
+          </Link>
+        </Button>
+      ) : (
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                  <Avatar className="mr-2 h-8 w-8">
+                    <AvatarFallback>
+                      {userName.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
+                        "?"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <span>{userName}</span>
+                    <span className="text-accent-foreground/60 text-xs font-light">
+                      {studentCode}
+                    </span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto h-4 w-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
+                <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
+                  <span>Cài đặt</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Thông tin cá nhân</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Đăng xuất</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      )}
     </SidebarFooter>
   );
 }
