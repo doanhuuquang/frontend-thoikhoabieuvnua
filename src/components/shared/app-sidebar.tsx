@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 import Logo from "@/components/shared/logo";
+import React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { isLoggedIn } from "@/utils/authUtils";
 import { UserData } from "@/data/UserData";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
 import {
   Home,
   Calendar,
@@ -15,6 +19,7 @@ import {
   BookCheck,
   Calculator,
   LogOut,
+  Loader2,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -49,9 +54,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import React from "react";
-import { isLoggedIn } from "@/utils/authUtils";
-import { Button } from "@/components/ui/button";
 
 // Sidebar group items
 const items = [
@@ -233,6 +235,9 @@ export function AppSidebarContent() {
 
 export function AppSidebarFooter() {
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const router = useRouter();
 
   React.useEffect(() => {
     setLoggedIn(isLoggedIn());
@@ -244,14 +249,25 @@ export function AppSidebarFooter() {
     window.location.reload();
   };
 
+  const handleLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    router.push("/login");
+  };
+
   return (
     <SidebarFooter className="border-t-1">
       <SidebarMenu>
         {!loggedIn ? (
-          <Button>
-            <Link href="/login" className="no-underline text-inherit">
-              Đăng nhập
-            </Link>
+          <Button
+            onClick={handleLogin}
+            disabled={isLoading}
+            className="relative"
+          >
+            {isLoading ? (
+              <Loader2 className="animate-spin mr-2 h-4 w-4" />
+            ) : null}
+            Đăng nhập
           </Button>
         ) : (
           <SidebarMenuItem>

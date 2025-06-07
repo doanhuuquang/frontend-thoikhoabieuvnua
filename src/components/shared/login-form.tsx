@@ -17,11 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Loading,
-  LoadingContent,
-  LoadingOverlay,
-} from "@/components/shared/loading";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   studentCode: z
@@ -81,14 +77,6 @@ export default function LoginForm({ className }: { className?: string }) {
         className
       )}
     >
-      {isLoading && (
-        <Loading>
-          <LoadingOverlay />
-          <LoadingContent>
-            <p className="text-white">Đang kiểm tra thông tin...</p>
-          </LoadingContent>
-        </Loading>
-      )}
       {error && (
         <Alert variant="destructive" className="mb-3 bg-red-500/10 ">
           <AlertTitle>
@@ -134,7 +122,14 @@ export default function LoginForm({ className }: { className?: string }) {
               </FormItem>
             )}
           />
-          <Button className="w-full text-white rounded-md mt-3" type="submit">
+          <Button
+            className="w-full text-white rounded-md mt-3 relative"
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader2 className="animate-spin mr-2 h-4 w-4" />
+            ) : null}
             Đăng nhập
           </Button>
         </form>
