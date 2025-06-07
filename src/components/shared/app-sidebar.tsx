@@ -230,14 +230,14 @@ export function AppSidebarFooter() {
 
   return (
     <SidebarFooter className="border-t-1">
-      {!loggedIn ? (
-        <Button>
-          <Link href="/login" className="no-underline text-inherit">
-            Đăng nhập
-          </Link>
-        </Button>
-      ) : (
-        <SidebarMenu>
+      <SidebarMenu>
+        {!loggedIn ? (
+          <Button>
+            <Link href="/login" className="no-underline text-inherit">
+              Đăng nhập
+            </Link>
+          </Button>
+        ) : (
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -270,8 +270,8 @@ export function AppSidebarFooter() {
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
-        </SidebarMenu>
-      )}
+        )}
+      </SidebarMenu>
     </SidebarFooter>
   );
 }
