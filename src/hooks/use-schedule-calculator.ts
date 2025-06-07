@@ -6,65 +6,61 @@ import { useMemo } from "react";
 
 dayjs.extend(isSameOrBefore);
 
+const DAYS_IN_WEEK = 7;
+const WEEK_END_OFFSET = DAYS_IN_WEEK - 1;
+const DAY_UNIT = "day";
+const DATE_FORMAT = "YYYY-MM-DD";
+
 export const useScheduleCalculator = (schedule: Schedule | null) => {
   const startDate = dayjs(schedule?.semesterStartDate);
 
+  // Tính số tuần kể từ ngày bắt đầu học kỳ đến ngày truyền vào
   const getWeekNumberByDate = (date: dayjs.Dayjs): number => {
-    if (!schedule || !schedule.semesterStartDate) return 0;
-
-    const start = dayjs(schedule.semesterStartDate).startOf("day");
-    const end = date.startOf("day");
-    const diffDays = end.diff(start, "day");
-
-    return Math.floor(diffDays / 7) + 1;
+    if (!schedule?.semesterStartDate) return 0;
+    const start = dayjs(schedule.semesterStartDate).startOf(DAY_UNIT);
+    const end = date.startOf(DAY_UNIT);
+    const diffDays = end.diff(start, DAY_UNIT);
+    return Math.floor(diffDays / DAYS_IN_WEEK) + 1;
   };
 
-  const getCurrentWeekNumber = () => {
-    return getWeekNumberByDate(getVietnamDate());
-  };
+  // Lấy số tuần hiện tại (theo ngày Việt Nam)
+  const getCurrentWeekNumber = () => getWeekNumberByDate(getVietnamDate());
 
-  const getWeeks = (): {
-    weekNumber: string;
-    weekStartDate: dayjs.Dayjs;
-    weekEndDate: dayjs.Dayjs;
-  }[] => {
-    if (!schedule || !schedule.schedules || !schedule.semesterStartDate) {
-      return [];
-    }
+  // Lấy danh sách các tuần trong học kỳ
+  const getWeeks = () => {
+    if (!schedule?.schedules || !schedule.semesterStartDate) return [];
 
-    const lastDateOfSemester = dayjs(
-      Object.keys(schedule.schedules).findLast((key) => key)
-    ).startOf("day");
-    const numberOfWeek: number = getWeekNumberByDate(lastDateOfSemester);
+    const lastDateStr = Object.keys(schedule.schedules).findLast(Boolean);
+    if (!lastDateStr) return [];
+
+    const lastDateOfSemester = dayjs(lastDateStr).startOf(DAY_UNIT);
+    const numberOfWeek = getWeekNumberByDate(lastDateOfSemester);
     const weeks = [];
-    const startDate = dayjs(schedule.semesterStartDate);
 
     for (let i = 1; i <= numberOfWeek; i++) {
-      const weekNumber = i;
-      const weekStart = startDate.add((weekNumber - 1) * 7, "day");
-      const weekEnd = weekStart.add(6, "day");
+      const weekStart = startDate.add((i - 1) * DAYS_IN_WEEK, DAY_UNIT);
+      const weekEnd = weekStart.add(WEEK_END_OFFSET, DAY_UNIT);
       weeks.push({
-        weekNumber: weekNumber.toString(),
+        weekNumber: i.toString(),
         weekStartDate: weekStart,
         weekEndDate: weekEnd,
       });
     }
 
-    weeks.sort((a, b) => Number(a.weekNumber) - Number(b.weekNumber));
     return weeks;
   };
 
+  // Lấy lịch học theo ngày
   const getScheduleByDate = (date: dayjs.Dayjs): Subject[] => {
     if (!schedule) return [];
-    return (
-      schedule.schedules[convertDateToString(date, "-", "YYYY-MM-DD")] || []
-    );
+    const key = convertDateToString(date, "-", DATE_FORMAT);
+    return schedule.schedules[key] || [];
   };
 
-  const getTodaySchedule = (): Subject[] => {
-    return getScheduleByDate(getVietnamDate());
-  };
+  // Lấy lịch học hôm nay
+  const getTodaySchedule = () => getScheduleByDate(getVietnamDate());
 
+  // Lấy lịch học trong tuần
   const getWeeklySchedule = ({
     weekStartDate,
     weekEndDate,
@@ -73,22 +69,22 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
     weekEndDate: dayjs.Dayjs;
   }): Subject[] => {
     if (!schedule) return [];
-
     const subjects: Subject[] = [];
-    let current = weekStartDate.startOf("day");
-    const end = weekEndDate.startOf("day");
+    let current = weekStartDate.startOf(DAY_UNIT);
+    const end = weekEndDate.startOf(DAY_UNIT);
 
     while (current.isSameOrBefore(end)) {
       const daySubjects =
-        schedule.schedules[convertDateToString(current)] || [];
-
+        schedule.schedules[convertDateToString(current, "-", DATE_FORMAT)] ||
+        [];
       subjects.push(...daySubjects);
-      current = current.add(1, "day");
+      current = current.add(1, DAY_UNIT);
     }
 
     return subjects;
   };
 
+  // Memoize các hàm trả về để tránh tính toán lại không cần thiết
   return useMemo(
     () => ({
       startDate,
