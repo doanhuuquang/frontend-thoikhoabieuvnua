@@ -48,18 +48,20 @@ export default function GreetingBlock({ className }: { className?: string }) {
       ) : !loggedIn ? (
         // Chưa đăng nhập
         <div className=" flex flex-col lg:items-start items-center grow text-center lg:text-start md:text-start">
-          <h2 className="text-2xl">Chào bạn sinh viên!</h2>
-          <p className="text-secondary-foreground/80">
-            Đăng nhập để tiếp tục sử dụng{" "}
-            <span className="text-primary font-bold">VnuaCalendar</span> nhé!
-          </p>
-          <Button className="mt-5 w-fit" asChild>
+          <div>
+            <h2 className="text-2xl">Chào bạn sinh viên!</h2>
+            <p className="text-secondary-foreground/80">
+              Đăng nhập để tiếp tục sử dụng{" "}
+              <span className="text-primary font-bold">Vnua Calendar</span> nhé!
+            </p>
+          </div>
+          <Button className="mt-5 px-10 w-fit" asChild>
             <Link href={"/login"}>Đăng nhập</Link>
           </Button>
         </div>
       ) : (
         // Đã đăng nhập
-        <div className="grow text-center lg:text-start md:text-start max-w-[50%]">
+        <div className="flex flex-col grow lg:items-start items-center text-center lg:text-start md:text-start">
           <h2 className="text-2xl">Xin chào, {UserData.name}!</h2>
           <p className="text-secondary-foreground/80">
             Hôm nay bạn thế nào rồi?
@@ -81,7 +83,6 @@ export default function GreetingBlock({ className }: { className?: string }) {
               </span>
             </p>
           )}
-
           <Button className="mt-5" asChild>
             <Link href={"/schedule/today"}>
               Xem chi tiết lịch học hôm nay
@@ -95,14 +96,10 @@ export default function GreetingBlock({ className }: { className?: string }) {
       <div className="">
         <Image
           alt="Greeting image"
-          src={
-            loggedIn
-              ? "/assets/images/children-preparing-their-backpack-bro.svg"
-              : "/assets/images/id-card-cuate.svg"
-          }
-          width={loggedIn ? 300 : 200}
+          src={"/assets/images/children-preparing-their-backpack-bro.svg"}
+          width={300}
           height={150}
-          className={loggedIn ? "-mb-50" : ""}
+          className={"-mb-50"}
         />
       </div>
     </div>
