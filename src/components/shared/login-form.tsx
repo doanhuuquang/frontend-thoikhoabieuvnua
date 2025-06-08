@@ -17,7 +17,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
+import { Loader2, ScanFace } from "lucide-react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   studentCode: z
@@ -59,7 +60,19 @@ export default function LoginForm({ className }: { className?: string }) {
           localStorage.setItem("token", data.token);
         }
 
+        // Chuyển hướng về trang chủ
         window.location.href = "/";
+
+        toast.success("Thành công", {
+          duration: 3000,
+          position: "top-center",
+          description: "Đăng nhập thành công",
+          icon: <ScanFace />,
+          action: {
+            label: "Ẩn thông báo",
+            onClick: () => console.log("Undo"),
+          },
+        });
       })
 
       .catch((err) => {

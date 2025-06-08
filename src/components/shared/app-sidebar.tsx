@@ -54,6 +54,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Sidebar group items
 const items = [
@@ -236,17 +238,29 @@ export function AppSidebarContent() {
 export function AppSidebarFooter() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [checkingLogin, setCheckingLogin] = React.useState(true);
 
   const router = useRouter();
 
   React.useEffect(() => {
+    setCheckingLogin(true);
     setLoggedIn(isLoggedIn());
+    setCheckingLogin(false);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    window.location.reload();
+    toast.success("Thành công", {
+      duration: 3000,
+      position: "top-center",
+      description: "Đã đăng xuất khỏi tài khoản",
+      icon: <LogOut />,
+      action: {
+        label: "Ẩn thông báo",
+        onClick: () => console.log("Undo"),
+      },
+    });
   };
 
   const handleLogin = (e: React.MouseEvent) => {
@@ -258,7 +272,15 @@ export function AppSidebarFooter() {
   return (
     <SidebarFooter className="border-t-1">
       <SidebarMenu>
-        {!loggedIn ? (
+        {checkingLogin ? (
+          <div className="flex items-center space-x-2">
+            <Skeleton className="h-9 w-9 rounded-full" />
+            <div className="space-y-2 grow-1">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-3 w-[50%]" />
+            </div>
+          </div>
+        ) : !loggedIn ? (
           <Button
             onClick={handleLogin}
             disabled={isLoading}
