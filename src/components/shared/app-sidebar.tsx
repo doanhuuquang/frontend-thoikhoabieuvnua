@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Logo from "@/components/shared/logo";
 import React from "react";
+import Cookies from "js-cookie";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { isLoggedIn } from "@/utils/authUtils";
@@ -20,6 +21,7 @@ import {
   Calculator,
   LogOut,
   Loader2,
+  ScanFace,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -249,8 +251,9 @@ export function AppSidebarFooter() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    Cookies.remove("token");
     setLoggedIn(false);
+    window.location.reload();
     toast.success("Thành công", {
       duration: 3000,
       position: "top-center",
@@ -274,10 +277,10 @@ export function AppSidebarFooter() {
       <SidebarMenu>
         {checkingLogin ? (
           <div className="flex items-center space-x-2">
-            <Skeleton className="h-9 w-9 rounded-full" />
+            <Skeleton className="h-9 w-9 rounded-full bg-gray-300 dark:bg-accent" />
             <div className="space-y-2 grow-1">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-3 w-[50%]" />
+              <Skeleton className="h-4 w-full bg-gray-300 dark:bg-accent" />
+              <Skeleton className="h-3 w-[50%] bg-gray-300 dark:bg-accent" />
             </div>
           </div>
         ) : !loggedIn ? (
@@ -290,6 +293,7 @@ export function AppSidebarFooter() {
               <Loader2 className="animate-spin mr-2 h-4 w-4" />
             ) : null}
             Đăng nhập
+            <ScanFace />
           </Button>
         ) : (
           <SidebarMenuItem>

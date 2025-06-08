@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Cookies from "js-cookie";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -55,9 +56,9 @@ export default function LoginForm({ className }: { className?: string }) {
           throw new Error(data.message || "Đăng nhập thất bại");
         }
         // Đăng nhập thành công
-        // Lưu token vào localStorage
+        // Lưu token vào cookie
         if (data.token) {
-          localStorage.setItem("token", data.token);
+          Cookies.set("token", data.token, { expires: 7, path: "/" });
         }
 
         // Chuyển hướng về trang chủ
