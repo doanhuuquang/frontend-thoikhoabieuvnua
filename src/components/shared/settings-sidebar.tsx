@@ -9,28 +9,22 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const items = [
-  {
-    title: "Cài đặt chung",
-    url: "/settings/general",
-  },
-  {
-    title: "Thời khóa biểu",
-    url: "/schedule",
-  },
-  {
-    title: "Lịch thi",
-    url: "/exams",
-  },
-  {
-    title: "Thông tin cá nhân",
-    url: "/settings/profile",
-  },
+  { title: "Cài đặt chung", url: "/settings" },
+  { title: "Thời khóa biểu", url: "/schedule" },
+  { title: "Lịch thi", url: "/exams" },
+  { title: "Thông tin cá nhân", url: "/settings/profile" },
 ];
 
-export default function SettingsSidebar() {
+export default function SettingsSidebar({
+  className,
+  onSelectMenu,
+}: {
+  className?: string;
+  onSelectMenu?: () => void;
+}) {
   const pathName = usePathname();
   return (
-    <div className="w-[25%] p-3">
+    <div className={className}>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem
@@ -42,7 +36,7 @@ export default function SettingsSidebar() {
             }
           >
             <SidebarMenuButton asChild>
-              <Link href={item.url}>
+              <Link href={item.url} onClick={onSelectMenu}>
                 <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>
