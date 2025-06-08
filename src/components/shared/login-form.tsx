@@ -74,6 +74,10 @@ export default function LoginForm({ className }: { className?: string }) {
             onClick: () => console.log("Undo"),
           },
         });
+
+        // Lấy thông tin danh sách học kỳ từ API
+        // const semesterResponse = await fetch("/api/schedule/get-semester-list");
+        // console.log(semesterResponse);
       })
 
       .catch((err) => {

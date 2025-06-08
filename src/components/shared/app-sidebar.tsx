@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { isLoggedIn } from "@/utils/authUtils";
 import { UserData } from "@/data/UserData";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import {
   Home,
@@ -186,6 +186,8 @@ export function AppSidebarHeader() {
 }
 
 export function AppSidebarContent() {
+  const pathName = usePathname();
+
   return (
     <SidebarContent>
       <SidebarGroup>
@@ -217,13 +219,17 @@ export function AppSidebarContent() {
                   <CollapsibleContent className="border-l pl-4 ml-4">
                     <div className="flex flex-col gap-2 py-2">
                       {menuItem.menuSubItems.map((subItem) => (
-                        <a
+                        <Link
+                          key={subItem.href + subItem.label}
                           href={subItem.href}
-                          key={subItem.label}
-                          className="text-sm text-muted-foreground hover:text-foreground hover:bg-accent px-3 py-2 rounded-[5px] transition-colors"
+                          className={
+                            subItem.href === pathName
+                              ? "text-foreground text-sm transition rounded-md p-2"
+                              : "text-foreground/50 hover:bg-accent hover:text-foreground font-light text-sm transition rounded-md p-2"
+                          }
                         >
-                          {subItem.label}
-                        </a>
+                          <span>{subItem.label}</span>
+                        </Link>
                       ))}
                     </div>
                   </CollapsibleContent>
@@ -316,10 +322,13 @@ export function AppSidebarFooter() {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem className="lg:w-[14rem] md:w-[14rem] md w-[16rem]">
+                <DropdownMenuItem
+                  className="lg:w-[14rem] md:w-[14rem] md w-[16rem]"
+                  onClick={() => router.push("/settings")}
+                >
                   <span>Cài đặt</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push("/settings")}>
                   <span>Thông tin cá nhân</span>
                 </DropdownMenuItem>
                 <AlertDialog>
