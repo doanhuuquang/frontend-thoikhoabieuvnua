@@ -3,13 +3,12 @@
 import Link from "next/link";
 import Logo from "@/components/shared/logo";
 import React from "react";
-import Cookies from "js-cookie";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { isLoggedIn } from "@/utils/authUtils";
-import { UserData } from "@/data/UserData";
+import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname, useRouter } from "next/navigation";
-
+import { UserData } from "@/data/UserData";
 import {
   Home,
   Calendar,
@@ -19,21 +18,11 @@ import {
   Bell,
   BookCheck,
   Calculator,
-  LogOut,
   Loader2,
   ScanFace,
+  Settings2,
+  ChevronRight,
 } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import {
   Sidebar,
   SidebarContent,
@@ -56,10 +45,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
 
-// Sidebar group items
 const items = [
   {
     groupLabel: "Tiện ích",
@@ -239,6 +225,16 @@ export function AppSidebarContent() {
           </SidebarMenu>
         </SidebarGroup>
       ))}
+      <SidebarGroup className="border-t-1">
+        <Link href="/settings" className="no-underline">
+          <SidebarMenu>
+            <SidebarMenuButton>
+              <Settings2 className="mr-2 h-4 w-4" />
+              <span>Cài đặt</span>
+            </SidebarMenuButton>
+          </SidebarMenu>
+        </Link>
+      </SidebarGroup>
     </SidebarContent>
   );
 }
@@ -255,22 +251,6 @@ export function AppSidebarFooter() {
     setLoggedIn(isLoggedIn());
     setCheckingLogin(false);
   }, []);
-
-  const handleLogout = () => {
-    Cookies.remove("token");
-    setLoggedIn(false);
-    window.location.reload();
-    toast.success("Thành công", {
-      duration: 3000,
-      position: "top-center",
-      description: "Đã đăng xuất khỏi tài khoản",
-      icon: <LogOut />,
-      action: {
-        label: "Ẩn thông báo",
-        onClick: () => console.log("Undo"),
-      },
-    });
-  };
 
   const handleLogin = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -303,68 +283,21 @@ export function AppSidebarFooter() {
           </Button>
         ) : (
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <Avatar className="mr-2 h-8 w-8">
-                    <AvatarFallback>
-                      {userName.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
-                        "?"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col">
-                    <span>{userName}</span>
-                    <span className="text-accent-foreground/60 text-xs font-light">
-                      {studentCode}
-                    </span>
-                  </div>
-                  <ChevronsUpDown className="ml-auto h-4 w-4" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem
-                  className="lg:w-[14rem] md:w-[14rem] md w-[16rem]"
-                  onClick={() => router.push("/settings")}
-                >
-                  <span>Cài đặt</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => router.push("/settings")}>
-                  <span>Thông tin cá nhân</span>
-                </DropdownMenuItem>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="w-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white flex justify-between"
-                    >
-                      <span>Đăng xuất</span>
-                      <LogOut />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Đăng xuất khỏi tài khoản này?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Tất cả thông tin lịch học, thời khóa biểu, ghi chú... sẽ
-                        được xóa khỏi thiết bị này sau khi đăng xuất. Vẫn muốn
-                        tiếp tục?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogAction
-                        onClick={handleLogout}
-                        className="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white"
-                      >
-                        Đăng xuất
-                      </AlertDialogAction>
-                      <AlertDialogCancel>Hủy</AlertDialogCancel>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SidebarMenuButton onClick={() => router.push("/profile")}>
+              <Avatar className="mr-2 h-8 w-8">
+                <AvatarFallback>
+                  {userName.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
+                    "?"}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <span>{userName}</span>
+                <span className="text-accent-foreground/60 text-xs font-light">
+                  {studentCode}
+                </span>
+              </div>
+              <ChevronRight className="ml-auto h-4 w-4" />
+            </SidebarMenuButton>
           </SidebarMenuItem>
         )}
       </SidebarMenu>

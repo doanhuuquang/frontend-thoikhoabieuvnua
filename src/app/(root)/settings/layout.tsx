@@ -19,7 +19,7 @@ export default function SettingsLayout({
 
   return (
     <div className="max-w-7xl mx-auto">
-      <h1 className="text-3xl py-5 font-medium border-b-1 px-3">Cài đặt</h1>
+      <h4 className="font-semibold text-lg py-5 border-b-1 px-3">Cài đặt</h4>
       <div className="flex gap-2">
         <div
           className={`${
