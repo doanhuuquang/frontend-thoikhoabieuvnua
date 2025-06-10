@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  const protectedPaths = ["/profile", "/schedule"];
+  const protectedPaths = ["/profile", "/schedule", "/settings", "/profile"];
   if (protectedPaths.some((path) => pathname.startsWith(path)) && !token) {
     const loginUrl = new URL("/login", request.url);
     return NextResponse.redirect(loginUrl);
@@ -22,5 +22,10 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/login", "/schedule/:path*"],
+  matcher: [
+    "/login",
+    "/schedule/:path*",
+    "/settings/:path*",
+    "/profile/:path*",
+  ],
 };

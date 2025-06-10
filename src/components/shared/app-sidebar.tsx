@@ -5,10 +5,8 @@ import Logo from "@/components/shared/logo";
 import React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { isLoggedIn } from "@/utils/authUtils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname, useRouter } from "next/navigation";
-import { UserData } from "@/data/UserData";
 import {
   Home,
   Calendar,
@@ -45,6 +43,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { useUser } from "@/contexts/UserContext";
 
 const items = [
   {
@@ -140,9 +139,6 @@ const items = [
     ],
   },
 ];
-
-const userName = UserData.name || "Người dùng";
-const studentCode = UserData.studentCode || "Người dùng";
 
 export function AppSidebarHeader() {
   return (
@@ -240,17 +236,10 @@ export function AppSidebarContent() {
 }
 
 export function AppSidebarFooter() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [checkingLogin, setCheckingLogin] = React.useState(true);
 
+  const { user, loading } = useUser();
   const router = useRouter();
-
-  React.useEffect(() => {
-    setCheckingLogin(true);
-    setLoggedIn(isLoggedIn());
-    setCheckingLogin(false);
-  }, []);
 
   const handleLogin = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -261,7 +250,7 @@ export function AppSidebarFooter() {
   return (
     <SidebarFooter className="border-t-1">
       <SidebarMenu>
-        {checkingLogin ? (
+        {loading ? (
           <div className="flex items-center space-x-2">
             <Skeleton className="h-9 w-9 rounded-full bg-gray-300 dark:bg-accent" />
             <div className="space-y-2 grow-1">
@@ -269,7 +258,7 @@ export function AppSidebarFooter() {
               <Skeleton className="h-3 w-[50%] bg-gray-300 dark:bg-accent" />
             </div>
           </div>
-        ) : !loggedIn ? (
+        ) : !user ? (
           <Button
             onClick={handleLogin}
             disabled={isLoading}
@@ -286,14 +275,14 @@ export function AppSidebarFooter() {
             <SidebarMenuButton onClick={() => router.push("/profile")}>
               <Avatar className="mr-2 h-8 w-8">
                 <AvatarFallback>
-                  {userName.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
+                  {user.name.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
                     "?"}
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span>{userName}</span>
+                <span>{user.name}</span>
                 <span className="text-accent-foreground/60 text-xs font-light">
-                  {studentCode}
+                  {user.studentCode}
                 </span>
               </div>
               <ChevronRight className="ml-auto h-4 w-4" />

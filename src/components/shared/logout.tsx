@@ -14,17 +14,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { toast } from "sonner";
-import Cookies from "js-cookie";
+import { logout } from "@/utils/authUtils";
 
 export default function LogoutButton() {
   const handleLogout = () => {
-    Cookies.remove("token");
+    logout();
     window.location.reload();
     toast.success("Thành công", {
       duration: 3000,
       position: "top-center",
       description: "Đã đăng xuất khỏi tài khoản",
-      icon: <LogOut />,
       action: {
         label: "Ẩn thông báo",
         onClick: () => console.log("Undo"),

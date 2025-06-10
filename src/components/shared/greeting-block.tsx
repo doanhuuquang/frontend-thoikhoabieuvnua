@@ -5,21 +5,13 @@ import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { isLoggedIn } from "@/utils/authUtils";
 import { ScheduleData } from "@/data/ScheduleData";
-import { UserData } from "@/data/UserData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUser } from "@/contexts/UserContext";
 
 export default function GreetingBlock({ className }: { className?: string }) {
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [checkingLogin, setCheckingLogin] = React.useState(true);
-
-  React.useEffect(() => {
-    setCheckingLogin(true);
-    setLoggedIn(isLoggedIn());
-    setCheckingLogin(false);
-  }, []);
+  const { user, loading } = useUser();
 
   const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
   const numberOfLessons =
@@ -36,7 +28,7 @@ export default function GreetingBlock({ className }: { className?: string }) {
       )}
     >
       {/* Main content */}
-      {checkingLogin ? (
+      {loading ? (
         // Skeleton loading
         <div className="grow space-y-2 flex flex-col justify-between lg:h-full">
           <div className="space-y-2">
@@ -45,9 +37,9 @@ export default function GreetingBlock({ className }: { className?: string }) {
           </div>
           <Skeleton className="h-5 w-[70%] bg-blue-500" />
         </div>
-      ) : !loggedIn ? (
+      ) : !user ? (
         // Chưa đăng nhập
-        <div className=" flex flex-col lg:items-start items-center grow text-center lg:text-start md:text-start">
+        <div className="flex flex-col lg:items-start items-center grow text-center lg:text-start md:text-start">
           <div>
             <h2 className="text-2xl">Chào bạn sinh viên!</h2>
             <p className="text-secondary-foreground/80">
@@ -62,7 +54,7 @@ export default function GreetingBlock({ className }: { className?: string }) {
       ) : (
         // Đã đăng nhập
         <div className="flex flex-col grow lg:items-start items-center text-center lg:text-start md:text-start">
-          <h2 className="text-2xl">Xin chào, {UserData.name}!</h2>
+          <h2 className="text-2xl">Xin chào, {user.name}!</h2>
           <p className="text-secondary-foreground/80">
             Hôm nay bạn thế nào rồi?
           </p>
@@ -99,7 +91,7 @@ export default function GreetingBlock({ className }: { className?: string }) {
           src={"/assets/images/children-preparing-their-backpack-bro.svg"}
           width={300}
           height={150}
-          className={"-mb-50"}
+          className="-mb-50"
         />
       </div>
     </div>

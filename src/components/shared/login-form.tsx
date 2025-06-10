@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Cookies from "js-cookie";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -18,8 +17,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Loader2, ScanFace } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { login } from "@/utils/authUtils";
 
 const formSchema = z.object({
   studentCode: z
@@ -40,52 +40,33 @@ export default function LoginForm({ className }: { className?: string }) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     setError(null);
 
-    fetch("/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        // Đăng nhập thất bại
-        if (!res.ok) {
-          throw new Error(data.message || "Đăng nhập thất bại");
-        }
-        // Đăng nhập thành công
-        // Lưu token vào cookie
-        if (data.token) {
-          Cookies.set("token", data.token, { expires: 7, path: "/" });
-        }
-
-        // Chuyển hướng về trang chủ
-        window.location.href = "/";
-
-        toast.success("Thành công", {
-          duration: 3000,
-          position: "top-center",
-          description: "Đăng nhập thành công",
-          icon: <ScanFace />,
-          action: {
-            label: "Ẩn thông báo",
-            onClick: () => console.log("Undo"),
-          },
-        });
-
-        // Lấy thông tin danh sách học kỳ từ API
-        // const semesterResponse = await fetch("/api/schedule/get-semester-list");
-        // console.log(semesterResponse);
-      })
-
-      .catch((err) => {
-        setError(err.message || "Đăng nhập thất bại");
-      })
-      .finally(() => {
-        setIsLoading(false);
+    try {
+      await login(values);
+      window.location.reload();
+      toast.success("Thành công", {
+        duration: 3000,
+        position: "top-center",
+        description: "Đăng nhập thành công",
+        action: {
+          label: "Ẩn thông báo",
+          onClick: () => console.log("Undo"),
+        },
       });
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else if (typeof err === "string") {
+        setError(err);
+      } else {
+        setError("Đã xảy ra lỗi không xác định");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
