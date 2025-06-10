@@ -1,4 +1,5 @@
 import { getVietnamDate } from "@/utils/timeUtils";
+import Cookies from "js-cookie";
 
 const PERIOD_START_TIMES = [
   7 * 60 + 0,
@@ -30,6 +31,16 @@ const PERIOD_END_TIMES = [
   19 * 60 + 45,
   20 * 60 + 40,
 ];
+
+export async function getScheduleFromAPI() {
+  const token = Cookies.get("token");
+  if (!token) {
+    throw new Error("Chưa đăng nhập");
+  }
+  // const res = await fetch("/api/schedule", {
+  //   method: "GET",
+  // });
+}
 
 const minutesToTime = (minutes: number): string => {
   const hours = Math.floor(minutes / 60);

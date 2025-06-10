@@ -23,7 +23,7 @@ export default function GreetingBlock({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        `flex flex-wrap gap-10 items-center justify-center p-4 bg-secondary rounded-md overflow-hidden text-secondary-foreground`,
+        `min-h-[180px] flex flex-wrap gap-10 items-center justify-center p-4 bg-secondary rounded-md overflow-hidden text-secondary-foreground`,
         className
       )}
     >

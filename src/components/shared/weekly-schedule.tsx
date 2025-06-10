@@ -20,6 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { convertDateToString, getVietnamDate } from "@/utils/timeUtils";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 type Weeks = {
   weekNumber: string;
@@ -229,13 +230,25 @@ export function WeekSelector({
         </PopoverContent>
       </Popover>
 
-      <WeekDaySelector
-        className="mt-2"
-        selectedDate={selectedDate}
-        onSelect={onDateChange}
-        startDate={startDate}
-        endDate={endDate}
-      />
+      {!selectedWeek ? (
+        <Alert>
+          <AlertTitle>
+            Chúc mừng! Bạn đã hoàn thành tất cả lịch học của kỳ này rồi.
+          </AlertTitle>
+          <AlertDescription>
+            Để xem lại lịch học trong học kỳ, chọn vào số tuần ở phía trên để
+            xem lịch học nhé.
+          </AlertDescription>
+        </Alert>
+      ) : (
+        <WeekDaySelector
+          className="mt-2"
+          selectedDate={selectedDate}
+          onSelect={onDateChange}
+          startDate={startDate}
+          endDate={endDate}
+        />
+      )}
     </div>
   );
 }
