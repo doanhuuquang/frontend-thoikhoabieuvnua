@@ -1,4 +1,4 @@
-import { User } from "@/lib/models/User";
+import { User } from "@/types/User";
 import Cookies from "js-cookie";
 
 export function isLoggedIn(): boolean {

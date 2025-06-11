@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User } from "@/lib/models/User";
+import { User } from "@/types/User";
 import {
   getUserProfileFromDb,
   getUserProfileFromLocalStorage,

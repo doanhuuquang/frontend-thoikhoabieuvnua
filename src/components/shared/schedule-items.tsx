@@ -1,5 +1,5 @@
 import { formatClassTime, getSubjectStatus } from "@/utils/scheduleUtils";
-import { Subject } from "@/lib/models/Schedule";
+import { Subject } from "@/types/Schedule";
 
 import {
   AlertDialog,

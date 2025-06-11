@@ -1,4 +1,4 @@
-export type User = {
+export interface User {
   _id: string;
   studentCode: string;
   name: string;
@@ -21,4 +21,4 @@ export type User = {
   bankAccountNumber: string;
   password: string;
   __v: number;
-};
+}

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { convertDateToString, getVietnamDate } from "@/utils/timeUtils";
-import { Schedule, Subject } from "@/lib/models/Schedule";
+import { Schedule, Subject } from "@/types/Schedule";
 import { useMemo } from "react";
 
 dayjs.extend(isSameOrBefore);

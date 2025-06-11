@@ -1,4 +1,4 @@
-export type Subject = {
+export interface Subject {
   code: string;
   name: string;
   group: string;
@@ -9,10 +9,10 @@ export type Subject = {
   room: string;
   lecturerName: string;
   subjectDate: string;
-};
+}
 
-export type Schedule = {
+export interface Schedule {
   semesterString: string;
   semesterStartDate: string;
   schedules: Record<string, Subject[]>;
-};
+}

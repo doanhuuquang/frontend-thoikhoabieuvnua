@@ -1,4 +1,4 @@
-import { Schedule } from "@/lib/models/Schedule";
+import { Schedule } from "@/types/Schedule";
 
 export const ScheduleData: Schedule = {
   semesterString: "Học kỳ 2 - Năm học 2024 - 2025",
