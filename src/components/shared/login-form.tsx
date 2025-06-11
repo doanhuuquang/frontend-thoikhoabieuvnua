@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { login } from "@/utils/authUtils";
+import { auth } from "@/utils/auth-utils";
 
 const formSchema = z.object({
   studentCode: z
@@ -45,7 +45,7 @@ export default function LoginForm({ className }: { className?: string }) {
     setError(null);
 
     try {
-      await login(values);
+      await auth(values.studentCode, values.password);
       window.location.reload();
       toast.success("Thành công", {
         duration: 3000,

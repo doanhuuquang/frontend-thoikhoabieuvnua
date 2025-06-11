@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Logo() {
+export default function Logo({ className }: { className?: string }) {
   return (
-    <Link href={"/"}>
+    <Link href={"/"} className={className}>
       <div className="flex gap-3">
         <Image alt="Logo" src="/logo.svg" width={35} height={35} />
         <div>

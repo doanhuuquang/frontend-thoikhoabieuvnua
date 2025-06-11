@@ -1,12 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { User } from "@/types/User";
 import {
   getUserProfileFromDb,
   getUserProfileFromLocalStorage,
   isLoggedIn,
-} from "@/utils/authUtils";
+} from "@/utils/auth-utils";
 
 type UserContextType = {
   user: User | null;
@@ -14,7 +14,7 @@ type UserContextType = {
   refreshUser: () => Promise<void>;
 };
 
-const UserContext = createContext<UserContextType>({
+export const UserContext = createContext<UserContextType>({
   user: null,
   loading: true,
   refreshUser: async () => {},
@@ -62,8 +62,4 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       {children}
     </UserContext.Provider>
   );
-}
-
-export function useUser() {
-  return useContext(UserContext);
 }

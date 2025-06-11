@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { ScheduleData } from "@/data/ScheduleData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useUser } from "@/contexts/UserContext";
+import { useUser } from "@/hooks/use-user";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { user, loading } = useUser();

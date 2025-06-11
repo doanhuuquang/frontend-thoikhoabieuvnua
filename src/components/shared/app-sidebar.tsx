@@ -7,6 +7,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname, useRouter } from "next/navigation";
+import { useUser } from "@/hooks/use-user";
+
 import {
   Home,
   Calendar,
@@ -43,7 +45,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { useUser } from "@/contexts/UserContext";
 
 const items = [
   {

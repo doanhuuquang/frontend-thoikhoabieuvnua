@@ -6,36 +6,20 @@ export function isLoggedIn(): boolean {
   return !!Cookies.get("token");
 }
 
-export async function login({
-  studentCode,
-  password,
-}: {
-  studentCode: string;
-  password: string;
-}) {
-  let res;
-  try {
-    res = await fetch("/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ studentCode, password }),
-    });
-  } catch {
-    throw new Error("Không có kết nối mạng");
-  }
+const API_URL = "https://thoikhoabieuvnua.up.railway.app";
 
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = {};
-  }
+export async function auth(studentCode: string, password: string) {
+  const res = await fetch(`${API_URL}/api/user/auth`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ studentCode, password }),
+  });
 
-  if (!res.ok)
-    throw new Error(data.message || "Có lỗi xảy ra, vui lòng thử lại sau");
-  if (data.token) {
-    Cookies.set("token", data.token, { expires: 30, path: "/" });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || "Đăng nhập thất bại");
   }
+  Cookies.set("token", data.token, { expires: 30, path: "/" });
   return data;
 }
 

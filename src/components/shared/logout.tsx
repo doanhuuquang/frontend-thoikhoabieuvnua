@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { toast } from "sonner";
-import { logout } from "@/utils/authUtils";
+import { logout } from "@/utils/auth-utils";
 
 export default function LogoutButton() {
   const handleLogout = () => {
