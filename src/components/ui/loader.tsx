@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/contexts/UserContext";
+import { useUser } from "@/hooks/use-user";
 import { LoaderCircle } from "lucide-react";
 
 export default function Loader() {
