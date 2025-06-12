@@ -7,12 +7,11 @@ import {
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const items = [
   { title: "Cài đặt chung", url: "/settings" },
-  { title: "Thời khóa biểu", url: "/schedule" },
-  { title: "Lịch thi", url: "/exams" },
-  { title: "Thông tin cá nhân", url: "/settings/profile" },
+  { title: "Dữ liệu ứng dụng", url: "settings/schedule-settings" },
 ];
 
 export default function SettingsSidebar({
@@ -24,7 +23,7 @@ export default function SettingsSidebar({
 }) {
   const pathName = usePathname();
   return (
-    <div className={className}>
+    <div className={cn("sticky top-[65px]", className)}>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem

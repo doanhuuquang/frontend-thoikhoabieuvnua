@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import { convertDateToString, getVietnamDate } from "@/utils/timeUtils";
+import { convertDateToString, getVietnamDate } from "@/utils/class-time-utils";
 import { Schedule, Subject } from "@/types/Schedule";
 import { useMemo } from "react";
 
@@ -28,9 +28,9 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
 
   // Lấy danh sách các tuần trong học kỳ
   const getWeeks = () => {
-    if (!schedule?.schedules || !schedule.semesterStartDate) return [];
+    if (!schedule?.timeTable || !schedule.semesterStartDate) return [];
 
-    const lastDateStr = Object.keys(schedule.schedules).findLast(Boolean);
+    const lastDateStr = Object.keys(schedule.timeTable).findLast(Boolean);
     if (!lastDateStr) return [];
 
     const lastDateOfSemester = dayjs(lastDateStr).startOf(DAY_UNIT);
@@ -54,7 +54,7 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
   const getScheduleByDate = (date: dayjs.Dayjs): Subject[] => {
     if (!schedule) return [];
     const key = convertDateToString(date, "-", DATE_FORMAT);
-    return schedule.schedules[key] || [];
+    return schedule.timeTable[key] || [];
   };
 
   // Lấy lịch học hôm nay
@@ -75,7 +75,7 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
 
     while (current.isSameOrBefore(end)) {
       const daySubjects =
-        schedule.schedules[convertDateToString(current, "-", DATE_FORMAT)] ||
+        schedule.timeTable[convertDateToString(current, "-", DATE_FORMAT)] ||
         [];
       subjects.push(...daySubjects);
       current = current.add(1, DAY_UNIT);

@@ -5,7 +5,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { ScheduleData } from "@/data/ScheduleData";
 import dayjs from "dayjs";
-import { getVietnamDate } from "@/utils/timeUtils";
+import { getVietnamDate } from "@/utils/class-time-utils";
 import ScheduleItems from "@/components/shared/schedule-items";
 import { cn } from "@/lib/utils";
 

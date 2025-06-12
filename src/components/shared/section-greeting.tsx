@@ -37,24 +37,10 @@ export default function GreetingBlock({ className }: { className?: string }) {
           </div>
           <Skeleton className="h-5 w-[70%] bg-blue-500" />
         </div>
-      ) : !user ? (
-        // Chưa đăng nhập
-        <div className="flex flex-col lg:items-start items-center grow text-center lg:text-start md:text-start">
-          <div>
-            <h2 className="text-2xl">Chào bạn sinh viên!</h2>
-            <p className="text-secondary-foreground/80">
-              Đăng nhập để tiếp tục sử dụng{" "}
-              <span className="text-primary font-bold">Vnua Calendar</span> nhé!
-            </p>
-          </div>
-          <Button className="mt-5 px-10 w-fit" asChild>
-            <Link href={"/login"}>Đăng nhập</Link>
-          </Button>
-        </div>
       ) : (
         // Đã đăng nhập
         <div className="flex flex-col grow lg:items-start items-center text-center lg:text-start md:text-start">
-          <h2 className="text-2xl">Xin chào, {user.name}!</h2>
+          <h2 className="text-2xl">Xin chào, {user?.name}!</h2>
           <p className="text-secondary-foreground/80">
             Hôm nay bạn thế nào rồi?
           </p>

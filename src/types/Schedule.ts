@@ -14,5 +14,5 @@ export interface Subject {
 export interface Schedule {
   semesterString: string;
   semesterStartDate: string;
-  schedules: Record<string, Subject[]>;
+  timeTable: Record<string, Subject[]>;
 }

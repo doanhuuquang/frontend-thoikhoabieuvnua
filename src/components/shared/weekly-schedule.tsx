@@ -19,7 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { convertDateToString, getVietnamDate } from "@/utils/timeUtils";
+import { convertDateToString, getVietnamDate } from "@/utils/class-time-utils";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 type Weeks = {

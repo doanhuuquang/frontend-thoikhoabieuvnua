@@ -17,9 +17,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
+import { Loader2, ScanFace } from "lucide-react";
 import { toast } from "sonner";
-import { auth } from "@/utils/auth-utils";
+import { auth, logout } from "@/utils/auth-utils";
+import { useSchedule } from "@/hooks/use-schedule";
 
 const formSchema = z.object({
   studentCode: z
@@ -29,8 +30,9 @@ const formSchema = z.object({
 });
 
 export default function LoginForm({ className }: { className?: string }) {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const { fetchSchedules } = useSchedule();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,12 +43,14 @@ export default function LoginForm({ className }: { className?: string }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
+    setLoading(true);
     setError(null);
 
     try {
       await auth(values.studentCode, values.password);
+      await fetchSchedules(values.password);
       window.location.reload();
+
       toast.success("Thành công", {
         duration: 3000,
         position: "top-center",
@@ -65,7 +69,7 @@ export default function LoginForm({ className }: { className?: string }) {
         setError("Đã xảy ra lỗi không xác định");
       }
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   }
 
@@ -129,7 +133,8 @@ export default function LoginForm({ className }: { className?: string }) {
             {isLoading ? (
               <Loader2 className="animate-spin mr-2 h-4 w-4" />
             ) : null}
-            Đăng nhập
+
+            {isLoading ? <span>Đang đăng nhập</span> : <span>đăng nhập</span>}
           </Button>
         </form>
       </Form>

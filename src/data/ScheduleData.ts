@@ -3,7 +3,7 @@ import { Schedule } from "@/types/Schedule";
 export const ScheduleData: Schedule = {
   semesterString: "Học kỳ 2 - Năm học 2024 - 2025",
   semesterStartDate: "2025-01-13",
-  schedules: {
+  timeTable: {
     "2025-01-14": [
       {
         code: "TH03105",

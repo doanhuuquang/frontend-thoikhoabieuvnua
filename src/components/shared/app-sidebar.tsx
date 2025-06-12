@@ -4,7 +4,6 @@ import Link from "next/link";
 import Logo from "@/components/shared/logo";
 import React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/hooks/use-user";
@@ -18,8 +17,6 @@ import {
   Bell,
   BookCheck,
   Calculator,
-  Loader2,
-  ScanFace,
   Settings2,
   ChevronRight,
 } from "lucide-react";
@@ -237,16 +234,8 @@ export function AppSidebarContent() {
 }
 
 export function AppSidebarFooter() {
-  const [isLoading, setIsLoading] = React.useState(false);
-
   const { user, loading } = useUser();
   const router = useRouter();
-
-  const handleLogin = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    router.push("/login");
-  };
 
   return (
     <SidebarFooter className="border-t-1">
@@ -259,31 +248,19 @@ export function AppSidebarFooter() {
               <Skeleton className="h-3 w-[50%] bg-gray-300 dark:bg-accent" />
             </div>
           </div>
-        ) : !user ? (
-          <Button
-            onClick={handleLogin}
-            disabled={isLoading}
-            className="relative"
-          >
-            {isLoading ? (
-              <Loader2 className="animate-spin mr-2 h-4 w-4" />
-            ) : null}
-            Đăng nhập
-            <ScanFace />
-          </Button>
         ) : (
           <SidebarMenuItem>
             <SidebarMenuButton onClick={() => router.push("/profile")}>
               <Avatar className="mr-2 h-8 w-8">
                 <AvatarFallback>
-                  {user.name.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
+                  {user?.name.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
                     "?"}
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span>{user.name}</span>
+                <span>{user?.name}</span>
                 <span className="text-accent-foreground/60 text-xs font-light">
-                  {user.studentCode}
+                  {user?.studentCode}
                 </span>
               </div>
               <ChevronRight className="ml-auto h-4 w-4" />

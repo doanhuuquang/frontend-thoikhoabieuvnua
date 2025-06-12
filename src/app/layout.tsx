@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "@/contexts/UserContext";
+import { ScheduleProvider } from "@/contexts/ScheduleContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,8 +49,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <UserProvider>
-            {children}
-            <Toaster />
+            <ScheduleProvider>
+              {children}
+              <Toaster />
+            </ScheduleProvider>
           </UserProvider>
         </ThemeProvider>
       </body>

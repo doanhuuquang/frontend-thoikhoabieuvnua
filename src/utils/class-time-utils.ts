@@ -1,6 +1,11 @@
-import { getVietnamDate } from "@/utils/timeUtils";
-import Cookies from "js-cookie";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// Giờ bắt đầu của từng tiết học trong ngày (tính theo phút từ 00:00)
 const PERIOD_START_TIMES = [
   7 * 60 + 0,
   7 * 60 + 55,
@@ -16,6 +21,7 @@ const PERIOD_START_TIMES = [
   18 * 60 + 55,
   19 * 60 + 50,
 ];
+// Giờ kết thúc của từng tiết học trong ngày (tính theo phút từ 00:00)
 const PERIOD_END_TIMES = [
   7 * 60 + 50,
   8 * 60 + 45,
@@ -32,17 +38,29 @@ const PERIOD_END_TIMES = [
   20 * 60 + 40,
 ];
 
-export async function getScheduleFromAPI() {
-  const token = Cookies.get("token");
-  if (!token) {
-    throw new Error("Chưa đăng nhập");
-  }
-  // const res = await fetch("/api/schedule", {
-  //   method: "GET",
-  // });
-}
+export const getVietnamDate = (): dayjs.Dayjs => {
+  return dayjs().tz("Asia/Ho_Chi_Minh");
+};
 
-const minutesToTime = (minutes: number): string => {
+export const convertDateToString = (
+  date: dayjs.Dayjs,
+  separator: string = "-",
+  format: "YYYY-MM-DD" | "DD-MM-YYYY" | "MM-DD-YYYY" = "YYYY-MM-DD"
+): string => {
+  const year = date.year().toString().padStart(4, "0");
+  const month = (date.month() + 1).toString().padStart(2, "0");
+  const day = date.date().toString().padStart(2, "0");
+
+  if (format === "YYYY-MM-DD") return [year, month, day].join(separator);
+  if (format === "DD-MM-YYYY") return [day, month, year].join(separator);
+  if (format === "MM-DD-YYYY") return [month, day, year].join(separator);
+
+  // fallback
+  return [year, month, day].join(separator);
+};
+
+// Chuyển đổi phút thành chuỗi thời gian "HH:mm"
+const convertMinutesToTime = (minutes: number): string => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
   return `${hours.toString().padStart(2, "0")}:${mins
@@ -50,21 +68,25 @@ const minutesToTime = (minutes: number): string => {
     .padStart(2, "0")}`;
 };
 
+// Định dạng thời gian bắt đầu và kết thúc của tiết học
 export const formatClassTime = (
   start: number,
   numberOfLessons: number
 ): string => {
   const startTime = PERIOD_START_TIMES[start - 1];
   const endTime = PERIOD_END_TIMES[start + numberOfLessons - 2];
-  return `${minutesToTime(startTime)} - ${minutesToTime(endTime)}`;
+  return `${convertMinutesToTime(startTime)} - ${convertMinutesToTime(
+    endTime
+  )}`;
 };
 
+// Lấy trạng thái của môn học dựa trên thời gian và ngày
+// 0: Đã hoàn thành, 1: Đang diễn ra, 2: Sắp tới
 export const getSubjectStatus = (
   start: number,
   numberOfLessons: number,
   subjectDateStr: string
 ): number => {
-  // 0: Đã hoàn thành, 1: Đang diễn ra, 2: Sắp tới
   const now = getVietnamDate();
   const [subjectYear, subjectMonth, subjectDay] = subjectDateStr
     .split("-")
