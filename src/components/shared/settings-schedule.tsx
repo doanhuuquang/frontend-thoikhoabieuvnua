@@ -1,47 +1,32 @@
 "use client";
 
-import { useSchedule } from "@/hooks/use-schedule";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2 } from "lucide-react";
+// import { useSchedule } from "@/hooks/use-schedule";
+// import { useState } from "react";
 
-export default function timeTableettings() {
-  const { semesters, loading, refreshSemesters } = useSchedule();
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+export default function SettingsSchedule() {
+  // const { semesters, scheduleLoading, refreshSemesters } = useSchedule();
+  // const [password, setPassword] = useState("");
+  // const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async () => {
-    setError(null);
+  // const handleSubmit = async () => {
+  //   setError(null);
 
-    try {
-      await refreshSemesters(password);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else if (typeof error === "string") {
-        setError(error);
-      } else {
-        setError("Đã xảy ra lỗi không xác định");
-      }
-    }
-  };
+  //   try {
+  //     await refreshSemesters(password);
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       setError(error.message);
+  //     } else if (typeof error === "string") {
+  //       setError(error);
+  //     } else {
+  //       setError("Đã xảy ra lỗi không xác định");
+  //     }
+  //   }
+  // };
 
   return (
     <div>
-      {!semesters && (
+      {/* {!semesters && (
         <>
           <p className="text-muted-foreground mb-2">
             Bạn chưa có dữ liệu thời khóa biểu!
@@ -106,7 +91,7 @@ export default function timeTableettings() {
             </DialogContent>
           </Dialog>
         </>
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import timeTableettings from "@/components/shared/settings-schedule";
+import SettingsSchedule from "@/components/shared/settings-schedule";
 
 export default function timeTableettingsPage() {
   return (
@@ -7,7 +7,7 @@ export default function timeTableettingsPage() {
       <p className="text-gray-600 mb-6">
         Tính năng này hiện đang được phát triển. Vui lòng quay lại sau.
       </p>
-      <timeTableettings />
+      <SettingsSchedule />
     </div>
   );
 }
