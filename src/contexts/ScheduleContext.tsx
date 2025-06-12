@@ -14,6 +14,7 @@ import {
   // fetchSchedules,
   // getCurrentSemesterFromLocalStorage,
   fetchSchedulesFromAPI,
+  getSemestersFromLocalStorage,
 } from "@/utils/schedule-utils";
 
 import {
@@ -37,18 +38,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { isLoggedIn } from "@/utils/auth-utils";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 type ScheduleContextType = {
   semesters: string[] | null;
   currentSemester: string | null;
   schedules: Schedule[] | null;
   currentSchedule: Schedule | null;
+  schedulesLoading: boolean;
   scheduleLoading: boolean;
   refreshSemesters: (password: string) => Promise<void>;
   refreshCurrentSemester: (semester: string) => Promise<void>;
-  fetchSchedules: (password: string) => Promise<void>;
   refreshSchedules: (password: string, semesterString: string) => Promise<void>;
   refreshCurrentSchedule: (semesterString: string) => Promise<void>;
+  fetchSchedules: (password: string) => Promise<void>;
+  fetchSemesters: () => Promise<void>;
 };
 
 export const ScheduleContext = createContext<ScheduleContextType>({
@@ -56,27 +60,30 @@ export const ScheduleContext = createContext<ScheduleContextType>({
   currentSemester: null,
   schedules: null,
   currentSchedule: null,
+  schedulesLoading: true,
   scheduleLoading: true,
   refreshSemesters: async () => {},
   refreshCurrentSemester: async () => {},
-  fetchSchedules: async () => {},
   refreshSchedules: async () => {},
   refreshCurrentSchedule: async () => {},
+  fetchSchedules: async () => {},
+  fetchSemesters: async () => {},
 });
 
 export function ScheduleProvider({ children }: { children: React.ReactNode }) {
-  const [semesters] = useState<string[] | null>(null);
+  const [semesters, setSemesters] = useState<string[] | null>(null);
   const [currentSemester] = useState<string | null>(null);
   const [schedules, setSchedules] = useState<Schedule[] | null>(null);
   const [currentSchedule] = useState<Schedule | null>(null);
-  const [scheduleLoading, setScheduleLoading] = useState(true);
+  const [schedulesLoading, setSchedulesLoading] = useState(false);
+  const [scheduleLoading, setScheduleLoading] = useState(false);
 
   const fetchSchedules = async (password: string) => {
-    setScheduleLoading(true);
+    setSchedulesLoading(true);
     // Nếu chưa đăng nhập, xóa schedules và dừng lại
     if (!isLoggedIn()) {
       setSchedules(null);
-      setScheduleLoading(false);
+      setSchedulesLoading(false);
       return;
     }
 
@@ -84,7 +91,7 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
     const localSchedules = getSchedulesFromLocalStorage();
     if (localSchedules) {
       setSchedules(localSchedules);
-      setScheduleLoading(false);
+      setSchedulesLoading(false);
       return;
     }
 
@@ -98,106 +105,68 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
     } catch {
       setSchedules(null);
     } finally {
-      setScheduleLoading(false);
+      setSchedulesLoading(false);
     }
   };
 
-  // const refreshSemesters = async (semesters: string[]) => {
-  //   setLoading(true);
+  const fetchSemesters = async () => {
+    setScheduleLoading(true);
 
-  //   const localSemesters = getSemestersFromLocalStorage();
-  //   if (localSemesters) {
-  //     setSemesters(localSemesters);
-  //     setLoading(false);
-  //     return;
-  //   } else {
-  //     setSemesters(semesters);
-  //     localStorage.setItem("semesters", JSON.stringify([semesters]));
-  //   }
-  // };
+    // Nếu chưa đăng nhập, xóa semesters và dừng lại
+    if (!isLoggedIn()) {
+      setSemesters(null);
+      setScheduleLoading(false);
+      return;
+    }
 
-  // const refreshCurrentSemester = async (semester: string) => {
-  //   setLoading(true);
+    // Nếu đã có semesters trong localStorage thì dùng luôn
+    const localSemesters = getSemestersFromLocalStorage();
+    if (localSemesters) {
+      setSemesters(localSemesters);
+      setScheduleLoading(false);
+      return;
+    }
 
-  //   const localCurrentSemester = getCurrentSemesterFromLocalStorage();
-  //   if (localCurrentSemester) {
-  //     setCurrentSemester(localCurrentSemester);
-  //     setLoading(false);
-  //     return;
-  //   } else {
-  //     setCurrentSemester(semester);
-  //     localStorage.setItem("currentSemester", JSON.stringify(semester));
-  //   }
-  // };
+    if (schedules && schedules.length > 0) {
+      const semsters = schedules.map((s) => s.semesterString);
 
-  // const refreshSchedules = async (password: string) => {
-  //   setLoading(true);
-
-  //   const localSchedules = getSchedulesFromLocalStorage();
-  //   if (localSchedules) {
-  //     setSchedules(localSchedules);
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     const fetchedSchedules: Schedule[] = await fetchSchedules(password);
-
-  //     const semester: string[] = [];
-  //     for (const schedule of fetchedSchedules) {
-  //       semester.push(schedule.semesterString);
-  //     }
-  //     refreshSemesters(semester);
-
-  //     setSchedules(fetchedSchedules);
-  //     localStorage.setItem("schedules", JSON.stringify(fetchedSchedules));
-  //   } catch (error) {
-  //     setSchedules(null);
-  //     throw new Error(
-  //       "Lỗi khi lấy thời khóa biểu: " +
-  //         (error instanceof Error ? error.message : "Không xác định")
-  //     );
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const refreshCurrentSchedule = async (semesterString: string) => {
-  //   setLoading(true);
-  //   const localSchedules = getSchedulesFromLocalStorage();
-  //   if (localSchedules) {
-  //     const schedule = localSchedules.find(
-  //       (s) => s.semesterString === semesterString
-  //     );
-  //     if (schedule) {
-  //       setCurentSchedule(schedule);
-  //       setLoading(false);
-  //       return;
-  //     }
-  //   } else {
-  //     setCurentSchedule(null);
-  //     setLoading(false);
-  //     return;
-  //   }
-  // };
+      setSemesters(semsters);
+      localStorage.setItem("semesters", JSON.stringify(semsters));
+    } else {
+      setSemesters([]);
+    }
+    setScheduleLoading(false);
+  };
 
   useEffect(() => {
     fetchSchedules("");
-    const handler = async () => fetchSchedules("");
 
-    window.addEventListener("semestersChanged", handler);
-    window.addEventListener("currentSemesterChanged", handler);
-    window.addEventListener("schedulesChanged", handler);
-    window.addEventListener("currentSchedulesChanged", handler);
-    window.addEventListener("storage", handler);
+    const handlerSchedules = async () => fetchSchedules("");
+    const handlerSemesters = async () => fetchSemesters();
+
+    window.addEventListener("semestersChanged", handlerSemesters);
+    window.addEventListener("currentSemesterChanged", handlerSemesters);
+    window.addEventListener("schedulesChanged", handlerSchedules);
+    window.addEventListener("currentSchedulesChanged", handlerSchedules);
+
+    window.addEventListener("storage", handlerSchedules);
+    window.addEventListener("storage", handlerSemesters);
     return () => {
-      window.removeEventListener("semestersChanged", handler);
-      window.removeEventListener("currentSemesterChanged", handler);
-      window.removeEventListener("schedulesChanged", handler);
-      window.removeEventListener("currentSchedulesChanged", handler);
-      window.removeEventListener("storage", handler);
+      window.removeEventListener("semestersChanged", handlerSemesters);
+      window.removeEventListener("currentSemesterChanged", handlerSemesters);
+      window.removeEventListener("schedulesChanged", handlerSchedules);
+      window.removeEventListener("currentSchedulesChanged", handlerSchedules);
+
+      window.removeEventListener("storage", handlerSchedules);
+      window.removeEventListener("storage", handlerSemesters);
     };
   }, []);
+
+  useEffect(() => {
+    if (schedules && schedules.length > 0) {
+      fetchSemesters();
+    }
+  }, [schedules]);
 
   return (
     <ScheduleContext.Provider
@@ -206,18 +175,28 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
         currentSemester,
         schedules,
         currentSchedule,
+        schedulesLoading,
         scheduleLoading,
         refreshSemesters: async () => {},
         refreshCurrentSemester: async () => {},
-        fetchSchedules,
         refreshSchedules: async () => {},
         refreshCurrentSchedule: async () => {},
+        fetchSchedules,
+        fetchSemesters,
       }}
     >
+      {schedulesLoading && schedules == null && (
+        <div className="fixed inset-0 flex items-center justify-center bg-background/60 z-50">
+          <Loader2 className="animate-spin h-5 w-5 mr-2" />
+          <span>Đang tải danh sách học kỳ...</span>
+        </div>
+      )}
+
       <SelectSemesterDialog
         isCurrentScheduleAvailable={currentSchedule != null}
         isLoggedIn={isLoggedIn()}
-        semestersFromLocalStorage={semesters || []}
+        semestersFromLocalStorage={semesters ?? []}
+        schedulesLoading={schedulesLoading}
         scheduleLoading={scheduleLoading}
       />
 
@@ -230,15 +209,21 @@ export function SelectSemesterDialog({
   isCurrentScheduleAvailable,
   isLoggedIn,
   semestersFromLocalStorage,
+  schedulesLoading,
   scheduleLoading,
 }: {
   isCurrentScheduleAvailable: boolean;
   isLoggedIn: boolean;
   semestersFromLocalStorage: string[];
+  schedulesLoading: boolean;
   scheduleLoading: boolean;
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(
+    !isCurrentScheduleAvailable
+  );
+  const [openPopover, setOpenPopover] = React.useState(false);
   const [value, setValue] = React.useState("");
+
   const semesters: { label: string; value: string }[] = [];
   for (const semester of semestersFromLocalStorage) {
     const label = semester;
@@ -247,41 +232,43 @@ export function SelectSemesterDialog({
   }
 
   ///////////////////////////////////////////////////////////////////////
-  if (!isLoggedIn || isCurrentScheduleAvailable) return null;
+  if (!isLoggedIn) return null;
+  if (isLoggedIn && isCurrentScheduleAvailable) return null;
+  if (semestersFromLocalStorage == null) return null;
+  if (schedulesLoading) return null;
 
   return (
-    <Dialog open={true}>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogContent className="sm:max-w-[425px]" isXButtonShow={false}>
         <DialogHeader>
           <DialogTitle>Chỉ còn 1 bước nữa thôi</DialogTitle>
           <DialogDescription>
             Để xem được thời khóa biểu, bạn vui lòng chọn học kỳ cần xem. Bạn có
-            thể thay đổi tùy chọn này trong phần Cài đặt.
+            thể thay đổi tùy chọn này trong phần{" "}
+            <span className="text-primary">Cài đặt</span>.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
           <div className="grid gap-3">
             {/* //////////////////////////////////////////////////////////////// */}
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover open={openPopover} onOpenChange={setOpenPopover}>
               <PopoverTrigger asChild className="w-full">
                 <Button
                   variant="outline"
                   role="combobox"
-                  aria-expanded={open}
+                  aria-expanded={openPopover}
                   className="w-full justify-between"
                   disabled={scheduleLoading}
                 >
                   {value
                     ? semesters.find((semester) => semester.value === value)
                         ?.label
-                    : scheduleLoading
-                    ? "Đang tải danh sách học kỳ..."
                     : "Chọn học kỳ"}
                   <ChevronsUpDown className="opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-full p-0">
-                <Command className="width-full">
+              <PopoverContent className=" p-0">
+                <Command>
                   <CommandList>
                     <CommandGroup>
                       {semesters.map((semester) => (
@@ -292,7 +279,7 @@ export function SelectSemesterDialog({
                             setValue(
                               currentValue === value ? "" : currentValue
                             );
-                            setOpen(false);
+                            setOpenPopover(false);
                           }}
                         >
                           {semester.label}
@@ -314,13 +301,16 @@ export function SelectSemesterDialog({
           </div>
         </div>
         <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">Để sau</Button>
+          </DialogClose>
           <Button type="submit" disabled={scheduleLoading}>
             {scheduleLoading && (
               <Loader2 className="animate-spin mr-2 h-4 w-4" />
             )}
             {scheduleLoading
               ? "Đang tải, vui lòng chờ.."
-              : "Xem thời khóa biểu"}
+              : "Tải thời khóa biểu"}
           </Button>
         </DialogFooter>
       </DialogContent>

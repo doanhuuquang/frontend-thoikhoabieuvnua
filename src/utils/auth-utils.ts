@@ -26,6 +26,10 @@ export async function auth(studentCode: string, password: string) {
 export async function logout() {
   Cookies.remove("token", { path: "/" });
   localStorage.removeItem("userProfile");
+  localStorage.removeItem("schedules");
+  localStorage.removeItem("localSchedule");
+  localStorage.removeItem("semesters");
+  localStorage.removeItem("localSemester");
   console.log(localStorage.getItem("userProfile") || "Đã xóa thông tin user");
   return true;
 }
