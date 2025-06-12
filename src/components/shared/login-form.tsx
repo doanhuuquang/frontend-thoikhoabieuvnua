@@ -17,9 +17,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Loader2, ScanFace } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { auth, logout } from "@/utils/auth-utils";
+import { auth } from "@/utils/auth-utils";
 import { useSchedule } from "@/hooks/use-schedule";
 
 const formSchema = z.object({

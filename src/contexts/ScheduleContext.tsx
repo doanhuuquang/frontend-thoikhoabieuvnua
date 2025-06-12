@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
 import { Schedule } from "@/types/Schedule";
 
 import {
-  isSemestersAvailable,
-  isScheduleAvailable,
-  getSemestersFromLocalStorage,
+  // isSemestersAvailable,
+  // isScheduleAvailable,
+  // getSemestersFromLocalStorage,
   getSchedulesFromLocalStorage,
-  fetchSchedules,
-  getCurrentSemesterFromLocalStorage,
+  // fetchSchedules,
+  // getCurrentSemesterFromLocalStorage,
   fetchSchedulesFromAPI,
 } from "@/utils/schedule-utils";
 
@@ -36,7 +36,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CommandEmpty } from "cmdk";
 import { isLoggedIn } from "@/utils/auth-utils";
 
 type ScheduleContextType = {
@@ -66,10 +65,10 @@ export const ScheduleContext = createContext<ScheduleContextType>({
 });
 
 export function ScheduleProvider({ children }: { children: React.ReactNode }) {
-  const [semesters, setSemesters] = useState<string[] | null>(null);
-  const [currentSemester, setCurrentSemester] = useState<string | null>(null);
+  const [semesters] = useState<string[] | null>(null);
+  const [currentSemester] = useState<string | null>(null);
   const [schedules, setSchedules] = useState<Schedule[] | null>(null);
-  const [currentSchedule, setCurentSchedule] = useState<Schedule | null>(null);
+  const [currentSchedule] = useState<Schedule | null>(null);
   const [scheduleLoading, setScheduleLoading] = useState(true);
 
   const fetchSchedules = async (password: string) => {
