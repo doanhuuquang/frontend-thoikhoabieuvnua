@@ -1,4 +1,4 @@
-import { formatClassTime, getSubjectStatus } from "@/utils/scheduleUtils";
+import { formatClassTime, getSubjectStatus } from "@/utils/class-time-utils";
 import { Subject } from "@/types/Schedule";
 
 import {
