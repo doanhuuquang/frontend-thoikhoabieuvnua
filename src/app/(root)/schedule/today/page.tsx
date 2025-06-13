@@ -1,4 +1,4 @@
-import { TodaySchedule } from "@/components/shared/today-schedule";
+import { TodaySchedule } from "@/components/shared/schedule-today";
 
 export default function TodaySchedulePage() {
   return (

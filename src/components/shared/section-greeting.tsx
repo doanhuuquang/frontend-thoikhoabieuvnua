@@ -5,15 +5,15 @@ import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ScheduleData } from "@/data/ScheduleData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/use-user";
+import { useSchedule } from "@/hooks/use-schedule";
 
 export default function GreetingBlock({ className }: { className?: string }) {
   const { user, loading } = useUser();
-
-  const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
+  const { currentSchedule } = useSchedule();
+  const { getTodaySchedule } = useScheduleCalculator(currentSchedule);
   const numberOfLessons =
     getTodaySchedule().reduce(
       (total, subject) => total + subject.numberOfLessons,

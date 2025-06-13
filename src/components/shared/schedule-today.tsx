@@ -1,11 +1,12 @@
 import ScheduleItems from "@/components/shared/schedule-items";
 import WeatherBlock from "@/components/shared/section-weather";
 import { getVietnamDate } from "@/utils/class-time-utils";
-import { ScheduleData } from "@/data/ScheduleData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
+import { useSchedule } from "@/hooks/use-schedule";
 
 export const TodaySchedule = () => {
-  const { getTodaySchedule } = useScheduleCalculator(ScheduleData);
+  const { currentSchedule } = useSchedule();
+  const { getTodaySchedule } = useScheduleCalculator(currentSchedule);
   const todayClasses = getTodaySchedule();
 
   return (

@@ -3,11 +3,11 @@ import * as React from "react";
 
 import { Calendar } from "@/components/ui/calendar";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
-import { ScheduleData } from "@/data/ScheduleData";
 import dayjs from "dayjs";
 import { getVietnamDate } from "@/utils/class-time-utils";
 import ScheduleItems from "@/components/shared/schedule-items";
 import { cn } from "@/lib/utils";
+import { useSchedule } from "@/hooks/use-schedule";
 
 function CalendarSelector({
   selected,
@@ -18,7 +18,9 @@ function CalendarSelector({
   onSelected: (date: dayjs.Dayjs) => void;
   className: string;
 }) {
-  const { startDate, getScheduleByDate } = useScheduleCalculator(ScheduleData);
+  const { currentSchedule } = useSchedule();
+  const { startDate, getScheduleByDate } =
+    useScheduleCalculator(currentSchedule);
 
   const isHasSchedule = (day: Date) => {
     const schedule = getScheduleByDate(dayjs(day));
@@ -49,8 +51,9 @@ function CalendarSelector({
 }
 
 export default function MonthlySchedule() {
+  const { currentSchedule } = useSchedule();
   const [selected, setSelected] = React.useState(getVietnamDate());
-  const calculator = useScheduleCalculator(ScheduleData);
+  const calculator = useScheduleCalculator(currentSchedule);
   const daySubjects = selected ? calculator.getScheduleByDate(selected) : [];
 
   return (

@@ -6,7 +6,6 @@ import ScheduleItems from "@/components/shared/schedule-items";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ScheduleData } from "@/data/ScheduleData";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import {
   Command,
@@ -21,6 +20,7 @@ import {
 } from "@/components/ui/popover";
 import { convertDateToString, getVietnamDate } from "@/utils/class-time-utils";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useSchedule } from "@/hooks/use-schedule";
 
 type Weeks = {
   weekNumber: string;
@@ -112,7 +112,8 @@ function WeekDaySelector({
   startDate: dayjs.Dayjs;
   endDate: dayjs.Dayjs;
 }) {
-  const calculader = useScheduleCalculator(ScheduleData);
+  const { currentSchedule } = useSchedule();
+  const calculader = useScheduleCalculator(currentSchedule);
   const days: dayjs.Dayjs[] = [];
   let current = startDate.startOf("day");
   const end = endDate.startOf("day");
@@ -143,8 +144,9 @@ export function WeekSelector({
   selectedDate,
   onDateChange,
 }: WeekSelectorProps) {
+  const { currentSchedule } = useSchedule();
   const [open, setOpen] = React.useState(false);
-  const calculator = useScheduleCalculator(ScheduleData);
+  const calculator = useScheduleCalculator(currentSchedule);
   const weeks: Weeks = calculator.getWeeks();
 
   const selectedWeek = weeks.find(
@@ -254,7 +256,8 @@ export function WeekSelector({
 }
 
 export const WeeklySchedule = () => {
-  const calculator = useScheduleCalculator(ScheduleData);
+  const { currentSchedule } = useSchedule();
+  const calculator = useScheduleCalculator(currentSchedule);
   const currentWeekNumber = calculator.getCurrentWeekNumber().toString();
 
   const [weekNumber, setWeekNumber] = React.useState<string | number>(
