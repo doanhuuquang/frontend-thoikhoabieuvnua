@@ -244,7 +244,6 @@ export function WeekSelector({
         </Alert>
       ) : (
         <WeekDaySelector
-          className="mt-2"
           selectedDate={selectedDate}
           onSelect={onDateChange}
           startDate={startDate}

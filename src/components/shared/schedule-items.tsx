@@ -47,6 +47,7 @@ export const ScheduleItem = ({ subject }: { subject: Subject }) => {
                 Mã môn: {subject.code} - Nhóm {subject.group}
               </p>
               <p className="text-sm text-gray-500">Phòng: {subject.room}</p>
+              <p className="text-sm text-gray-500">Lớp: {subject.classCode}</p>
               <p className="text-sm text-gray-500">
                 Giảng viên: {subject.lecturerName}
               </p>
@@ -135,7 +136,10 @@ export default function ScheduleItems({
   return (
     <div className={`space-y-3 ${className}`}>
       {(sortedSubjects ?? subjects).map((subject) => (
-        <ScheduleItem key={subject.code + subject.start} subject={subject} />
+        <ScheduleItem
+          key={subject.code + subject.start + Math.random()}
+          subject={subject}
+        />
       ))}
     </div>
   );

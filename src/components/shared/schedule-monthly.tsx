@@ -52,9 +52,17 @@ function CalendarSelector({
 
 export default function MonthlySchedule() {
   const { currentSchedule } = useSchedule();
-  const [selected, setSelected] = React.useState(getVietnamDate());
+  const [selected, setSelected] = React.useState<dayjs.Dayjs | null>(null);
   const calculator = useScheduleCalculator(currentSchedule);
   const daySubjects = selected ? calculator.getScheduleByDate(selected) : [];
+
+  React.useEffect(() => {
+    if (!selected) {
+      setSelected(getVietnamDate());
+    }
+  }, [selected]);
+
+  if (!selected) return null;
 
   return (
     <div className="space-y-5">

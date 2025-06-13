@@ -1,3 +1,5 @@
+"use client";
+
 import ScheduleItems from "@/components/shared/schedule-items";
 import WeatherBlock from "@/components/shared/section-weather";
 import { getVietnamDate } from "@/utils/class-time-utils";
