@@ -38,7 +38,7 @@ export async function getUserProfileFromDb() {
   if (!token) {
     throw new Error("Chưa đăng nhập");
   }
-  const res = await fetch("/api/profile", {
+  const res = await fetch(`${API_URL}/api/user/profile`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ export async function getUserProfileFromDb() {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Lấy thông tin thất bại");
-  console.log("Lấy thông tin user thành công", data);
+  localStorage.setItem("userProfile", JSON.stringify(data));
   return data;
 }
 

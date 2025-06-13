@@ -27,7 +27,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   const fetchUser = async () => {
     setLoading(true);
-    // Nếu chưa đăng nhập, xóa user và dừng lại
     if (!isLoggedIn()) {
       setUser(null);
       setLoading(false);
@@ -35,7 +34,11 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     }
 
     // Nếu đã đăng nhập mà chưa có thông tin về schedules -> lần đăng nhập trước bị lỗi
-    if (!localStorage.getItem("schedules") && isLoggedIn()) logout();
+    if (typeof window !== "undefined" && !localStorage.getItem("schedules")) {
+      logout();
+      setLoading(false);
+      return;
+    }
 
     // Nếu đã có user trong localStorage thì dùng luôn
     const localUser = getUserProfileFromLocalStorage();
@@ -45,16 +48,14 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    // Nếu chưa có localUser nhưng đã đăng nhập, lấy từ DB
+    // Nếu chưa có localUser, lấy từ DB
     try {
       const userFromApi = await getUserProfileFromDb();
       setUser(userFromApi);
-      localStorage.setItem("userProfile", JSON.stringify(userFromApi));
     } catch {
       setUser(null);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
