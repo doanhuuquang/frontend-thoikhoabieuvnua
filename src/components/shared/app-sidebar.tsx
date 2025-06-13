@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Logo from "@/components/shared/logo";
 import React from "react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/hooks/use-user";
@@ -42,6 +41,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import UserAvatar from "@/components/shared/user-avatar";
 
 const items = [
   {
@@ -242,21 +242,16 @@ export function AppSidebarFooter() {
       <SidebarMenu>
         {loading ? (
           <div className="flex items-center space-x-2">
-            <Skeleton className="h-9 w-9 rounded-full bg-gray-300 dark:bg-accent" />
+            <Skeleton className="h-9 w-9 rounded-full" />
             <div className="space-y-2 grow-1">
-              <Skeleton className="h-4 w-full bg-gray-300 dark:bg-accent" />
-              <Skeleton className="h-3 w-[50%] bg-gray-300 dark:bg-accent" />
+              <Skeleton className="h-4 w-full " />
+              <Skeleton className="h-3 w-[50%]" />
             </div>
           </div>
         ) : (
           <SidebarMenuItem>
             <SidebarMenuButton onClick={() => router.push("/profile")}>
-              <Avatar className="mr-2 h-8 w-8">
-                <AvatarFallback>
-                  {user?.name.trim().split(" ").filter(Boolean).at(-1)?.[0] ||
-                    "?"}
-                </AvatarFallback>
-              </Avatar>
+              <UserAvatar userName={user?.name} className="h-9 w-9" />
               <div className="flex flex-col">
                 <span>{user?.name}</span>
                 <span className="text-accent-foreground/60 text-xs font-light">

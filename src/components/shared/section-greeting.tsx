@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/use-user";
 import { useSchedule } from "@/hooks/use-schedule";
 
-export default function GreetingBlock({ className }: { className?: string }) {
+export default function GreetingSection({ className }: { className?: string }) {
   const { user, loading } = useUser();
   const { currentSchedule } = useSchedule();
   const { getTodaySchedule } = useScheduleCalculator(currentSchedule);

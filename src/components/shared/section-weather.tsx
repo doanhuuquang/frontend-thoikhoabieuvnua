@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function WeatherBlock({ className }: { className?: string }) {
+export default function WeatherSection({ className }: { className?: string }) {
   return (
     <div
       className={`flex items-center justify-between p-4 bg-background dark:bg-accent rounded-md ${className}`}

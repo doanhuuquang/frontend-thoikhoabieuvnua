@@ -1,7 +1,7 @@
 "use client";
 
 import ScheduleItems from "@/components/shared/schedule-items";
-import WeatherBlock from "@/components/shared/section-weather";
+import WeatherSection from "@/components/shared/section-weather";
 import { getVietnamDate } from "@/utils/class-time-utils";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { useSchedule } from "@/hooks/use-schedule";
@@ -24,7 +24,7 @@ export const TodaySchedule = () => {
           className="lg:col-span-2 col-span-4"
           subjects={todayClasses ?? []}
         />
-        <WeatherBlock className="lg:col-span-2 col-span-4" />
+        <WeatherSection className="lg:col-span-2 col-span-4" />
       </div>
       <div></div>
     </div>
