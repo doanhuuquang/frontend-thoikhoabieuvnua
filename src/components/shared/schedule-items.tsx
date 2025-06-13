@@ -87,7 +87,9 @@ export const ScheduleItem = ({ subject }: { subject: Subject }) => {
                 Mã môn: {subject.code} - Nhóm {subject.group}
               </li>
               <li className="text-sm text-gray-500">Phòng: {subject.room}</li>
-              <p className="text-sm text-gray-500">Lớp: {subject.classCode}</p>
+              <li className="text-sm text-gray-500">
+                Lớp: {subject.classCode}
+              </li>
 
               <li className="text-sm text-gray-500">
                 Giảng viên: {subject.lecturerName}
