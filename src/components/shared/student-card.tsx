@@ -6,6 +6,7 @@ import Image from "next/image";
 import JsBarcode from "jsbarcode";
 import { useEffect, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 function StudentCardHeader() {
   return (
@@ -16,7 +17,7 @@ function StudentCardHeader() {
         width={50}
         height={50}
       />
-      <div className="space-y-1">
+      <div className="space-y-1 text-end">
         <p className="uppercase text-sm">HỌC VIỆN NÔNG NGHIỆP VIỆT NAM</p>
         <p className="uppercase text-[10px]">
           VIETNAM NATIONAL UNIVERSITY OF AGRICULTURE
@@ -113,9 +114,14 @@ function StudentCardFooter() {
   );
 }
 
-export default function StudentCard() {
+export default function StudentCard({ className }: { className?: string }) {
   return (
-    <div className="w-full bg-background dark:bg-sidebar rounded-lg overflow-hidden relative">
+    <div
+      className={cn(
+        className,
+        "w-full h-fit bg-background dark:bg-sidebar rounded-lg overflow-hidden relative"
+      )}
+    >
       <StudentCardHeader />
       <StudentCardContent />
       <StudentCardFooter />

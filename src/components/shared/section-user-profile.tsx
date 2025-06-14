@@ -17,7 +17,7 @@ export default function UserProfileSection() {
   const { user, loading } = useUser();
 
   return (
-    <div className="space-y-3">
+    <div className="w-full space-y-3">
       <StudentCard />
       <div className="space-y-10 p-3 bg-background dark:bg-sidebar rounded-lg">
         {loading ? (
