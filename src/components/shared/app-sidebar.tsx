@@ -251,7 +251,10 @@ export function AppSidebarFooter() {
         ) : (
           <SidebarMenuItem>
             <SidebarMenuButton onClick={() => router.push("/profile")}>
-              <UserAvatar userName={user?.name} className="h-9 w-9" />
+              <UserAvatar
+                userName={user?.name}
+                className="h-9 w-9 rounded-full"
+              />
               <div className="flex flex-col">
                 <span>{user?.name}</span>
                 <span className="text-accent-foreground/60 text-xs font-light">
