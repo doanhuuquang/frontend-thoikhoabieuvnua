@@ -72,28 +72,30 @@ function StudentCardContent() {
           <div className="flex-grow flex flex-col items-center space-y-3">
             <p className="uppercase text-center font-semibold">Thẻ sinh viên</p>
             <div className="w-full relative">
-              <div className="w-full flex items-center justify-between">
-                <p className="text-sm font-light">Họ tên: </p>
-                <p className="text-sm text-end">{user?.name}</p>
-              </div>
-              <div className="w-full flex items-center justify-between">
-                <p className="text-sm font-light">Ngày sinh: </p>
-                <p className="text-sm text-end">{user?.dateOfBirth}</p>
-              </div>
-              <div className="w-full flex items-center justify-between">
-                <p className="text-sm font-light">Lớp: </p>
-                <p className="text-sm text-end">{user?.className}</p>
-              </div>
-              <div className="w-full flex items-center justify-between">
-                <p className="text-sm font-light">Hạn sử dụng: </p>
-                <p className="text-sm text-end">{user?.academicYear}</p>
+              <div className="w-full relative z-1">
+                <div className="w-full flex items-center justify-between">
+                  <p className="text-sm font-light">Họ tên: </p>
+                  <p className="text-sm text-end">{user?.name}</p>
+                </div>
+                <div className="w-full flex items-center justify-between">
+                  <p className="text-sm font-light">Ngày sinh: </p>
+                  <p className="text-sm text-end">{user?.dateOfBirth}</p>
+                </div>
+                <div className="w-full flex items-center justify-between">
+                  <p className="text-sm font-light">Lớp: </p>
+                  <p className="text-sm text-end">{user?.className}</p>
+                </div>
+                <div className="w-full flex items-center justify-between">
+                  <p className="text-sm font-light">Hạn sử dụng: </p>
+                  <p className="text-sm text-end">{user?.academicYear}</p>
+                </div>
               </div>
               <Image
                 src={"/assets/images/vnua-hoa-van.svg"}
                 alt="Vnua decor"
                 width={100}
                 height={100}
-                className="opacity-30 dark:opacity-5 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 "
+                className="opacity-30 dark:opacity-5 absolute z-0 top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 "
               />
             </div>
             <svg ref={barcodeRef}></svg>
