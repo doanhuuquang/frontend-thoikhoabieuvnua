@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/form";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { auth } from "@/utils/auth-utils";
+import { auth, logout } from "@/utils/auth-utils";
+import { fetchSchedulesFromAPI } from "@/utils/schedule-utils";
 import { useSchedule } from "@/hooks/use-schedule";
 
 const formSchema = z.object({
@@ -32,7 +33,7 @@ const formSchema = z.object({
 export default function LoginForm({ className }: { className?: string }) {
   const [isLoading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-  const { fetchSchedules } = useSchedule();
+  const { setSchedulesLoading } = useSchedule();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,7 +49,8 @@ export default function LoginForm({ className }: { className?: string }) {
 
     try {
       await auth(values.studentCode, values.password);
-      await fetchSchedules(values.password);
+      setSchedulesLoading(true);
+      await fetchSchedulesFromAPI(values.password);
       window.location.reload();
 
       toast.success("Thành công", {
@@ -56,11 +58,14 @@ export default function LoginForm({ className }: { className?: string }) {
         position: "top-center",
         description: "Đăng nhập thành công",
         action: {
-          label: "Ẩn thông báo",
+          label: "Ẩn",
           onClick: () => console.log("Undo"),
         },
       });
     } catch (err) {
+      logout();
+      window.location.reload();
+
       if (err instanceof Error) {
         setError(err.message);
       } else if (typeof err === "string") {

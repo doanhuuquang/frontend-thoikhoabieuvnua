@@ -30,6 +30,7 @@ export async function logout() {
   localStorage.removeItem("currentSchedule");
   localStorage.removeItem("semesters");
   localStorage.removeItem("currentSemester");
+
   return true;
 }
 
