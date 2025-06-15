@@ -121,7 +121,7 @@ export default function StudentCard({ className }: { className?: string }) {
     <div
       className={cn(
         className,
-        "w-full h-fit bg-background dark:bg-sidebar rounded-lg overflow-hidden relative"
+        "h-fit bg-background dark:bg-sidebar rounded-lg overflow-hidden relative"
       )}
     >
       <StudentCardHeader />

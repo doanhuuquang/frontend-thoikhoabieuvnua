@@ -6,9 +6,9 @@ import { useUser } from "@/hooks/use-user";
 
 function UserProfileRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex gap-3 items-center justify-between">
       <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="text-sm text-end    ">{value}</p>
+      <p className="text-sm text-end">{value}</p>
     </div>
   );
 }
@@ -18,8 +18,8 @@ export default function UserProfileSection() {
 
   return (
     <div className="w-full space-y-3">
-      <StudentCard />
-      <div className="space-y-10 p-3 bg-background dark:bg-sidebar rounded-lg">
+      <StudentCard className="w-full" />
+      <div className="w-full flex flex-wrap gap-3 space-y-10 p-3 bg-background dark:bg-sidebar rounded-lg">
         {loading ? (
           <div className="space-y-2">
             <Skeleton className="w-50 h-5 " />
@@ -30,7 +30,7 @@ export default function UserProfileSection() {
             <Skeleton className="w-25 h-5 " />
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-2 grow">
             <p className="font-medium text-primary mb-2">Thông tin đào tạo</p>
 
             <UserProfileRow label="Ngày sinh" value={user?.dateOfBirth ?? ""} />
@@ -60,7 +60,7 @@ export default function UserProfileSection() {
             <Skeleton className="w-25 h-5 " />
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-2 grow">
             <p className="font-medium text-primary mb-2">Thông tin khác</p>
 
             <UserProfileRow
