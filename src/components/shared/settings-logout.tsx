@@ -16,7 +16,7 @@ import { LogOut } from "lucide-react";
 import { toast } from "sonner";
 import { logout } from "@/utils/auth-utils";
 
-export default function LogoutButton() {
+export function LogoutButton() {
   const handleLogout = () => {
     logout();
     window.location.reload();
@@ -36,7 +36,7 @@ export default function LogoutButton() {
       <AlertDialogTrigger asChild>
         <Button
           variant="ghost"
-          className="w-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white flex justify-between"
+          className="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white flex justify-between"
         >
           <span>Chuyển đổi tài khoản</span>
           <LogOut />
@@ -61,5 +61,24 @@ export default function LogoutButton() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+}
+
+export default function SettingsLogout() {
+  return (
+    <div className="space-y-3  rounded-md border bg-background/50 dark:bg-sidebar/50">
+      <div className="w-full px-3 pt-3 pb-1.5 space-y-2">
+        <h4 className="text-lg font-bold">Tài khoản</h4>
+        <p className="text-sm text-muted-foreground">
+          Mọi dữ liệu đã lưu sẽ được xóa và bạn sẽ được đăng xuất khỏi tài khoản
+          của mình. Bạn sẽ cần đăng nhập lại để sử dụng ứng dụng.
+        </p>
+      </div>
+      <div className="w-full h-[1px] bg-muted"></div>
+      <div className="flex items-center justify-between gap-3 px-3 pb-3 pt-1.5">
+        <div></div>
+        <LogoutButton />
+      </div>
+    </div>
   );
 }

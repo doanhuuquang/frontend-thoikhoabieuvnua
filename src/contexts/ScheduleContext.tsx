@@ -50,6 +50,7 @@ type ScheduleContextType = {
   fetchCurrentSchedule: (semesterString: string) => Promise<void>;
   fetchSemesters: () => Promise<void>;
   fetchCurrentSemester: (semester: string) => Promise<void>;
+  openSemesterDialog: () => void;
 };
 
 export const ScheduleContext = createContext<ScheduleContextType>({
@@ -64,6 +65,7 @@ export const ScheduleContext = createContext<ScheduleContextType>({
   fetchCurrentSchedule: async () => {},
   fetchSemesters: async () => {},
   fetchCurrentSemester: async () => {},
+  openSemesterDialog: () => {},
 });
 
 export function ScheduleProvider({ children }: { children: React.ReactNode }) {
@@ -81,6 +83,9 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
   );
   const [schedulesLoading, setSchedulesLoading] = useState(false);
   const [scheduleLoading, setScheduleLoading] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const openSemesterDialog = () => setOpenDialog(true);
 
   const fetchSchedules = async () => {
     setSchedulesLoading(true);
@@ -196,6 +201,7 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
         fetchCurrentSchedule,
         fetchSemesters,
         fetchCurrentSemester,
+        openSemesterDialog,
       }}
     >
       {schedulesLoading && schedules == null && (
@@ -205,14 +211,23 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      <SelectSemesterDialog />
+      <SelectSemesterDialog
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+      />
 
       {children}
     </ScheduleContext.Provider>
   );
 }
 
-export function SelectSemesterDialog() {
+export function SelectSemesterDialog({
+  openDialog,
+  setOpenDialog,
+}: {
+  openDialog: boolean;
+  setOpenDialog: (open: boolean) => void;
+}) {
   const {
     fetchCurrentSemester,
     semesters,
@@ -222,7 +237,6 @@ export function SelectSemesterDialog() {
   } = useSchedule();
 
   const [value, setValue] = React.useState(currentSemester ?? "");
-  const [openDialog, setOpenDialog] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     setValue(currentSemester ?? "");
