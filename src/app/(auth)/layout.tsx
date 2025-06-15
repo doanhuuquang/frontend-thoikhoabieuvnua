@@ -16,24 +16,27 @@ export default function AuthLayout({
         </div>
       </div>
       {/* Banner */}
-      <div className="lg:w-[50%] flex h-full rounded-2xl flex-col items-center justify-between bg-linear-to-br from-secondary/90 to-secondary relative overflow-hidden">
-        <div className="flex flex-col items-center gap-5 py-10 px-3">
-          <Image alt="Logo" src={"/logo.svg"} width={50} height={50} />
-          <p className="max-w-[400px] lg:text-2xl text-lg text-center font-semibold text-secondary-foreground">
-            Lịch học và hơn thế nữa – tất cả trong một ứng dụng duy nhất
-          </p>
-          <p className="max-w-[440px] lg:text-lg text-sm text-center font-light text-secondary-foreground/70">
-            Xem thời khóa biểu, ghi chú, nhắc nhở... dễ dàng và trực quan.
-          </p>
+      <div className="lg:w-[50%] h-full rounded-2xl bg-linear-to-br from-secondary/60 to-secondary relative overflow-hidden">
+        <div className="w-full h-full flex flex-col items-center justify-between relative z-10">
+          <div className="flex flex-col items-center gap-5 py-10 px-3">
+            <Image alt="Logo" src={"/logo.svg"} width={50} height={50} />
+            <p className="max-w-[400px] lg:text-2xl text-lg text-center font-semibold text-secondary-foreground">
+              Lịch học và hơn thế nữa – tất cả trong một ứng dụng duy nhất
+            </p>
+            <p className="max-w-[440px] lg:text-lg text-sm text-center font-light text-secondary-foreground/70">
+              Xem thời khóa biểu, ghi chú, nhắc nhở... dễ dàng và trực quan.
+            </p>
+          </div>
+          {/* Mock up */}
+          <Image
+            alt="Mockup"
+            src={"/assets/images/banner-mockup.svg"}
+            width={0}
+            height={0}
+            className="w-full h-auto"
+          />
         </div>
-        {/* Mock up */}
-        <Image
-          alt="Mockup"
-          src={"/assets/images/banner-mockup.svg"}
-          width={800}
-          height={1000}
-          className="w-[full]"
-        />
+        <div className="w-[10000px] h-45 bg-linear-to-r from-secondary/20 to-secondary/5 absolute z-9 top-10 left-0 -translate-x-[50%] -translate-y-[50%] rotate-45"></div>
       </div>
     </main>
   );
