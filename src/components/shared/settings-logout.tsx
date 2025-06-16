@@ -76,7 +76,6 @@ export default function SettingsLogout() {
       </div>
       <div className="w-full h-[1px] bg-muted"></div>
       <div className="flex items-center justify-between gap-3 px-3 pb-3 pt-1.5">
-        <div></div>
         <LogoutButton />
       </div>
     </div>

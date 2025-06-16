@@ -17,7 +17,7 @@ export default function SettingsSchedule() {
       <div className="w-full h-[1px] bg-muted"></div>
       <div className="flex items-center justify-between gap-3 px-3 pb-3 pt-1.5">
         <p className="text-sm text-muted-foreground">
-          học kỳ hiện tại: {currentSemester ?? "chưa được chọn"}
+          Hiện tại: {currentSemester || "Chưa có học kỳ nào được chọn"}
         </p>
         <Button variant={"outline"} onClick={() => openSemesterDialog()}>
           Chọn học kỳ

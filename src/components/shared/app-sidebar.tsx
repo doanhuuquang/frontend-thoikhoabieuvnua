@@ -205,7 +205,7 @@ export function AppSidebarContent() {
                           className={
                             subItem.href === pathName
                               ? "text-foreground text-sm transition rounded-md p-2"
-                              : "text-foreground/50 hover:bg-accent hover:text-foreground font-light text-sm transition rounded-md p-2"
+                              : "text-foreground/50 hover:bg-accent hover:text-foreground text-sm transition rounded-md p-2"
                           }
                         >
                           <span>{subItem.label}</span>

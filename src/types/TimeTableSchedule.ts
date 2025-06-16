@@ -1,4 +1,4 @@
-export interface Subject {
+export interface TimeTableSubject {
   code: string;
   name: string;
   group: string;
@@ -11,8 +11,8 @@ export interface Subject {
   subjectDate: string;
 }
 
-export interface Schedule {
+export interface TimeTableSchedule {
   semesterString: string;
   semesterStartDate: string;
-  timeTable: Record<string, Subject[]>;
+  schedule: Record<string, TimeTableSubject[]>;
 }

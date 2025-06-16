@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { convertDateToString, getVietnamDate } from "@/utils/class-time-utils";
-import { Schedule, Subject } from "@/types/Schedule";
+import { TimeTableSchedule, TimeTableSubject } from "@/types/TimeTableSchedule";
 import { useMemo } from "react";
 
 dayjs.extend(isSameOrBefore);
@@ -11,13 +11,15 @@ const WEEK_END_OFFSET = DAYS_IN_WEEK - 1;
 const DAY_UNIT = "day";
 const DATE_FORMAT = "YYYY-MM-DD";
 
-export const useScheduleCalculator = (schedule: Schedule | null) => {
-  const startDate = dayjs(schedule?.semesterStartDate);
+export const useScheduleCalculator = (
+  timeTableSchedule: TimeTableSchedule | null
+) => {
+  const startDate = dayjs(timeTableSchedule?.semesterStartDate);
 
   // Tính số tuần kể từ ngày bắt đầu học kỳ đến ngày truyền vào
   const getWeekNumberByDate = (date: dayjs.Dayjs): number => {
-    if (!schedule?.semesterStartDate) return 0;
-    const start = dayjs(schedule.semesterStartDate).startOf(DAY_UNIT);
+    if (!timeTableSchedule?.semesterStartDate) return 0;
+    const start = dayjs(timeTableSchedule.semesterStartDate).startOf(DAY_UNIT);
     const end = date.startOf(DAY_UNIT);
     const diffDays = end.diff(start, DAY_UNIT);
     return Math.floor(diffDays / DAYS_IN_WEEK) + 1;
@@ -28,9 +30,12 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
 
   // Lấy danh sách các tuần trong học kỳ
   const getWeeks = () => {
-    if (!schedule?.timeTable || !schedule.semesterStartDate) return [];
+    if (!timeTableSchedule?.schedule || !timeTableSchedule.semesterStartDate)
+      return [];
 
-    const lastDateStr = Object.keys(schedule.timeTable).findLast(Boolean);
+    const lastDateStr = Object.keys(timeTableSchedule.schedule).findLast(
+      Boolean
+    );
     if (!lastDateStr) return [];
 
     const lastDateOfSemester = dayjs(lastDateStr).startOf(DAY_UNIT);
@@ -51,10 +56,10 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
   };
 
   // Lấy lịch học theo ngày
-  const getScheduleByDate = (date: dayjs.Dayjs): Subject[] => {
-    if (!schedule) return [];
+  const getScheduleByDate = (date: dayjs.Dayjs): TimeTableSubject[] => {
+    if (!timeTableSchedule) return [];
     const key = convertDateToString(date, "-", DATE_FORMAT);
-    return schedule.timeTable[key] || [];
+    return timeTableSchedule.schedule[key] || [];
   };
 
   // Lấy lịch học hôm nay
@@ -67,16 +72,17 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
   }: {
     weekStartDate: dayjs.Dayjs;
     weekEndDate: dayjs.Dayjs;
-  }): Subject[] => {
-    if (!schedule) return [];
-    const subjects: Subject[] = [];
+  }): TimeTableSubject[] => {
+    if (!timeTableSchedule) return [];
+    const subjects: TimeTableSubject[] = [];
     let current = weekStartDate.startOf(DAY_UNIT);
     const end = weekEndDate.startOf(DAY_UNIT);
 
     while (current.isSameOrBefore(end)) {
       const daySubjects =
-        schedule.timeTable[convertDateToString(current, "-", DATE_FORMAT)] ||
-        [];
+        timeTableSchedule.schedule[
+          convertDateToString(current, "-", DATE_FORMAT)
+        ] || [];
       subjects.push(...daySubjects);
       current = current.add(1, DAY_UNIT);
     }
@@ -93,6 +99,6 @@ export const useScheduleCalculator = (schedule: Schedule | null) => {
       getScheduleByDate,
       getWeeklySchedule,
     }),
-    [schedule]
+    [timeTableSchedule]
   );
 };

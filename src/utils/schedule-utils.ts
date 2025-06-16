@@ -1,11 +1,11 @@
-import { Schedule } from "@/types/Schedule";
+import { TimeTableSchedule } from "@/types/TimeTableSchedule";
 import Cookies from "js-cookie";
 
 const API_URL = "https://thoikhoabieuvnua.up.railway.app";
 
-export async function fetchSchedulesFromAPI(
+export async function fetchTimeTableSchedulesFromAPI(
   password: string
-): Promise<Schedule[]> {
+): Promise<TimeTableSchedule[]> {
   const token = Cookies.get("token");
   if (!token) {
     throw new Error("Chưa đăng nhập");
@@ -24,13 +24,13 @@ export async function fetchSchedulesFromAPI(
   if (!res.ok) {
     throw new Error(data.message || "Lấy danh sách lịch học thất bại");
   }
-  localStorage.setItem("schedules", JSON.stringify(data));
+  localStorage.setItem("time-table-schedules", JSON.stringify(data));
   return data;
 }
 
-export function getSemestersFromLocalStorage() {
+export function getTimeTableSemestersFromLocalStorage() {
   if (typeof window === "undefined") return null;
-  const data = localStorage.getItem("semesters");
+  const data = localStorage.getItem("time-table-semesters");
   if (!data) return null;
   try {
     return JSON.parse(data) as string[];
@@ -39,9 +39,9 @@ export function getSemestersFromLocalStorage() {
   }
 }
 
-export function getCurrentSemesterFromLocalStorage() {
+export function getCurrentTimeTableSemesterFromLocalStorage() {
   if (typeof window === "undefined") return null;
-  const data = localStorage.getItem("currentSemester");
+  const data = localStorage.getItem("current-time-table-semester");
   if (!data) return null;
   try {
     return JSON.parse(data) as string;
@@ -50,23 +50,23 @@ export function getCurrentSemesterFromLocalStorage() {
   }
 }
 
-export function getSchedulesFromLocalStorage(): Schedule[] | null {
+export function getTimeTableSchedulesFromLocalStorage() {
   if (typeof window === "undefined") return null;
-  const data = localStorage.getItem("schedules");
+  const data = localStorage.getItem("time-table-schedules");
   if (!data) return null;
   try {
-    return JSON.parse(data) as Schedule[];
+    return JSON.parse(data) as TimeTableSchedule[];
   } catch {
     return null;
   }
 }
 
-export function getCurrentScheduleFromLocalStorage(): Schedule | null {
+export function getCurrentTimeTableScheduleFromLocalStorage(): TimeTableSchedule | null {
   if (typeof window === "undefined") return null;
-  const data = localStorage.getItem("currentSchedule");
+  const data = localStorage.getItem("current-time-table-Schedule");
   if (!data) return null;
   try {
-    return JSON.parse(data) as Schedule;
+    return JSON.parse(data) as TimeTableSchedule;
   } catch {
     return null;
   }

@@ -10,6 +10,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/use-user";
 import { useSchedule } from "@/hooks/use-schedule";
 
+enum Greetings {
+  HowAreYouToday = "Hôm nay bạn thế nào rồi?",
+  GoodMorning = "Chúc bạn một ngày mới tốt lành!",
+  KeepGoing = "Cố lên nhé, mọi chuyện sẽ ổn thôi!",
+  StayPositive = "Luôn giữ tinh thần tích cực nhé!",
+  HaveAGreatDay = "Chúc bạn một ngày tuyệt vời!",
+  Smile = "Đừng quên mỉm cười nhé!",
+  TakeCare = "Nhớ giữ gìn sức khỏe!",
+  BelieveInYourself = "Hãy tin vào bản thân mình!",
+  NewOpportunities = "Hôm nay sẽ có nhiều cơ hội mới cho bạn!",
+}
+
 export default function GreetingSection({ className }: { className?: string }) {
   const { user, loading } = useUser();
   const { currentSchedule } = useSchedule();
@@ -23,7 +35,7 @@ export default function GreetingSection({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        `min-h-[180px] flex flex-wrap gap-10 items-center justify-center p-4 bg-secondary rounded-md overflow-hidden text-secondary-foreground`,
+        `min-h-[180px] flex flex-wrap gap-10 items-center justify-center p-4 bg-linear-to-br from-secondary/90 to-secondary rounded-md overflow-hidden text-secondary-foreground`,
         className
       )}
     >
@@ -32,25 +44,26 @@ export default function GreetingSection({ className }: { className?: string }) {
         // Skeleton loading
         <div className="grow space-y-2 flex flex-col justify-between lg:h-full">
           <div className="space-y-2">
-            <Skeleton className="h-7 w-full bg-blue-500" />
-            <Skeleton className="h-4 w-[50%] bg-blue-500" />
+            <Skeleton className="h-7 w-full bg-blue-500 dark:bg-blue-700" />
+            <Skeleton className="h-4 w-[50%] bg-blue-500 dark:bg-blue-700" />
           </div>
-          <Skeleton className="h-5 w-[70%] bg-blue-500" />
+          <Skeleton className="h-5 w-[70%] bg-blue-500 dark:bg-blue-700" />
         </div>
       ) : (
         // Đã đăng nhập
         <div className="flex flex-col grow lg:items-start items-center text-center lg:text-start md:text-start">
           <h2 className="text-2xl">Xin chào, {user?.name}!</h2>
           <p className="text-secondary-foreground/80">
-            Hôm nay bạn thế nào rồi?
+            {
+              Object.values(Greetings)[
+                Math.floor(Math.random() * Object.values(Greetings).length)
+              ]
+            }
           </p>
           {numberOfLessons > 0 ? (
             <p className="text-sm text-secondary-foreground/80 ">
               Hôm nay bạn có
-              <span className="text-primary font-bold">
-                {" "}
-                {numberOfLessons}{" "}
-              </span>
+              <span className="text-primary font-bold">{numberOfLessons} </span>
               tiết học, đừng cúp học đấy nhé!
             </p>
           ) : (

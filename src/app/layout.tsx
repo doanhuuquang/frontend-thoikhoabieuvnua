@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Montserrat } from "next/font/google";
+import { Nunito } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScheduleProvider } from "@/contexts/ScheduleContext";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const nunito = Nunito({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-nunito",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${montserrat.variable} bg-background text-foreground antialiased`}
+      className={`${nunito.className} bg-background text-foreground antialiased`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>

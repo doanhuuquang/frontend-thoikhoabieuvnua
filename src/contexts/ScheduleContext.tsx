@@ -4,13 +4,13 @@ import React, { createContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Schedule } from "@/types/Schedule";
+import { TimeTableSchedule } from "@/types/TimeTableSchedule";
 
 import {
-  getSchedulesFromLocalStorage,
-  getSemestersFromLocalStorage,
-  getCurrentSemesterFromLocalStorage,
-  getCurrentScheduleFromLocalStorage,
+  getTimeTableSchedulesFromLocalStorage,
+  getTimeTableSemestersFromLocalStorage,
+  getCurrentTimeTableSemesterFromLocalStorage,
+  getCurrentTimeTableScheduleFromLocalStorage,
 } from "@/utils/schedule-utils";
 
 import {
@@ -39,85 +39,95 @@ import { useSchedule } from "@/hooks/use-schedule";
 import { toast } from "sonner";
 
 type ScheduleContextType = {
-  semesters: string[] | null;
-  currentSemester: string | null;
-  schedules: Schedule[] | null;
-  currentSchedule: Schedule | null;
+  timeTableSemesters: string[] | null;
+  currentTimeTableSemester: string | null;
+  timeTableSchedules: TimeTableSchedule[] | null;
+  currentTimeTableSchedule: TimeTableSchedule | null;
   schedulesLoading: boolean;
   scheduleLoading: boolean;
   setSchedulesLoading: (loading: boolean) => void;
-  fetchSchedules: () => Promise<void>;
-  fetchCurrentSchedule: (semesterString: string) => Promise<void>;
-  fetchSemesters: () => Promise<void>;
-  fetchCurrentSemester: (semester: string) => Promise<void>;
+  fetchTimeTableSchedules: () => Promise<void>;
+  fetchCurrentTimeTableSchedule: (semesterString: string) => Promise<void>;
+  fetchTimeTableSemesters: () => Promise<void>;
+  fetchCurrentTimeTableSemester: (semester: string) => Promise<void>;
   openSemesterDialog: () => void;
 };
 
 export const ScheduleContext = createContext<ScheduleContextType>({
-  semesters: null,
-  currentSemester: null,
-  schedules: null,
-  currentSchedule: null,
+  timeTableSemesters: null,
+  currentTimeTableSemester: null,
+  timeTableSchedules: null,
+  currentTimeTableSchedule: null,
   schedulesLoading: true,
   scheduleLoading: true,
   setSchedulesLoading: () => {},
-  fetchSchedules: async () => {},
-  fetchCurrentSchedule: async () => {},
-  fetchSemesters: async () => {},
-  fetchCurrentSemester: async () => {},
+  fetchTimeTableSchedules: async () => {},
+  fetchCurrentTimeTableSchedule: async () => {},
+  fetchTimeTableSemesters: async () => {},
+  fetchCurrentTimeTableSemester: async () => {},
   openSemesterDialog: () => {},
 });
 
 export function ScheduleProvider({ children }: { children: React.ReactNode }) {
-  const [semesters, setSemesters] = useState<string[] | null>(
-    getSemestersFromLocalStorage()
+  /////////////////////////////////////////////////////////////////////////////////////
+  const [timeTableSemesters, setTimeTableSemesters] = useState<string[] | null>(
+    getTimeTableSemestersFromLocalStorage()
   );
-  const [currentSemester, setCurrentSemester] = useState<string | null>(
-    getCurrentSemesterFromLocalStorage()
-  );
-  const [schedules, setSchedules] = useState<Schedule[] | null>(
-    getSchedulesFromLocalStorage()
-  );
-  const [currentSchedule, setCurrentSchedule] = useState<Schedule | null>(
-    getCurrentScheduleFromLocalStorage()
-  );
+  /////////////////////////////////////////////////////////////////////////////////////
+  const [currentTimeTableSemester, setCurrentTimeTableSemester] = useState<
+    string | null
+  >(getCurrentTimeTableSemesterFromLocalStorage());
+  /////////////////////////////////////////////////////////////////////////////////////
+  const [timeTableSchedules, setTimeTableSchedules] = useState<
+    TimeTableSchedule[] | null
+  >(getTimeTableSchedulesFromLocalStorage());
+  /////////////////////////////////////////////////////////////////////////////////////
+  const [currentTimeTableSchedule, setCurrentTimeTableSchedule] =
+    useState<TimeTableSchedule | null>(
+      getCurrentTimeTableScheduleFromLocalStorage()
+    );
+  /////////////////////////////////////////////////////////////////////////////////////
   const [schedulesLoading, setSchedulesLoading] = useState(false);
   const [scheduleLoading, setScheduleLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
   const openSemesterDialog = () => setOpenDialog(true);
 
-  const fetchSchedules = async () => {
+  const fetchTimeTableSchedules = async () => {
     setSchedulesLoading(true);
 
-    const localSchedules = getSchedulesFromLocalStorage();
-    if (localSchedules) {
-      setSchedules(localSchedules);
+    const localTimeTableSchedules = getTimeTableSchedulesFromLocalStorage();
+    if (localTimeTableSchedules) {
+      setTimeTableSchedules(localTimeTableSchedules);
     }
 
     setSchedulesLoading(false);
   };
 
-  const fetchCurrentSchedule = async (semesterString: string) => {
+  const fetchCurrentTimeTableSchedule = async (semesterString: string) => {
     setScheduleLoading(true);
 
-    const localCurrentSchedule = getCurrentScheduleFromLocalStorage();
+    const localCurrentTimeTableSchedule =
+      getCurrentTimeTableScheduleFromLocalStorage();
     if (
-      localCurrentSchedule &&
-      localCurrentSchedule.semesterString === semesterString
+      localCurrentTimeTableSchedule &&
+      localCurrentTimeTableSchedule.semesterString === semesterString
     ) {
-      setCurrentSchedule(localCurrentSchedule);
+      setCurrentTimeTableSchedule(localCurrentTimeTableSchedule);
       setScheduleLoading(false);
       return;
     }
 
-    const found = schedules?.find(
-      (schedule) => schedule.semesterString === semesterString
+    const found = timeTableSchedules?.find(
+      (timeTableSchedule) => timeTableSchedule.semesterString === semesterString
     );
 
     if (found) {
-      setCurrentSchedule(found);
-      localStorage.setItem("currentSchedule", JSON.stringify(found));
+      setCurrentTimeTableSchedule(found);
+      localStorage.setItem(
+        "current-time-table-Schedule",
+        JSON.stringify(found)
+      );
       toast.success("Thành công", {
         duration: 3000,
         position: "top-center",
@@ -132,79 +142,87 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
     setScheduleLoading(false);
   };
 
-  const fetchSemesters = async () => {
+  const fetchTimeTableSemesters = async () => {
     setScheduleLoading(true);
 
-    const localSemesters = getSemestersFromLocalStorage();
-    if (localSemesters) {
-      setSemesters(localSemesters);
+    const localTimeTableSemesters = getTimeTableSemestersFromLocalStorage();
+    if (localTimeTableSemesters) {
+      setTimeTableSemesters(localTimeTableSemesters);
       setScheduleLoading(false);
       return;
     }
 
-    if (schedules && schedules.length > 0) {
-      const semsters = schedules.map((s) => s.semesterString);
-      setSemesters(semsters);
-      localStorage.setItem("semesters", JSON.stringify(semsters));
+    if (timeTableSchedules && timeTableSchedules.length > 0) {
+      const timeTableSemsters = timeTableSchedules.map((s) => s.semesterString);
+      setTimeTableSemesters(timeTableSemsters);
+      localStorage.setItem(
+        "time-table-semesters",
+        JSON.stringify(timeTableSemsters)
+      );
     } else {
-      setSemesters([]);
+      setTimeTableSemesters([]);
     }
     setScheduleLoading(false);
   };
 
-  const fetchCurrentSemester = async (semster: string) => {
-    const localSemesters = getSemestersFromLocalStorage();
-    const localCurrentSemester = getCurrentSemesterFromLocalStorage();
+  const fetchCurrentTimeTableSemester = async (semster: string) => {
+    const localTimeTableSemesters = getTimeTableSemestersFromLocalStorage();
+    const localTimeTableSemester =
+      getCurrentTimeTableSemesterFromLocalStorage();
 
-    if (localCurrentSemester && localCurrentSemester === semster) {
+    if (localTimeTableSemester && localTimeTableSemester === semster) {
       setScheduleLoading(false);
       return;
     }
-    if (localSemesters == null || localSemesters.length < 0) {
-      setCurrentSemester(null);
+    if (localTimeTableSemesters == null || localTimeTableSemesters.length < 0) {
+      setCurrentTimeTableSemester(null);
       setScheduleLoading(false);
       return;
     }
-    if (localSemesters?.includes(semster)) {
-      setCurrentSemester(semster);
-      localStorage.setItem("currentSemester", JSON.stringify(semster));
+    if (localTimeTableSemester?.includes(semster)) {
+      setCurrentTimeTableSemester(semster);
+      localStorage.setItem(
+        "current-time-table-semester",
+        JSON.stringify(semster)
+      );
       setScheduleLoading(false);
     }
   };
 
   useEffect(() => {
     if (!isLoggedIn()) return;
-    fetchSchedules();
+    fetchTimeTableSchedules();
   }, []);
 
   useEffect(() => {
-    if (!schedules || schedules.length <= 0) return;
-    fetchSemesters();
-  }, [schedules]);
+    if (!timeTableSchedules || timeTableSchedules.length <= 0) return;
+    fetchTimeTableSemesters();
+  }, [timeTableSchedules]);
 
   useEffect(() => {
-    if (!semesters || semesters.length <= 0) return;
-    if (currentSemester) fetchCurrentSchedule(currentSemester);
-  }, [semesters, currentSemester]);
+    if (!timeTableSemesters || timeTableSemesters.length <= 0) return;
+    if (currentTimeTableSemester)
+      fetchCurrentTimeTableSchedule(currentTimeTableSemester);
+  }, [timeTableSemesters, currentTimeTableSemester]);
 
   return (
     <ScheduleContext.Provider
       value={{
-        semesters,
-        currentSemester,
-        schedules,
-        currentSchedule,
+        timeTableSemesters,
+        currentTimeTableSemester,
+        timeTableSchedules,
+        currentTimeTableSchedule,
         schedulesLoading,
         scheduleLoading,
         setSchedulesLoading,
-        fetchSchedules,
-        fetchCurrentSchedule,
-        fetchSemesters,
-        fetchCurrentSemester,
+        fetchTimeTableSchedules,
+        fetchCurrentTimeTableSchedule,
+        fetchTimeTableSemesters,
+        fetchCurrentTimeTableSemester,
         openSemesterDialog,
       }}
     >
-      {schedulesLoading && schedules == null && (
+      {schedulesLoading && timeTableSchedules == null && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 text-white z-50">
           <Loader2 className="animate-spin h-5 w-5 mr-2" />
           <span>Đang tải danh sách học kỳ...</span>
@@ -229,24 +247,26 @@ export function SelectSemesterDialog({
   setOpenDialog: (open: boolean) => void;
 }) {
   const {
-    fetchCurrentSemester,
-    semesters,
-    currentSemester,
-    currentSchedule,
+    fetchCurrentTimeTableSemester,
+    timeTableSemesters,
+    currentTimeTableSemester,
+    currentTimeTableSchedule,
     scheduleLoading,
   } = useSchedule();
 
-  const [value, setValue] = React.useState(currentSemester ?? "");
+  const [value, setValue] = React.useState(currentTimeTableSemester ?? "");
 
   React.useEffect(() => {
-    setValue(currentSemester ?? "");
-    setOpenDialog((semesters?.length ?? 0) > 0 && !currentSemester);
-  }, [currentSemester, currentSchedule, semesters]);
+    setValue(currentTimeTableSemester ?? "");
+    setOpenDialog(
+      (timeTableSemesters?.length ?? 0) > 0 && !currentTimeTableSemester
+    );
+  }, [currentTimeTableSemester, currentTimeTableSchedule, timeTableSemesters]);
 
   const [openPopover, setOpenPopover] = React.useState(false);
 
   const semestersPopover: { label: string; value: string }[] = (
-    semesters ?? []
+    timeTableSemesters ?? []
   ).map((semester) => ({
     label: semester,
     value: semester,
@@ -254,7 +274,7 @@ export function SelectSemesterDialog({
 
   const handleSelectSemester = async () => {
     if (!value) return;
-    await fetchCurrentSemester(value);
+    await fetchCurrentTimeTableSemester(value);
     setOpenDialog(false);
   };
 
