@@ -30,6 +30,7 @@ export async function logout() {
   localStorage.removeItem("current-time-table-schedule");
   localStorage.removeItem("time-table-semesters");
   localStorage.removeItem("current-time-table-semester");
+  localStorage.removeItem("exam-schedules");
 
   return true;
 }

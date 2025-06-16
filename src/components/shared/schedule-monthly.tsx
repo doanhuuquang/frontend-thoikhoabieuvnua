@@ -54,8 +54,12 @@ function CalendarSelector({
 export default function MonthlySchedule() {
   const { currentTimeTableSchedule } = useSchedule();
   const [selected, setSelected] = React.useState<dayjs.Dayjs | null>(null);
+
   const calculator = useScheduleCalculator(currentTimeTableSchedule);
-  const daySubjects = selected ? calculator.getScheduleByDate(selected) : [];
+  const daySubjects =
+    selected && currentTimeTableSchedule
+      ? calculator.getScheduleByDate(selected)
+      : [];
 
   React.useEffect(() => {
     if (!selected) {

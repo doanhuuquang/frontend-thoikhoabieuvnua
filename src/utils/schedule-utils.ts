@@ -1,3 +1,4 @@
+import { ExamSchedule } from "@/types/ExamSchedule";
 import { TimeTableSchedule } from "@/types/TimeTableSchedule";
 import Cookies from "js-cookie";
 
@@ -67,6 +68,42 @@ export function getCurrentTimeTableScheduleFromLocalStorage(): TimeTableSchedule
   if (!data) return null;
   try {
     return JSON.parse(data) as TimeTableSchedule;
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchExamSchedulesFromAPI(
+  password: string
+): Promise<ExamSchedule[]> {
+  const token = Cookies.get("token");
+  if (!token) {
+    throw new Error("Chưa đăng nhập");
+  }
+
+  const res = await fetch(`${API_URL}/api/schedule/exam`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ password }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || "Lấy danh sách lịch thi thất bại");
+  }
+  localStorage.setItem("exam-schedules", JSON.stringify(data));
+  return data;
+}
+
+export function getExamSchedulesFromStorage(): ExamSchedule[] | null {
+  if (typeof window === "undefined") return null;
+  const data = localStorage.getItem("exam-Schedules");
+  if (!data) return null;
+  try {
+    return JSON.parse(data) as ExamSchedule[];
   } catch {
     return null;
   }

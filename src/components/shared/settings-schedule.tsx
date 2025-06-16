@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useSchedule } from "@/hooks/use-schedule";
 
 export default function SettingsSchedule() {
-  const { openSemesterDialog, currentSemester } = useSchedule();
+  const { setOpenDialog, currentTimeTableSemester } = useSchedule();
 
   return (
     <div className="space-y-3  rounded-md border bg-background/50 dark:bg-sidebar/50">
@@ -17,9 +17,10 @@ export default function SettingsSchedule() {
       <div className="w-full h-[1px] bg-muted"></div>
       <div className="flex items-center justify-between gap-3 px-3 pb-3 pt-1.5">
         <p className="text-sm text-muted-foreground">
-          Hiện tại: {currentSemester || "Chưa có học kỳ nào được chọn"}
+          Hiện tại: {currentTimeTableSemester || "Chưa chọn học kỳ"}
         </p>
-        <Button variant={"outline"} onClick={() => openSemesterDialog()}>
+
+        <Button variant={"outline"} onClick={() => setOpenDialog(true)}>
           Chọn học kỳ
         </Button>
       </div>
