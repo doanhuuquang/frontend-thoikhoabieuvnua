@@ -1,5 +1,5 @@
 import { formatClassTime, getSubjectStatus } from "@/utils/class-time-utils";
-import { Subject } from "@/types/TimeTableSchedule";
+import { TimeTableSubject } from "@/types/TimeTableSchedule";
 
 import {
   AlertDialog,
@@ -19,7 +19,7 @@ const statusColors = {
   incoming: "border-amber-400",
 };
 
-export const ScheduleItem = ({ subject }: { subject: Subject }) => {
+export const ScheduleItem = ({ subject }: { subject: TimeTableSubject }) => {
   const subjectStatus = getSubjectStatus(
     subject.start,
     subject.numberOfLessons,
@@ -121,7 +121,7 @@ export default function ScheduleItems({
   subjects,
 }: {
   className: string;
-  subjects: Subject[];
+  subjects: TimeTableSubject[];
 }) {
   if (!subjects?.length) {
     return (
