@@ -20,7 +20,7 @@ import {
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { auth, logout } from "@/utils/auth-utils";
-import { fetchSchedulesFromAPI } from "@/utils/schedule-utils";
+import { fetchTimeTableSchedulesFromAPI } from "@/utils/schedule-utils";
 import { useSchedule } from "@/hooks/use-schedule";
 
 const formSchema = z.object({
@@ -50,7 +50,7 @@ export default function LoginForm({ className }: { className?: string }) {
     try {
       await auth(values.studentCode, values.password);
       setSchedulesLoading(true);
-      await fetchSchedulesFromAPI(values.password);
+      await fetchTimeTableSchedulesFromAPI(values.password);
       window.location.reload();
 
       toast.success("Thành công", {
