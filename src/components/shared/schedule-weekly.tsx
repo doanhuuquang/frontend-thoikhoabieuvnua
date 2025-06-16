@@ -112,8 +112,8 @@ function WeekDaySelector({
   startDate: dayjs.Dayjs;
   endDate: dayjs.Dayjs;
 }) {
-  const { currentSchedule } = useSchedule();
-  const calculader = useScheduleCalculator(currentSchedule);
+  const { currentTimeTableSchedule } = useSchedule();
+  const calculader = useScheduleCalculator(currentTimeTableSchedule);
   const days: dayjs.Dayjs[] = [];
   let current = startDate.startOf("day");
   const end = endDate.startOf("day");
@@ -144,9 +144,9 @@ export function WeekSelector({
   selectedDate,
   onDateChange,
 }: WeekSelectorProps) {
-  const { currentSchedule } = useSchedule();
+  const { currentTimeTableSchedule } = useSchedule();
   const [open, setOpen] = React.useState(false);
-  const calculator = useScheduleCalculator(currentSchedule);
+  const calculator = useScheduleCalculator(currentTimeTableSchedule);
   const weeks: Weeks = calculator.getWeeks();
 
   const selectedWeek = weeks.find(
@@ -255,8 +255,8 @@ export function WeekSelector({
 }
 
 export const WeeklySchedule = () => {
-  const { currentSchedule } = useSchedule();
-  const calculator = useScheduleCalculator(currentSchedule);
+  const { currentTimeTableSchedule } = useSchedule();
+  const calculator = useScheduleCalculator(currentTimeTableSchedule);
   const currentWeekNumber = calculator.getCurrentWeekNumber().toString();
 
   const [weekNumber, setWeekNumber] = React.useState<string | number>(

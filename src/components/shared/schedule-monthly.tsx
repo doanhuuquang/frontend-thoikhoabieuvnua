@@ -18,9 +18,10 @@ function CalendarSelector({
   onSelected: (date: dayjs.Dayjs) => void;
   className: string;
 }) {
-  const { currentSchedule } = useSchedule();
-  const { startDate, getScheduleByDate } =
-    useScheduleCalculator(currentSchedule);
+  const { currentTimeTableSchedule } = useSchedule();
+  const { startDate, getScheduleByDate } = useScheduleCalculator(
+    currentTimeTableSchedule
+  );
 
   const isHasSchedule = (day: Date) => {
     const schedule = getScheduleByDate(dayjs(day));
@@ -51,9 +52,9 @@ function CalendarSelector({
 }
 
 export default function MonthlySchedule() {
-  const { currentSchedule } = useSchedule();
+  const { currentTimeTableSchedule } = useSchedule();
   const [selected, setSelected] = React.useState<dayjs.Dayjs | null>(null);
-  const calculator = useScheduleCalculator(currentSchedule);
+  const calculator = useScheduleCalculator(currentTimeTableSchedule);
   const daySubjects = selected ? calculator.getScheduleByDate(selected) : [];
 
   React.useEffect(() => {

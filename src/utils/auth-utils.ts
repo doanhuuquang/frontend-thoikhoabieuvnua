@@ -25,11 +25,11 @@ export async function auth(studentCode: string, password: string) {
 
 export async function logout() {
   Cookies.remove("token", { path: "/" });
-  localStorage.removeItem("userProfile");
-  localStorage.removeItem("schedules");
-  localStorage.removeItem("currentSchedule");
-  localStorage.removeItem("semesters");
-  localStorage.removeItem("currentSemester");
+  localStorage.removeItem("user-profile");
+  localStorage.removeItem("time-table-schedules");
+  localStorage.removeItem("current-time-table-schedule");
+  localStorage.removeItem("time-table-semesters");
+  localStorage.removeItem("current-time-table-semester");
 
   return true;
 }
@@ -47,13 +47,13 @@ export async function getUserProfileFromDb() {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Lấy thông tin thất bại");
-  localStorage.setItem("userProfile", JSON.stringify(data));
+  localStorage.setItem("user-profile", JSON.stringify(data));
   return data;
 }
 
 export function getUserProfileFromLocalStorage(): User | null {
   if (typeof window === "undefined") return null;
-  const data = localStorage.getItem("userProfile");
+  const data = localStorage.getItem("user-profile");
   if (!data) return null;
   try {
     return JSON.parse(data) as User;

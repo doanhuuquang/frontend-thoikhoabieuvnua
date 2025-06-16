@@ -179,7 +179,7 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
       setScheduleLoading(false);
       return;
     }
-    if (localTimeTableSemester?.includes(semster)) {
+    if (localTimeTableSemesters?.includes(semster)) {
       setCurrentTimeTableSemester(semster);
       localStorage.setItem(
         "current-time-table-semester",

@@ -7,8 +7,8 @@ import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import { useSchedule } from "@/hooks/use-schedule";
 
 export const TodaySchedule = () => {
-  const { currentSchedule } = useSchedule();
-  const { getTodaySchedule } = useScheduleCalculator(currentSchedule);
+  const { currentTimeTableSchedule } = useSchedule();
+  const { getTodaySchedule } = useScheduleCalculator(currentTimeTableSchedule);
   const todayClasses = getTodaySchedule();
 
   return (

@@ -24,8 +24,8 @@ enum Greetings {
 
 export default function GreetingSection({ className }: { className?: string }) {
   const { user, loading } = useUser();
-  const { currentSchedule } = useSchedule();
-  const { getTodaySchedule } = useScheduleCalculator(currentSchedule);
+  const { currentTimeTableSchedule } = useSchedule();
+  const { getTodaySchedule } = useScheduleCalculator(currentTimeTableSchedule);
   const numberOfLessons =
     getTodaySchedule().reduce(
       (total, subject) => total + subject.numberOfLessons,

@@ -11,7 +11,7 @@ export async function fetchTimeTableSchedulesFromAPI(
     throw new Error("Chưa đăng nhập");
   }
 
-  const res = await fetch(`${API_URL}/api/schedule`, {
+  const res = await fetch(`${API_URL}/api/schedule/time-table`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

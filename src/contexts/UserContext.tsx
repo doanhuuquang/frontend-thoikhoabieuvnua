@@ -34,7 +34,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     }
 
     // Nếu đã đăng nhập mà chưa có thông tin về schedules -> lần đăng nhập trước bị lỗi
-    if (typeof window !== "undefined" && !localStorage.getItem("schedules")) {
+    if (
+      typeof window !== "undefined" &&
+      !localStorage.getItem("time-table-schedules")
+    ) {
       logout();
       setLoading(false);
       return;
