@@ -35,7 +35,6 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { useSchedule } from "@/hooks/use-schedule";
 import { toast } from "sonner";
 import { ExamSchedule } from "@/types/ExamSchedule";
-import { get } from "http";
 
 type ScheduleContextType = {
   timeTableSemesters: string[] | null;
