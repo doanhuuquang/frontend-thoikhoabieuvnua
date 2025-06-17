@@ -6,74 +6,67 @@ import {
   getUserProfileFromDb,
   getUserProfileFromLocalStorage,
   isLoggedIn,
-  logout,
 } from "@/utils/auth-utils";
 
 type UserContextType = {
   user: User | null;
   loading: boolean;
-  refreshUser: () => Promise<void>;
+  fetchUserProfileFromLocalStorage: () => void;
+  fetchUserProfileFromDb: () => Promise<void>;
 };
 
 export const UserContext = createContext<UserContextType>({
   user: null,
   loading: true,
-  refreshUser: async () => {},
+  fetchUserProfileFromLocalStorage: () => {},
+  fetchUserProfileFromDb: async () => {},
 });
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchUser = async () => {
+  const fetchUserProfileFromLocalStorage = () => {
+    if (!isLoggedIn()) return;
+
+    console.log("Fetching user profile from local storage");
     setLoading(true);
-    if (!isLoggedIn()) {
-      setUser(null);
-      setLoading(false);
-      return;
-    }
-
-    // Nếu đã đăng nhập mà chưa có thông tin về schedules -> lần đăng nhập trước bị lỗi
-    if (
-      typeof window !== "undefined" &&
-      !localStorage.getItem("time-table-schedules")
-    ) {
-      logout();
-      setLoading(false);
-      return;
-    }
-
-    // Nếu đã có user trong localStorage thì dùng luôn
     const localUser = getUserProfileFromLocalStorage();
     if (localUser) {
       setUser(localUser);
       setLoading(false);
       return;
     }
+  };
 
-    // Nếu chưa có localUser, lấy từ DB
+  const fetchUserProfileFromDb = async () => {
+    if (!isLoggedIn()) return;
+
+    console.log("Fetching user profile from database");
+    setLoading(true);
     try {
       const userFromApi = await getUserProfileFromDb();
       setUser(userFromApi);
+      setLoading(false);
     } catch {
       setUser(null);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
-    fetchUser();
-    const handler = () => fetchUser();
-    window.addEventListener("userProfileChanged", handler);
-    window.addEventListener("storage", handler);
-    return () => {
-      window.removeEventListener("userProfileChanged", handler);
-      window.removeEventListener("storage", handler);
-    };
+    if (!getUserProfileFromLocalStorage()) fetchUserProfileFromDb();
+    else fetchUserProfileFromLocalStorage();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading, refreshUser: fetchUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        loading,
+        fetchUserProfileFromLocalStorage,
+        fetchUserProfileFromDb,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
