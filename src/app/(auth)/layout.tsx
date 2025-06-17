@@ -9,9 +9,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-primary/5">
       {/* Left Side - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-background">
+      <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
           {/* Header */}
           <div>
@@ -21,15 +21,12 @@ export default function AuthLayout({
           {/* Form */}
           {children}
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-muted" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className=" px-4 text-muted-foreground bg-background">
-                Liên hệ hỗ trợ
-              </span>
-            </div>
+          <div className="relative flex items-center justify-center text-sm">
+            <span className="grow border-t border-muted" />
+            <span className="grow text-center text-muted-foreground">
+              Liên hệ hỗ trợ
+            </span>
+            <span className="grow border-t border-muted" />
           </div>
 
           {/* Social Login */}
