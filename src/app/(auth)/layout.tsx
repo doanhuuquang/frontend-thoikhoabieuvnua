@@ -9,7 +9,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen flex bg-primary/5">
+    <div className="min-h-screen flex lg:items-center items-start bg-primary/5">
       {/* Left Side - Login Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
@@ -69,7 +69,7 @@ export default function AuthLayout({
       </div>
 
       {/* Right Side - Banner */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary/80 to-secondary relative overflow-hidden items-center justify-center">
+      <div className="h-[100vh] hidden lg:flex flex-1 bg-gradient-to-br from-primary/80 to-secondary relative overflow-hidden items-center justify-center">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl"></div>
