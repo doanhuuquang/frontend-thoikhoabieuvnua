@@ -167,7 +167,7 @@ export function WeekSelector({
   return (
     <div className={cn("space-y-3", className)}>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild className="w-full">
+        <PopoverTrigger asChild className="w-full shadow-none">
           <Button
             variant="outline"
             role="combobox"

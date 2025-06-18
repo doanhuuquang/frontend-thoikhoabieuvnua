@@ -44,7 +44,7 @@ function CalendarSelector({
           "relative after:bg-primary after:absolute after:-bottom-0.5 after:border-2 after:border-sidebar after:border-background after:-right-0.5 after:w-3 after:h-3 after:rounded-full",
       }}
       className={cn(
-        "rounded-md border shadow bg-background dark:bg-sidebar w-full",
+        "rounded-md border bg-background dark:bg-sidebar w-full ",
         className
       )}
     />
