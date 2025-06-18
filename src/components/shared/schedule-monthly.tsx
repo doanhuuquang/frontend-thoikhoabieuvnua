@@ -16,7 +16,7 @@ function CalendarSelector({
 }: {
   selected: dayjs.Dayjs;
   onSelected: (date: dayjs.Dayjs) => void;
-  className: string;
+  className?: string;
 }) {
   const { currentTimeTableSchedule } = useSchedule();
   const { startDate, getScheduleByDate } = useScheduleCalculator(
@@ -70,18 +70,24 @@ export default function MonthlySchedule() {
   if (!selected) return null;
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <h4 className="font-semibold text-lg">Lịch học theo tháng</h4>
-      </div>
-      <div className="flex flex-col-reverse lg:flex-row gap-4 items-start">
-        <ScheduleItems className="lg:w-[50%] w-[100%]" subjects={daySubjects} />
-        <CalendarSelector
-          className="lg:w-[50%] w-[100%]"
-          selected={selected}
-          onSelected={setSelected}
-        />
-      </div>
+    <div className="space-y-3">
+      <h4 className="font-semibold text-lg">Lịch học theo tháng</h4>
+      <CalendarSelector selected={selected} onSelected={setSelected} />
+      <ScheduleItems subjects={daySubjects} />
     </div>
+
+    // <div className="space-y-5">
+    //   <div className="flex items-center justify-between gap-2 flex-wrap">
+    //     <h4 className="font-semibold text-lg">Lịch học theo tháng</h4>
+    //   </div>
+    //   <div className="flex flex-col-reverse lg:flex-row gap-4 items-start">
+    //     <ScheduleItems className="lg:w-[50%] w-[100%]" subjects={daySubjects} />
+    //     <CalendarSelector
+    //       className="lg:w-[50%] w-[100%]"
+    //       selected={selected}
+    //       onSelected={setSelected}
+    //     />
+    //   </div>
+    // </div>
   );
 }

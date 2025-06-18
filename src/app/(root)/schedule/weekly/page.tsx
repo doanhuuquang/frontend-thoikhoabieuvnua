@@ -1,9 +1,5 @@
 import { WeeklySchedule } from "@/components/shared/schedule-weekly";
 
 export default function WeeklySchedulePage() {
-  return (
-    <div className="p-3 w-full max-w-7xl m-auto">
-      <WeeklySchedule />
-    </div>
-  );
+  return <WeeklySchedule />;
 }

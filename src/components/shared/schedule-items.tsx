@@ -29,7 +29,7 @@ export const ScheduleItem = ({ subject }: { subject: TimeTableSubject }) => {
   return (
     <div
       key={subject.code}
-      className={`p-3 rounded-lg border-l-5 hover:cursor-pointer
+      className={`p-3 rounded-lg border-l-5 hover:cursor-pointer shadow-sm transition-all duration-200
       ${
         subjectStatus == 0
           ? `opacity-50 bg-background dark:bg-accent/50 dark:opacity-30 ${statusColors.inactive}`
@@ -42,22 +42,26 @@ export const ScheduleItem = ({ subject }: { subject: TimeTableSubject }) => {
         <AlertDialogTrigger asChild>
           <div className="flex justify-between items-start">
             <div>
-              <h4 className="font-medium w-[200px]">{subject.name}</h4>
-              <p className="text-sm text-gray-500">
+              <h4 className="font-bold text-sm w-[200px]">{subject.name}</h4>
+              <p className="text-sm text-muted-foreground">
                 Mã môn: {subject.code} - Nhóm {subject.group}
               </p>
-              <p className="text-sm text-gray-500">Phòng: {subject.room}</p>
-              <p className="text-sm text-gray-500">Lớp: {subject.classCode}</p>
+              <p className="text-sm text-muted-foreground">
+                Phòng: {subject.room}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Lớp: {subject.classCode}
+              </p>
 
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted-foreground">
                 Giảng viên: {subject.lecturerName}
               </p>
             </div>
-            <div className="text-right text-sm">
+            <div className="text-right text-xs">
               <div className="font-medium">
                 {formatClassTime(subject.start, subject.numberOfLessons)}
               </div>
-              <div className="text-gray-500">
+              <div className="text-muted-foreground">
                 Tiết {subject.start}-
                 {subject.start + subject.numberOfLessons - 1}
               </div>
@@ -83,18 +87,20 @@ export const ScheduleItem = ({ subject }: { subject: TimeTableSubject }) => {
               )}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-start">
-              <li className="text-sm text-gray-500">
+              <li className="text-sm text-muted-foreground">
                 Mã môn: {subject.code} - Nhóm {subject.group}
               </li>
-              <li className="text-sm text-gray-500">Phòng: {subject.room}</li>
-              <li className="text-sm text-gray-500">
+              <li className="text-sm text-muted-foreground">
+                Phòng: {subject.room}
+              </li>
+              <li className="text-sm text-muted-foreground">
                 Lớp: {subject.classCode}
               </li>
 
-              <li className="text-sm text-gray-500">
+              <li className="text-sm text-muted-foreground">
                 Giảng viên: {subject.lecturerName}
               </li>
-              <li className="text-sm text-gray-500">
+              <li className="text-sm text-muted-foreground">
                 Tiết {subject.start}-
                 {subject.start + subject.numberOfLessons - 1}
               </li>
@@ -120,13 +126,13 @@ export default function ScheduleItems({
   className,
   subjects,
 }: {
-  className: string;
+  className?: string;
   subjects: TimeTableSubject[];
 }) {
   if (!subjects?.length) {
     return (
       <div className={className}>
-        <p className="text-gray-500 text-sm lg:text-start text-center">
+        <p className="text-muted-foreground text-sm">
           Yeahhhhh! Không có lịch học. Hãy tận dụng thời gian rảnh để tự học
           thêm kiến thức nhé
         </p>

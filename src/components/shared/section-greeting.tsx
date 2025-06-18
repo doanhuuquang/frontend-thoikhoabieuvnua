@@ -35,7 +35,7 @@ export default function GreetingSection({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        `min-h-[180px] flex flex-wrap gap-10 items-center justify-center p-4 bg-linear-to-br from-secondary/90 to-secondary rounded-md overflow-hidden text-secondary-foreground`,
+        `min-h-[180px] flex flex-wrap gap-10 items-center justify-center p-4 bg-linear-to-br from-secondary to-secondary/90 rounded-md overflow-hidden text-secondary-foreground`,
         className
       )}
     >

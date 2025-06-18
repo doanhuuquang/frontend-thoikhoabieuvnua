@@ -282,20 +282,15 @@ export const WeeklySchedule = () => {
     : [];
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <h4 className="font-semibold text-lg">Lịch học theo tuần</h4>
-      </div>
-      <div className="flex flex-col-reverse lg:flex-row gap-4 items-start">
-        <ScheduleItems className="lg:w-[50%] w-[100%]" subjects={daySubjects} />
-        <WeekSelector
-          className="lg:w-[50%] w-[100%]"
-          value={weekNumber}
-          onWeekChange={setWeekNumber}
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-        />
-      </div>
+    <div className="space-y-3">
+      <h4 className="font-semibold text-lg">Lịch học theo tuần</h4>
+      <WeekSelector
+        value={weekNumber}
+        onWeekChange={setWeekNumber}
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+      />
+      <ScheduleItems subjects={daySubjects} />
     </div>
   );
 };
