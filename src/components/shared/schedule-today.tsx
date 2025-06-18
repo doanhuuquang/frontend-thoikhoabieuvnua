@@ -11,7 +11,7 @@ export const TodaySchedule = () => {
   const todayClasses = getTodaySchedule();
 
   return (
-    <>
+    <div className="space-y-10">
       <h4 className="font-semibold text-lg flex items-center justify-between wrap">
         <span>Lịch học hôm nay</span>
         <span className="text-accent-foreground/50 font-light text-sm">
@@ -19,6 +19,6 @@ export const TodaySchedule = () => {
         </span>
       </h4>
       <ScheduleItems subjects={todayClasses ?? []} />
-    </>
+    </div>
   );
 };

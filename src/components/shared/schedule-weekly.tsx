@@ -282,7 +282,7 @@ export const WeeklySchedule = () => {
     : [];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-10">
       <h4 className="font-semibold text-lg">Lịch học theo tuần</h4>
       <WeekSelector
         value={weekNumber}

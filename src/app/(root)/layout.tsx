@@ -14,7 +14,7 @@ export default async function RootLayout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <main className="w-full bg-accent dark:bg-background min-w-[300px]">
+      <main className="w-full min-w-[300px] bg-accent dark:bg-background">
         <Header />
         {children}
       </main>

@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${nunito.className} bg-background text-foreground antialiased`}
+      className={`${nunito.className}text-foreground antialiased`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>

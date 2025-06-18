@@ -44,7 +44,7 @@ function CalendarSelector({
           "relative after:bg-primary after:absolute after:-bottom-0.5 after:border-2 after:border-sidebar after:border-background after:-right-0.5 after:w-3 after:h-3 after:rounded-full",
       }}
       className={cn(
-        "rounded-md border bg-background dark:bg-sidebar w-full ",
+        "rounded-md w-full bg-background dark:bg-accent border-t border-b py-5 px-0",
         className
       )}
     />
@@ -70,24 +70,10 @@ export default function MonthlySchedule() {
   if (!selected) return null;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-10">
       <h4 className="font-semibold text-lg">Lịch học theo tháng</h4>
       <CalendarSelector selected={selected} onSelected={setSelected} />
       <ScheduleItems subjects={daySubjects} />
     </div>
-
-    // <div className="space-y-5">
-    //   <div className="flex items-center justify-between gap-2 flex-wrap">
-    //     <h4 className="font-semibold text-lg">Lịch học theo tháng</h4>
-    //   </div>
-    //   <div className="flex flex-col-reverse lg:flex-row gap-4 items-start">
-    //     <ScheduleItems className="lg:w-[50%] w-[100%]" subjects={daySubjects} />
-    //     <CalendarSelector
-    //       className="lg:w-[50%] w-[100%]"
-    //       selected={selected}
-    //       onSelected={setSelected}
-    //     />
-    //   </div>
-    // </div>
   );
 }
