@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useScheduleCalculator } from "@/hooks/use-schedule-calculator";
 import {
   Command,
+  CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
@@ -21,6 +22,7 @@ import {
 import { convertDateToString, getVietnamDate } from "@/utils/class-time-utils";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useSchedule } from "@/hooks/use-schedule";
+import Link from "next/link";
 
 type Weeks = {
   weekNumber: string;
@@ -198,6 +200,15 @@ export function WeekSelector({
         </PopoverTrigger>
         <PopoverContent className="p-0">
           <Command>
+            <CommandEmpty className="text-start px-3 py-1 text-muted-foreground">
+              Học kỳ này không có thông tin lịch học, thử đổi sang học kỳ khác
+              xem sao.
+              <span>
+                <Link href="/settings/app-data" className="text-primary ml-1">
+                  Cài đặt
+                </Link>
+              </span>
+            </CommandEmpty>
             <CommandList>
               <CommandGroup>
                 {weeks.map((week) => (

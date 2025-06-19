@@ -9,7 +9,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen flex lg:items-center items-start bg-primary/5">
+    <div className="min-h-screen flex lg:items-center items-start bg-linear-to-br from-primary/2 to-primary/5">
       {/* Left Side - Login Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
@@ -99,7 +99,7 @@ export default function AuthLayout({
               <div className="text-left">
                 <h3 className="font-semibold">Thời khóa biểu</h3>
                 <p className="text-white/80 text-sm">
-                  Xem lịch học chi tiết theo tuần
+                  Xem lịch học chi tiết theo ngày, tuần và tháng
                 </p>
               </div>
             </div>

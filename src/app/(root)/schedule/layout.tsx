@@ -7,12 +7,22 @@ export default function ScheduleLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="lg:flex flex-col flex-wrap lg:h-[calc(100vh-64px)] h w-full max-w-7xl m-auto ">
-      <div className="lg:w-[40%] lg:h-[calc(100vh-64px)] h-fit lg:overflow-auto space-y-5 p-3 bg-background dark:bg-accent border-r">
+    <div className="flex lg:flex-row flex-col flex-wrap gap-1 lg:h-[calc(100vh-65px)] h-fit w-full max-w-7xl m-auto p-1">
+      <div className="grow lg:max-w-[450px] h-full lg:overflow-auto space-y-5 p-2 bg-background dark:bg-accent rounded-lg">
         <ScheduleMenu />
         {children}
       </div>
-      <div className="grow lg:w-[60%] p-3">
+      <div className="grow h-full overflow-auto">
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
+        <WeatherSection />
         <WeatherSection />
       </div>
     </div>

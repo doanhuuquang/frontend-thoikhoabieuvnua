@@ -117,7 +117,7 @@ export default function LoginForm({ className }: { className?: string }) {
                       <Input
                         placeholder="Nhập mã sinh viên của bạn"
                         {...field}
-                        className="h-12 border-gray-200 focus:border-[#00CF6A] focus:ring-[#00CF6A]/20"
+                        className="h-12 border-gray-200 focus:border-[#00CF6A] focus:ring-[#00CF6A]/20 shadow-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -136,7 +136,7 @@ export default function LoginForm({ className }: { className?: string }) {
                       {/* Forgot Password Link */}
                       <Link
                         href={"https://daotao.vnua.edu.vn/#/forgetpass"}
-                        className="text-sm text-[#00CF6A] hover:text-[#00CF6A]/80 font-medium"
+                        className="text-sm text-[#00CF6A] hover:text-[#00CF6A]/80 font-medium "
                       >
                         Quên mật khẩu?
                       </Link>
@@ -147,7 +147,7 @@ export default function LoginForm({ className }: { className?: string }) {
                           type={showPassword ? "text" : "password"}
                           placeholder="Nhập mật khẩu tài khoản"
                           {...field}
-                          className="h-12 border-gray-200 focus:border-[#00CF6A] focus:ring-[#00CF6A]/20"
+                          className="h-12 border-gray-200 focus:border-[#00CF6A] focus:ring-[#00CF6A]/20 shadow-none"
                         />
                         <button
                           type="button"

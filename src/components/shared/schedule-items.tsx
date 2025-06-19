@@ -29,7 +29,7 @@ export const ScheduleItem = ({ subject }: { subject: TimeTableSubject }) => {
   return (
     <div
       key={subject.code}
-      className={`p-3 rounded-lg border-l-5 hover:cursor-pointer transition-all duration-200 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-1px_rgba(0,0,0,0.06)]
+      className={`p-3 rounded-lg border-l-5 hover:cursor-pointer transition-all duration-200 shadow-[inset_0px_2px_0px_0px_rgba(255,255,255,0.5),0px_2px_4px_0px_rgba(0,0,0,0.2)]
       ${
         subjectStatus == 0
           ? `opacity-50 bg-background dark:bg-accent/50 dark:opacity-30 ${statusColors.inactive}`

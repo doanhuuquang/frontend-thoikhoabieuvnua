@@ -66,8 +66,8 @@ export function LogoutButton() {
 
 export default function SettingsLogout() {
   return (
-    <div className="space-y-3  rounded-md border bg-background/50 dark:bg-sidebar/50">
-      <div className="w-full px-3 pt-3 pb-1.5 space-y-2">
+    <div className="space-y-3 rounded-lg border bg-background/50 dark:bg-sidebar/50 backdrop-blur-2xl">
+      <div className="w-full px-2 pt-3 pb-1.5 space-y-2">
         <h4 className="text-lg font-bold">Tài khoản</h4>
         <p className="text-sm text-muted-foreground">
           Mọi dữ liệu đã lưu sẽ được xóa và bạn sẽ được đăng xuất khỏi tài khoản
@@ -75,7 +75,7 @@ export default function SettingsLogout() {
         </p>
       </div>
       <div className="w-full h-[1px] bg-muted"></div>
-      <div className="flex items-center justify-between gap-3 px-3 pb-3 pt-1.5">
+      <div className="flex items-center justify-between gap-3 px-2 pb-3 pt-1.5">
         <LogoutButton />
       </div>
     </div>

@@ -35,7 +35,7 @@ export default function GreetingSection({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        `min-h-[180px] flex flex-wrap gap-10 items-center justify-center p-4 bg-linear-to-br from-secondary to-secondary rounded-md overflow-hidden text-secondary-foreground`,
+        `flex flex-wrap gap-10 items-center justify-center p-2 bg-linear-to-br from-secondary to-secondary overflow-hidden text-secondary-foreground rounded-lg shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-1px_rgba(0,0,0,0.06)]`,
         className
       )}
     >
@@ -50,8 +50,7 @@ export default function GreetingSection({ className }: { className?: string }) {
           <Skeleton className="h-5 w-[70%] bg-blue-500 dark:bg-blue-700" />
         </div>
       ) : (
-        // Đã đăng nhập
-        <div className="flex flex-col grow lg:items-start items-center text-center lg:text-start md:text-start">
+        <div className="grow flex flex-col items-center text-center lg:text-start md:text-start">
           <h2 className="text-2xl">Xin chào, {user?.name}!</h2>
           <p className="text-secondary-foreground/80">
             {
@@ -84,15 +83,13 @@ export default function GreetingSection({ className }: { className?: string }) {
       )}
 
       {/* Image */}
-      <div className="">
-        <Image
-          alt="Greeting image"
-          src={"/assets/images/children-preparing-their-backpack-bro.svg"}
-          width={300}
-          height={150}
-          className="-mb-50"
-        />
-      </div>
+      <Image
+        alt="Greeting image"
+        src={"/assets/images/children-preparing-their-backpack-bro.svg"}
+        width={300}
+        height={150}
+        className="-mb-50"
+      />
     </div>
   );
 }

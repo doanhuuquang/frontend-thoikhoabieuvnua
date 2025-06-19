@@ -1,6 +1,7 @@
 "use client";
 
 import SettingsSidebar from "@/components/shared/settings-sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import React from "react";
 
 export default function SettingsLayout({
@@ -11,11 +12,11 @@ export default function SettingsLayout({
   return (
     <div className="max-w-7xl mx-auto">
       <h4 className="font-semibold text-lg py-5 border-b-1 px-3">Cài đặt</h4>
-      <div className="gap-2 grid grid-cols-3">
-        <SettingsSidebar className="p-3 lg:col-span-1 md:col-span-1 col-span-3" />
-        <main className="lg:col-span-2 md:col-span-2 col-span-3 p-3">
-          {children}
-        </main>
+      <div className="flex p-1 gap-1 lg:flex-row lg:h-[calc(100vh-134px)] h-fit flex-col">
+        <SettingsSidebar className="lg:w-[40%] w-[100%] p-2 bg-background dark:bg-accent rounded-lg" />
+        <ScrollArea className="lg:w-[60%] w-[100%]">
+          <div>{children}</div>
+        </ScrollArea>
       </div>
     </div>
   );
