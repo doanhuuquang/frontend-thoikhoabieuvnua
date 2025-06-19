@@ -1,6 +1,11 @@
 import Logo from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Shield, Zap, BookOpen } from "lucide-react";
+import {
+  Sparkles,
+  Shield,
+  Zap,
+  BookOpen,
+} from "lucide-react";
 import Image from "next/image";
 
 export default function AuthLayout({
@@ -31,38 +36,9 @@ export default function AuthLayout({
 
           {/* Social Login */}
           <div className="grid grid-cols-3 gap-4">
-            <Button variant="outline">
-              <svg viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
-                {" "}
-                <path
-                  d="M1168.737 487.897c44.672-41.401 113.824-36.889 118.9-36.663l289.354-.113 6.317-417.504L1539.65 22.9C1511.675 16.02 1426.053 0 1237.324 0 901.268 0 675.425 235.206 675.425 585.137v93.97H337v451.234h338.425V1920h451.234v-789.66h356.7l62.045-451.233H1126.66v-69.152c0-54.937 14.214-96.112 42.078-122.058"
-                  className="fill-foreground"
-                ></path>
-              </svg>
-              Facebook
-            </Button>
-            <Button variant="outline">
-              <svg
-                viewBox="0 0 32 32"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                className="fill-foreground"
-              >
-                <path d="M25.264 5.562v-0.769c-0.001-0.442-0.359-0.8-0.801-0.8h-16.639c-0.442 0-0.8 0.358-0.8 0.8v0.929c0 0.442 0.358 0.8 0.8 0.8h13.738l-14.885 19.418c-0.103 0.133-0.165 0.302-0.165 0.485 0 0 0 0.001 0 0.002v-0 0.768c0 0.442 0.358 0.8 0.8 0.801h17.119c0.442-0.001 0.8-0.359 0.801-0.801v-0.928c-0.001-0.442-0.359-0.8-0.801-0.801h-14.219l14.885-19.417c0.103-0.133 0.166-0.302 0.166-0.486v-0z"></path>{" "}
-              </svg>
-              Zalo
-            </Button>
-            <Button variant="outline">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="fill-foreground"
-              >
-                <path d="M22,5V9L12,13,2,9V5A1,1,0,0,1,3,4H21A1,1,0,0,1,22,5ZM2,11.154V19a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V11.154l-10,4Z"></path>
-              </svg>
-              Email
-            </Button>
+            <Button variant="outline">Facebook</Button>
+            <Button variant="outline">Zalo</Button>
+            <Button variant="outline">Email</Button>
           </div>
         </div>
       </div>
