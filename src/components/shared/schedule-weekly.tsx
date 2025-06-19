@@ -79,7 +79,7 @@ const WeekDayItem = React.memo(
       onClick={() => onClick(date)}
       type="button"
       className={cn(
-        "w-full relative p-1 bg-background dark:bg-sidebar rounded-md border flex flex-col items-center gap-1 justify-center text-center hover:border-primary hover:cursor-pointer transition",
+        "w-full relative p-1 bg-background dark:bg-accent border hover:border-primary rounded-md  flex flex-col items-center gap-1 justify-center text-center hover:cursor-pointer transition",
         selected && "border-primary",
         convertDateToString(date, "-", "YYYY-MM-DD") ==
           convertDateToString(getVietnamDate(), "-", "YYYY-MM-DD") &&
@@ -293,7 +293,7 @@ export const WeeklySchedule = () => {
     : [];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-5">
       <h4 className="font-semibold text-lg">Lịch học theo tuần</h4>
       <WeekSelector
         value={weekNumber}

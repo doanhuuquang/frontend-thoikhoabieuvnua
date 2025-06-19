@@ -70,7 +70,7 @@ export default function MonthlySchedule() {
   if (!selected) return null;
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-5">
       <h4 className="font-semibold text-lg">Lịch học theo tháng</h4>
       <CalendarSelector selected={selected} onSelected={setSelected} />
       <ScheduleItems subjects={daySubjects} />
