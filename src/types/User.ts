@@ -1,5 +1,4 @@
 export interface User {
-  _id: string; // ID
   studentCode: string; // Mã sinh viên
   name: string; // Họ và tên
   dateOfBirth: string; // Ngày sinh
@@ -20,5 +19,4 @@ export interface User {
   ethnicity: string; // Dân tộc
   bankAccountNumber: string; // Số tài khoản ngân hàng
   password: string; // Mật khẩu
-  __v: number; // Phiên bản dữ liệu (MongoDB)
 }

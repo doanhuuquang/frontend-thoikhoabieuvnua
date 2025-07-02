@@ -123,7 +123,7 @@
   }
   /* width */
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
   }
 
   /* Track */
@@ -135,10 +135,12 @@
   ::-webkit-scrollbar-thumb {
     background: var(--accent);
     border-radius: 10px;
+    transition: all 0.3s ease-in-out;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: var(--primary);
+    cursor: pointer;
   }
 }

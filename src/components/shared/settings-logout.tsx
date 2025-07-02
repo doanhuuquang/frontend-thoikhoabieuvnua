@@ -66,7 +66,7 @@ export function LogoutButton() {
 
 export default function SettingsLogout() {
   return (
-    <div className="space-y-3 rounded-lg border bg-background/50 dark:bg-sidebar/50 backdrop-blur-2xl">
+    <div className="space-y-3 rounded-lg bg-background dark:bg-sidebar">
       <div className="w-full px-2 pt-3 pb-1.5 space-y-2">
         <h4 className="text-lg font-bold">Tài khoản</h4>
         <p className="text-sm text-muted-foreground">
