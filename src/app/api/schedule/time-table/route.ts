@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 
   try {
     const { studentCode, password } = await request.json();
-    browser = await chromium.launch({ headless: false });
+    browser = await chromium.launch({ headless: true });
     page = (await loginWeb(browser, studentCode, password)).page;
 
     if (page) {
